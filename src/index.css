@@ -1,15 +1,55 @@
-body {
+body,
+#root {
   font-family: "Nunito Sans", sans-serif;
+  margin: 0;
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
 header {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0px 5px;
+  padding: 0px 15px;
   background: lightcoral;
   h1 {
-    font-size: 23px;
+    font-weight: 600;
+    font-size: 18px;
     flex-grow: 1;
   }
+}
+main {
+  flex-grow: 1;
+}
+
+footer {
+  display: flex;
+  justify-content: space-evenly;
+  background: lightblue;
+  padding: 6px 0px;
+}
+
+.navigation-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 9px;
+  color: black;
+  text-decoration: none;
+}
+.navigation-btn.active {
+  font-weight: 700;
+  border-bottom: 2px solid #9b9898;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+  stroke-width: 1;
 }
