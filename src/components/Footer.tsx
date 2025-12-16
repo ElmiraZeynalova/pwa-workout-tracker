@@ -3,15 +3,15 @@ export default function Footer(){
     return(
         <footer>
             <NavLink className={({isActive}) =>  isActive ? "navigation-btn active" : "navigation-btn"} to="/">
-                <img className="icon" src='src/assets/icons/home1.svg'/>
+                <img className="icon" src='/icons/home.svg' alt="Home"/>
                 Home
             </NavLink>
             <NavLink className="navigation-btn" to="/workout">
-                <img className="icon" src="src/assets/icons/dumbbell6.svg"/>
+                <img className="icon" src="/icons/dumbbell.svg" alt="Dumbbell"/>
                 Workout
             </NavLink>
             <NavLink className="navigation-btn" to="/profile">
-                <img className="icon" src="src/assets/icons/profile10.svg"/>
+                <img className="icon" src="/icons/profile.svg" alt="Profile"/>
                 Profile
             </NavLink>
         </footer>

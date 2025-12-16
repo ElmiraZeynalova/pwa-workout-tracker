@@ -6,7 +6,7 @@ export default function Dashboard(){
         <div className="layout">
             <Header heading="Home" 
                     element={ <Link to="/calendar">
-                                <img className="icon" src="src/assets/icons/calendar1.svg"/>
+                                <img className="icon" src="/icons/calendar.svg" alt="Calendar"/>
                             </Link>}/>
             <main>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit officiis minima ad rem placeat, ducimus obcaecati pariatur, fugit animi doloribus repudiandae quisquam rerum. Beatae voluptas ad enim commodi aperiam laboriosam.</p>
