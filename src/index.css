@@ -8,6 +8,7 @@ body,
   display: flex;
   flex-direction: column;
   height: 100vh;
+  gap: 15px;
 }
 
 header {
@@ -24,6 +25,7 @@ header {
 }
 main {
   flex-grow: 1;
+  padding: 0px 18px;
 }
 
 footer {
@@ -33,23 +35,42 @@ footer {
   padding: 6px 0px;
 }
 
+.calendar-btn {
+  fill: black;
+}
+
 .navigation-btn {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   font-size: 9px;
+  fill: black;
   color: black;
   text-decoration: none;
 }
 .navigation-btn.active {
-  font-weight: 700;
-  border-bottom: 2px solid #9b9898;
+  fill: blue;
+  color: blue;
 }
 
-.icon {
-  width: 24px;
-  height: 24px;
-  fill: currentColor;
-  stroke-width: 1;
+.start-workout-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-weight: 400;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+}
+
+.exercise {
+  border-top: 1px solid #aaa;
+  padding: 6px 12px;
+  .exercise-muscle {
+    color: #837f7f;
+  }
 }
