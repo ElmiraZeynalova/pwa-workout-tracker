@@ -1,31 +1,38 @@
 import { NavLink } from "react-router"
-import { useState, useEffect } from 'react'
-import { useAllChosenExercisesStore } from "../store"
-import type { SelectedExercise } from "../store"
-
+import { useWorkoutStore } from "../store"
+import Exercise from "./Exercise"
 export default function LogWorkout(){
 
-    const exercises = useAllChosenExercisesStore((state) => state.exercises)
+    const workoutExercises = useWorkoutStore((state) => state.exercises)
 
-    const exerciseElements = exercises.map((exercise, idx) => {
-        return <p key={idx}>{exercise.exerciseName}</p>
+    const exerciseCards = workoutExercises.map(exercise => {
+        return <Exercise key={exercise.exerciseId} exerciseId={exercise.exerciseId}/>
     })
 
     return(
     <>
         <NavLink to="/">Go Home</NavLink>
-        {exercises.length > 0 && <div>Added exercises: {exerciseElements}</div>}
-        {exercises.length === 0 && 
-            <div>
+        {exerciseCards.length > 0 && 
+            <div className="all-exercise-cards">{exerciseCards}</div>
+        }
+        {exerciseCards.length === 0 && 
+            <>
                 <h2>Get started</h2>
                 <p>Add an exercise to start your workout</p>
-            </div>}
-        <NavLink to="/workouts/new/exercises">Add Exercise</NavLink>
+            </>
+        }        
+        <NavLink to="/workouts/new/exercises" className="add-exercise-btn">
+            <svg className="plus-icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="18" height="18" viewBox="0 0 24 24">
+                <path fillRule="evenodd" d="M 11 2 L 11 11 L 2 11 L 2 13 L 11 13 L 11 22 L 13 22 L 13 13 L 22 13 L 22 11 L 13 11 L 13 2 Z"></path>
+            </svg>
+            Add Exercise
+        </NavLink>
+
     </>
         
     )
 }
-//******ADD ABILITY TO LOG REPS AND SETS FOR EACH CHOSEN EXERCISE********
+
 
 
 
