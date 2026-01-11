@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-
+import dayjs from 'dayjs'
 export type SetInfo = {
     reps: string
     weight?: string
@@ -17,6 +17,16 @@ type WorkoutStore = {
     addNewSet: (exerciseId: string) => void
     updateSet: (exerciseId: string, setIdx: number, fieldName: string, value: string) => void
 }
+
+type DateStore = {
+    selectedDate: string,
+    setSelectedDate: (date: string) => void
+}
+
+export const useDateStore = create<DateStore>((set) => ({
+    selectedDate:  dayjs().format('YYYY-MM-DD'),
+    setSelectedDate: (date) => set({selectedDate: date})
+}))
 
 export const useWorkoutStore = create<WorkoutStore>((set) => ({
     exercises: [],

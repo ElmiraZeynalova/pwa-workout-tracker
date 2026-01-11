@@ -9,9 +9,33 @@ export default function LogWorkout(){
         return <Exercise key={exercise.exerciseId} exerciseId={exercise.exerciseId}/>
     })
 
+    function saveWorkout(){
+        const request = indexedDB.open("workout_tracker", 1)
+
+        request.onerror = (event) => {
+            console.log("Error occured!")
+        }
+
+        request.onsuccess = (event: any) => {
+            const db = event.target.result
+            const transaction = db.transaction("workouts", "readwrite")
+            const store = transaction.objectStore("workouts")
+        }
+
+        request.onupgradeneeded = (event: any) => {
+            const db = event.target.result
+            const objectStore = db.createObjectStore("workouts", {keyPath: "date"})
+            objectStore.createIndex("date", "date", {unique: true})
+        }
+    }
+
     return(
     <>
-        <NavLink to="/">Go Home</NavLink>
+        <div className="navigation-bar">
+            <NavLink to="/">Go Home</NavLink>
+            <button onClick={saveWorkout}>Finish</button>
+        </div>
+        
         {exerciseCards.length > 0 && 
             <div className="all-exercise-cards">{exerciseCards}</div>
         }
