@@ -1,39 +1,28 @@
-import { NavLink } from "react-router"
-import { useWorkoutStore } from "../store"
+import { NavLink, useNavigate } from "react-router"
+import { useWorkoutStore, useDateStore } from "../store"
+import { saveWorkout } from "../workoutsDB"
 import Exercise from "./Exercise"
 export default function LogWorkout(){
 
-    const workoutExercises = useWorkoutStore((state) => state.exercises)
-
-    const exerciseCards = workoutExercises.map(exercise => {
+    const currentWorkoutExercises = useWorkoutStore((state) => state.exercises)
+    const currentWorkoutDate = useDateStore((state) => state.selectedDate)
+    const clearWorkoutStore = useWorkoutStore((state) => state.clearWorkout)
+    const navigate = useNavigate()
+    const exerciseCards = currentWorkoutExercises.map(exercise => {
         return <Exercise key={exercise.exerciseId} exerciseId={exercise.exerciseId}/>
     })
 
-    function saveWorkout(){
-        const request = indexedDB.open("workout_tracker", 1)
-
-        request.onerror = (event) => {
-            console.log("Error occured!")
-        }
-
-        request.onsuccess = (event: any) => {
-            const db = event.target.result
-            const transaction = db.transaction("workouts", "readwrite")
-            const store = transaction.objectStore("workouts")
-        }
-
-        request.onupgradeneeded = (event: any) => {
-            const db = event.target.result
-            const objectStore = db.createObjectStore("workouts", {keyPath: "date"})
-            objectStore.createIndex("date", "date", {unique: true})
-        }
+    async function handleFinish(){
+        await saveWorkout(currentWorkoutDate, currentWorkoutExercises)
+        clearWorkoutStore()
+        navigate("/")
     }
 
     return(
     <>
         <div className="navigation-bar">
             <NavLink to="/">Go Home</NavLink>
-            <button onClick={saveWorkout}>Finish</button>
+            <button onClick={handleFinish}>Finish</button>
         </div>
         
         {exerciseCards.length > 0 && 

@@ -16,16 +16,31 @@ type WorkoutStore = {
     addNewExercise: (exerciseName: string) => void
     addNewSet: (exerciseId: string) => void
     updateSet: (exerciseId: string, setIdx: number, fieldName: string, value: string) => void
+    clearWorkout: () => void
 }
 
 type DateStore = {
     selectedDate: string,
-    setSelectedDate: (date: string) => void
+    setSelectedDate: (date: string) => void,
+    goPrevDay: () => void,
+    goNextDay: () => void,
 }
 
 export const useDateStore = create<DateStore>((set) => ({
     selectedDate:  dayjs().format('YYYY-MM-DD'),
-    setSelectedDate: (date) => set({selectedDate: date})
+    setSelectedDate: (date) => set({selectedDate: date}),
+    goPrevDay: () => 
+        set(state => ({
+            selectedDate: dayjs(state.selectedDate)
+                .subtract(1, 'day')
+                .format('YYYY-MM-DD')
+        })),
+    goNextDay: () => 
+        set(state => ({
+            selectedDate: dayjs(state.selectedDate)
+                .add(1, 'day')
+                .format('YYYY-MM-DD')
+        })) 
 }))
 
 export const useWorkoutStore = create<WorkoutStore>((set) => ({
@@ -54,6 +69,8 @@ export const useWorkoutStore = create<WorkoutStore>((set) => ({
                 }
                     : e
             )
-        })) 
+        })),
+    clearWorkout: () => 
+        set({exercises: []})
     
 }))
