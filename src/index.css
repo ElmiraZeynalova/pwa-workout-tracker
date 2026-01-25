@@ -2,6 +2,7 @@ body,
 #root {
   font-family: "Nunito Sans", sans-serif;
   margin: 0;
+  overflow-y: hidden;
 }
 
 .layout {
@@ -131,24 +132,73 @@ footer {
   }
 }
 .date-bar {
+  padding: 0 10px;
   background: rgb(5, 5, 5);
   color: white;
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  button {
+    background: none;
+    border: none;
+    svg {
+      width: 28px;
+      height: 28px;
+    }
+  }
 }
 
-.carousel-container {
-  background: blue;
-  flex-grow: 1;
+main {
+  height: 100%;
+}
+
+.carousel-viewport {
+  touch-action: pan-y;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-track {
   display: flex;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-snap-type: x mandatory;
+  will-change: transform;
+  transform: translateX(0);
+  height: 100%;
 }
 
 .day-content {
   flex: 0 0 100%;
   height: 100%;
-  scroll-snap-align: start;
+  background: blue;
+}
+
+.workout-day {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.logged-exercise-card {
+  margin-top: 0;
+  background: white;
+  .exercise-name {
+    margin: 0;
+    padding: 6px;
+    font-weight: 600;
+    font-size: 18px;
+    border-bottom: 1px solid blue;
+  }
+  table {
+    margin: 6px;
+    text-align: left;
+    width: 50%;
+    text-align: center;
+    thead {
+      font-size: 14px;
+      color: #767474;
+    }
+  }
 }
 
 .navigation-bar {
@@ -165,3 +215,23 @@ footer {
     cursor: pointer;
   }
 }
+
+/* .loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #fff;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} */

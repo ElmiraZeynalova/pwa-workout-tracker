@@ -8,8 +8,10 @@ export default function Home(){
     return(
         <div className="layout">
             <Header/>
-            <DateBar/>
-            <CarouselContent />
+            <main>
+                <DateBar />
+                <CarouselContent />
+            </main>
         </div>
 
     )
