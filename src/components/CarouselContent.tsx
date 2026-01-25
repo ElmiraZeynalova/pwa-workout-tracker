@@ -25,6 +25,8 @@ export default function CarouselContent(){
 
     const [activeIndex, setActiveIndex] = useState<number>(range)
 
+    const transitionIndexRef = useRef<number>(activeIndex)
+
     const dates = useMemo(
         () => generateDateRange(dayjs(centerDate)), 
         [centerDate]
@@ -39,6 +41,11 @@ export default function CarouselContent(){
         if (!carouselTrackRef.current) return
 
         const index = dates.findIndex(date => date === selectedDate)
+
+        if (index === -1) {
+            console.log("OUT OF RANGE!!!")
+            return
+        }
 
         setActiveIndex(index) 
 
@@ -55,9 +62,11 @@ export default function CarouselContent(){
 
     useEffect(() => {
         console.log(dates)
+        transitionIndexRef.current = activeIndex
+
         if (!carouselTrackRef.current) return
 
-        carouselTrackRef.current.style.transition = 'transform 0.5s ease'
+        carouselTrackRef.current.style.transition = 'transform 0.3s ease'
         carouselTrackRef.current.style.transform =
         `translateX(${-activeIndex * slideWidthRef.current}px)`
 
@@ -68,14 +77,15 @@ export default function CarouselContent(){
         if (!track) return
 
         const onTransitionEnd = () => {
-            if (activeIndex === 0 || activeIndex === dates.length - 1) {
-                setCenterDate(dates[activeIndex])
+            const index = transitionIndexRef.current
+            if (index === 0 || index === dates.length - 1) {
+                setCenterDate(dates[index])
             }
         }
 
         track.addEventListener('transitionend', onTransitionEnd)
         return () => track.removeEventListener('transitionend', onTransitionEnd)
-    }, [activeIndex, dates])
+    }, [dates])
 
 
     function generateDateRange(centerDate: Dayjs){
@@ -116,12 +126,17 @@ export default function CarouselContent(){
 
             if(deltaX > 0) {//moving left
                 const newIndex = activeIndex - 1
-                setSelectedDate(dates[newIndex])
+                if(dates[newIndex]){
+                    setSelectedDate(dates[newIndex])
+                }
+                
             }
 
             if(deltaX < 0){//moving right
                 const newIndex = activeIndex + 1
-                setSelectedDate(dates[newIndex])
+                if(dates[newIndex]){
+                    setSelectedDate(dates[newIndex])
+                }
             }
         }else{
             if (carouselTrackRef.current) {
