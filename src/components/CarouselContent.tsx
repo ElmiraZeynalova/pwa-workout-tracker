@@ -1,165 +1,69 @@
 import DayContent from './DayContent'
 import dayjs from 'dayjs'
 import type { Dayjs } from 'dayjs'
-import { useState, useMemo, useRef, useEffect, useLayoutEffect } from 'react'
+import { useState, useMemo, useRef, useEffect} from 'react'
 import {useDateStore} from "../store"
+import { Swiper, SwiperSlide } from 'swiper/react';
+import type { Swiper as SwiperType } from 'swiper'
+import 'swiper/css'
 
+const RANGE = 7
 
+function generateDateRange(centerDate: Dayjs) {
+  return Array.from({ length: RANGE * 2 + 1 }, (_, i) =>
+    centerDate.add(i - RANGE, 'day').format('YYYY-MM-DD')
+  )
+}
 export default function CarouselContent(){
-    const range = 7
+
     const setSelectedDate = useDateStore((state) => state.setSelectedDate)
-    const selectedDate = useDateStore((state) => state.selectedDate)
-
-    const carouselViewportRef = useRef<HTMLDivElement>(null)
-    const carouselTrackRef = useRef<HTMLDivElement>(null)
-
-    const slideWidthRef = useRef<number>(0)
-    const swipeThresholdRef = useRef<number>(0)
-
     const today = dayjs().format('YYYY-MM-DD')
     const [centerDate, setCenterDate] = useState<string>(today)
-
-    const startXRef = useRef<number>(0)
-
-    const isDraggingRef = useRef<boolean>(false)
-
-    const [activeIndex, setActiveIndex] = useState<number>(range)
-
-    const transitionIndexRef = useRef<number>(activeIndex)
+    const swiperRef = useRef<SwiperType | null>(null)
 
     const dates = useMemo(
-        () => generateDateRange(dayjs(centerDate)), 
+        () => generateDateRange(dayjs(centerDate)),
         [centerDate]
     )
+const selectedDate = useDateStore((state) => state.selectedDate)
 
     useEffect(() => {
-        slideWidthRef.current = carouselViewportRef.current!.offsetWidth
-        swipeThresholdRef.current = slideWidthRef.current * 0.25
-    }, [])
+        if (!swiperRef.current) return
 
-    useEffect(() => {
-        if (!carouselTrackRef.current) return
+        const index = dates.findIndex(d => d === selectedDate)
 
-        const index = dates.findIndex(date => date === selectedDate)
+        if (index === -1) return
 
-        if (index === -1) {
-            console.log("OUT OF RANGE!!!")
-            return
-        }
+        if (swiperRef.current.activeIndex === index) return
 
-        setActiveIndex(index) 
-
+        swiperRef.current.slideTo(index)
     }, [selectedDate, dates])
 
-    useLayoutEffect(() => {
-        if (!carouselTrackRef.current) return
+    const handleSlideChange = (swiper: SwiperType) => {
+        const index = swiper.activeIndex
+        const newDate = dates[index]
+        setSelectedDate(newDate)
 
-        carouselTrackRef.current.style.transition = 'none'
-        carouselTrackRef.current.style.transform =
-        `translateX(${-range * slideWidthRef.current}px)`
-
-    }, [centerDate])
-
-    useEffect(() => {
-        console.log(dates)
-        transitionIndexRef.current = activeIndex
-
-        if (!carouselTrackRef.current) return
-
-        carouselTrackRef.current.style.transition = 'transform 0.3s ease'
-        carouselTrackRef.current.style.transform =
-        `translateX(${-activeIndex * slideWidthRef.current}px)`
-
-    }, [activeIndex])
-
-    useEffect(() => {
-        const track = carouselTrackRef.current
-        if (!track) return
-
-        const onTransitionEnd = () => {
-            const index = transitionIndexRef.current
-            if (index === 0 || index === dates.length - 1) {
-                setCenterDate(dates[index])
-            }
+        if (index === 0 || index === dates.length - 1) {
+            setCenterDate(newDate)
         }
-
-        track.addEventListener('transitionend', onTransitionEnd)
-        return () => track.removeEventListener('transitionend', onTransitionEnd)
-    }, [dates])
-
-
-    function generateDateRange(centerDate: Dayjs){
-        return Array.from({length: range * 2 + 1}, (_, i) => (
-            centerDate.add(i - range, 'day').format('YYYY-MM-DD')
-        ))
     }
 
-    function handlePointerDown(e: React.PointerEvent<HTMLDivElement>){
-        carouselTrackRef.current!.style.transition = 'none'
-        e.currentTarget.setPointerCapture(e.pointerId)
-        isDraggingRef.current = true
-        startXRef.current = e.clientX
-        
-    }
-
-    function handlePointerMove(e: React.PointerEvent<HTMLDivElement>){
-
-        if(!isDraggingRef.current) return
-
-        const deltaX = e.clientX - startXRef.current
-
-        if (carouselTrackRef.current) {
-            carouselTrackRef.current.style.transform =
-            `translateX(${ -activeIndex * slideWidthRef.current + deltaX }px)`
-        }
-
-    }
-
-    function handlePointerUp(e: React.PointerEvent<HTMLDivElement>){
-       
-        if(!isDraggingRef.current) return
-        e.currentTarget.releasePointerCapture(e.pointerId)
-        isDraggingRef.current = false
-       
-        const deltaX = e.clientX - startXRef.current
-        if(Math.abs(deltaX) > swipeThresholdRef.current){
-
-            if(deltaX > 0) {//moving left
-                const newIndex = activeIndex - 1
-                if(dates[newIndex]){
-                    setSelectedDate(dates[newIndex])
-                }
-                
-            }
-
-            if(deltaX < 0){//moving right
-                const newIndex = activeIndex + 1
-                if(dates[newIndex]){
-                    setSelectedDate(dates[newIndex])
-                }
-            }
-        }else{
-            if (carouselTrackRef.current) {
-                carouselTrackRef.current.style.transition = 'transform 0.5s ease'
-                carouselTrackRef.current.style.transform =
-                `translateX(${ -activeIndex * slideWidthRef.current}px)`
-            }
-        }
-
-    }
-
-    return(
-        <div 
-            className="carousel-viewport"
-            ref={carouselViewportRef} 
-            onPointerDown={handlePointerDown}
-            onPointerMove={handlePointerMove}
-            onPointerUp={handlePointerUp}>
-            <div className="carousel-track" ref={carouselTrackRef}>
-                {dates.map(date => (
-                    <DayContent key={date} date={date}/>
-                ))}
-            </div>
-        </div>
+    return (
+        <Swiper
+            key={centerDate}
+            initialSlide={RANGE}
+            slidesPerView={1}
+            onSwiper={(swiper) => { swiperRef.current = swiper }}
+            onSlideChange={handleSlideChange}
+            style={{ width: '100%', height: '100vh' }}
+        >
+        {dates.map((date) => (
+            <SwiperSlide key={date}>
+                <DayContent date={date} />
+            </SwiperSlide>
+        ))}
+        </Swiper>
     )
 }
+

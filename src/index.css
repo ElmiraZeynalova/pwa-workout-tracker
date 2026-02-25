@@ -1,14 +1,23 @@
-body,
-#root {
-  font-family: "Nunito Sans", sans-serif;
+html,
+body {
+  height: 100%;
   margin: 0;
-  overflow-y: hidden;
+  overflow: hidden;
+}
+
+body {
+  font-family: "Nunito Sans", sans-serif;
+}
+
+#root {
+  height: 100%;
+  overflow: hidden;
 }
 
 .layout {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100dvh;
 }
 
 header {
@@ -24,15 +33,29 @@ header {
   }
 }
 
-footer {
+main {
   display: flex;
-  justify-content: space-evenly;
-  background: lightblue;
-  padding: 6px 0px;
+  overflow: hidden;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
-.calendar-btn {
-  fill: black;
+.date-bar {
+  padding: 0 10px;
+  background: rgb(5, 5, 5);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  button {
+    background: none;
+    border: none;
+    svg {
+      width: 28px;
+      height: 28px;
+    }
+  }
 }
 
 .navigation-btn {
@@ -130,46 +153,6 @@ footer {
   input {
     max-width: 40%;
   }
-}
-.date-bar {
-  padding: 0 10px;
-  background: rgb(5, 5, 5);
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  button {
-    background: none;
-    border: none;
-    svg {
-      width: 28px;
-      height: 28px;
-    }
-  }
-}
-
-main {
-  height: 100%;
-}
-
-.carousel-viewport {
-  touch-action: pan-y;
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-}
-
-.carousel-track {
-  display: flex;
-  will-change: transform;
-  transform: translateX(0);
-  height: 100%;
-}
-
-.day-content {
-  flex: 0 0 100%;
-  height: 100%;
-  background: blue;
 }
 
 .workout-day {
