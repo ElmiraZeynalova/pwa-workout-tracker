@@ -1,4 +1,4 @@
-import {NavLink} from 'react-router'
+import {NavLink} from 'react-router-dom'
 import {getWorkoutByDate} from "../workoutsDB"
 import {useEffect, useState} from "react"
 import type {Exercise} from '../store'
