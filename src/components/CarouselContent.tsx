@@ -1,7 +1,7 @@
 import DayContent from './DayContent'
 import dayjs from 'dayjs'
 import type { Dayjs } from 'dayjs'
-import { useState, useMemo, useRef, useEffect} from 'react'
+import { useMemo, useRef, useEffect} from 'react'
 import {useDateStore} from "../store"
 import { Swiper, SwiperSlide } from 'swiper/react';
 import type { Swiper as SwiperType } from 'swiper'
@@ -16,16 +16,18 @@ function generateDateRange(centerDate: Dayjs) {
 }
 export default function CarouselContent(){
 
+    const selectedDate = useDateStore((state) => state.selectedDate)
     const setSelectedDate = useDateStore((state) => state.setSelectedDate)
-    const today = dayjs().format('YYYY-MM-DD')
-    const [centerDate, setCenterDate] = useState<string>(today)
+    const centerDate = useDateStore((state) => state.centerDate)
+    const setCenterDate = useDateStore((state) => state.setCenterDate)
     const swiperRef = useRef<SwiperType | null>(null)
 
     const dates = useMemo(
         () => generateDateRange(dayjs(centerDate)),
         [centerDate]
     )
-const selectedDate = useDateStore((state) => state.selectedDate)
+    
+    const initialSlideIndex = dates.findIndex(d => d === selectedDate)
 
     useEffect(() => {
         if (!swiperRef.current) return
@@ -52,7 +54,7 @@ const selectedDate = useDateStore((state) => state.selectedDate)
     return (
         <Swiper
             key={centerDate}
-            initialSlide={RANGE}
+            initialSlide={initialSlideIndex}
             slidesPerView={1}
             onSwiper={(swiper) => { swiperRef.current = swiper }}
             onSlideChange={handleSlideChange}

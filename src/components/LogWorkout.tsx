@@ -22,7 +22,7 @@ export default function LogWorkout(){
     <>
         <div className="navigation-bar">
             <NavLink to="/">Go Home</NavLink>
-            <button onClick={handleFinish}>Finish</button>
+            {exerciseCards.length > 0 && <button onClick={handleFinish}>Finish</button>}
         </div>
         
         {exerciseCards.length > 0 && 

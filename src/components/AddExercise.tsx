@@ -2,27 +2,31 @@ import { NavLink } from "react-router-dom"
 import {useState} from 'react'
 import exercises from '../exercises.json'
 import { useWorkoutStore } from "../store"
+import clsx from 'clsx';
 
 export default function AddExercise(){
 
-    const [showAddExrBtn, setShowAddExrBtn] = useState<boolean>(false)
-    const [chosenExercise, setChosenExercise] = useState<string>("")
+    const [chosenExercises, setChosenExercises] = useState<string[]>([])
+    const addNewExercises = useWorkoutStore((state) => state.addNewExercises)
 
-    const addNewExercise = useWorkoutStore((state) => state.addNewExercise)
-    
     function handleExerciseChoice(exerciseName: string){
-        setShowAddExrBtn(prev => !prev)
-        setChosenExercise(exerciseName)
+        setChosenExercises((prev) => 
+            prev.includes(exerciseName) 
+                ? prev.filter(e => e !== exerciseName)
+                : [...prev, exerciseName]
+        )
     }
 
     function saveChosenExercises(){
-        addNewExercise(chosenExercise)
+        addNewExercises(chosenExercises)
     }
 
     const exercisesList = exercises.map(exercise => {
-        return <div key={exercise.exerciseName} className="exercise" onClick={() => handleExerciseChoice(exercise.exerciseName)}>
-            {exercise.exerciseName}
-            <span>{exercise.muscleGroup}</span>
+        return <div key={exercise.exerciseName} className="exercise">
+            <div className={clsx("exerciseInfo", { selected: chosenExercises.includes(exercise.exerciseName) })} onClick={() => handleExerciseChoice(exercise.exerciseName)}>
+                {exercise.exerciseName}
+                <span>{exercise.muscleGroup}</span>
+            </div>
         </div>
     })
     return(
@@ -31,7 +35,7 @@ export default function AddExercise(){
             <h1>All Exercises</h1>
             {exercisesList}
            
-            {showAddExrBtn && <NavLink to="/workouts/new" className="add-exercise-btn" onClick={saveChosenExercises}>Add Exercise</NavLink>} 
+            {chosenExercises.length > 0 && <NavLink to="/workouts/new" className="add-exercise-btn" onClick={saveChosenExercises}>{chosenExercises.length === 1 ? "Add 1 exercise" : `Add ${chosenExercises.length} exercises`}</NavLink>}
         </>
         
     )

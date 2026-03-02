@@ -87,15 +87,27 @@ main {
 }
 
 .exercise {
+  padding: 6px 12px;
+  cursor: pointer;
+  border-top: 1px solid #aaa;
+}
+
+.exercise:hover {
+  opacity: 0.5;
+}
+
+.exerciseInfo {
   display: flex;
   flex-direction: column;
-  border-top: 1px solid #aaa;
-  padding: 6px 12px;
   .exercise-muscle {
     color: #837f7f;
   }
 }
-
+.exerciseInfo.selected {
+  margin-left: 5px;
+  padding-left: 6px;
+  border-left: 5px solid rgb(104, 162, 254);
+}
 .add-exercise-btn {
   display: flex;
   gap: 5px;

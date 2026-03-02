@@ -13,21 +13,25 @@ export type Exercise = {
 
 type WorkoutStore = {
     exercises: Exercise[],
-    addNewExercise: (exerciseName: string) => void
+    addNewExercises: (newExercisesNames: string[]) => void
     addNewSet: (exerciseId: string) => void
     updateSet: (exerciseId: string, setIdx: number, fieldName: string, value: string) => void
     clearWorkout: () => void
 }
 
 type DateStore = {
+    centerDate: string,
     selectedDate: string,
+    setCenterDate: (date: string) => void,
     setSelectedDate: (date: string) => void,
     goPrevDay: () => void,
     goNextDay: () => void,
 }
 
 export const useDateStore = create<DateStore>((set) => ({
+    centerDate:  dayjs().format('YYYY-MM-DD'),
     selectedDate:  dayjs().format('YYYY-MM-DD'),
+    setCenterDate: (date) => set({centerDate: date}),
     setSelectedDate: (date) => set({selectedDate: date}),
     goPrevDay: () => 
         set(state => ({
@@ -45,9 +49,13 @@ export const useDateStore = create<DateStore>((set) => ({
 
 export const useWorkoutStore = create<WorkoutStore>((set) => ({
     exercises: [],
-    addNewExercise: (newExerciseName) => 
+    addNewExercises: (newExercisesNames) => 
         set(state => ({
-            exercises: [...state.exercises, {exerciseId: crypto.randomUUID(), exerciseName: newExerciseName, sets: []}]
+            exercises: [...state.exercises, 
+                ...newExercisesNames.map(newName => (
+                    {exerciseId: crypto.randomUUID(), exerciseName: newName, sets: []}
+                ))
+            ]
         })),
     addNewSet: (exerciseId) => 
         set(state => ({
