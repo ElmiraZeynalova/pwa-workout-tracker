@@ -18,8 +18,10 @@ export default function LogWorkout(){
         navigate("/")
     }
 
+    //Make modal window for confirming "Go Home" action
     return(
     <>
+   
         <div className="navigation-bar">
             <NavLink to="/">Go Home</NavLink>
             {exerciseCards.length > 0 && <button onClick={handleFinish}>Finish</button>}
