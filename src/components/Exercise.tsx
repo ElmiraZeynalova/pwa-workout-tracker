@@ -12,7 +12,7 @@ export default function Exercise({exerciseId}:{exerciseId: string}){
     }
   
     const setForms = exerciseSets?.map((set, idx) => {
-        return <SetForm key={idx} reps={set.reps || ""} weight={set.weight || ""} updateReps={(v) => updateSet(exerciseId, idx, "reps", v)} updateWeight={(v) => updateSet(exerciseId, idx, "weight", v)}/>
+        return <SetForm key={idx} reps={set.reps} weight={set.weight} updateReps={(v) => updateSet(exerciseId, idx, "reps", v)} updateWeight={(v) => updateSet(exerciseId, idx, "weight", v)}/>
     })
 
     return(

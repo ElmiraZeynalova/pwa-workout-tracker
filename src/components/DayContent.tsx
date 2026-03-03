@@ -28,10 +28,9 @@ export default function DayContent({date}: {date: string}){
     ))
     return(
        <div className="day-content">
-        {loading && <span className="loader"></span>}
-        {workout === null && 
+        {!loading && workout === null && 
             <div className="no-workout-day">
-                <h1>Workout Log Is Empty</h1>
+                <p>Workout Log Is Empty</p>
                 <NavLink to="/workouts/new" className="start-workout-btn">
                     <svg className="plus-icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="21" height="21" viewBox="0 0 24 24">
                         <path fillRule="evenodd" d="M 11 2 L 11 11 L 2 11 L 2 13 L 11 13 L 11 22 L 13 22 L 13 13 L 22 13 L 22 11 L 13 11 L 13 2 Z"></path>
@@ -40,7 +39,7 @@ export default function DayContent({date}: {date: string}){
                 </NavLink>
             </div>
         }
-        {workout && <div className="workout-day">{loggedExercises}</div>}
+        {!loading && workout && <div className="workout-day">{loggedExercises}</div>}
     </div>
         
     )

@@ -23,20 +23,20 @@ export default function AddExercise(){
 
     const exercisesList = exercises.map(exercise => {
         return <div key={exercise.exerciseName} className="exercise">
-            <div className={clsx("exerciseInfo", { selected: chosenExercises.includes(exercise.exerciseName) })} onClick={() => handleExerciseChoice(exercise.exerciseName)}>
-                {exercise.exerciseName}
-                <span>{exercise.muscleGroup}</span>
-            </div>
-        </div>
-    })
+                    <div className={clsx("exerciseInfo", { selected: chosenExercises.includes(exercise.exerciseName) })} onClick={() => handleExerciseChoice(exercise.exerciseName)}>
+                        {exercise.exerciseName}
+                        <span className="muscle-group">{exercise.muscleGroup}</span>
+                    </div>
+                 </div>
+    })      
     return(
-        <>
-            <NavLink to="/workouts/new">Cancel</NavLink>
+        <div className="all-exercises-layout">
+            <NavLink className="cancel-btn" to="/workouts/new">Cancel</NavLink>
             <h1>All Exercises</h1>
             {exercisesList}
            
             {chosenExercises.length > 0 && <NavLink to="/workouts/new" className="add-exercise-btn" onClick={saveChosenExercises}>{chosenExercises.length === 1 ? "Add 1 exercise" : `Add ${chosenExercises.length} exercises`}</NavLink>}
-        </>
+        </div>
         
     )
 }

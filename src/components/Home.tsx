@@ -6,7 +6,7 @@ import CarouselContent from './CarouselContent'
 export default function Home(){
 
     return(
-        <div className="layout">
+        <div className="home-page-layout">
             <Header/>
             <main>
                 <DateBar />

@@ -1,20 +1,19 @@
 type Props = {
-    reps: string
-    weight: string
-    updateReps: (reps: string) => void
-    updateWeight: (weight: string) => void
+    reps: number | null
+    weight?: number | null
+    updateReps: (reps: number) => void
+    updateWeight: (weight: number) => void
 }
 export default function SetForm({reps, weight, updateReps, updateWeight}: Props){
-
 
     return(
         <form className="set-form">
             <label>Reps:
-                <input type="text" value={reps} onChange={(e) => updateReps(e.target.value)}/>
+                <input placeholder="0" value={reps || ''} type="number"  onChange={(e) => updateReps(Number(e.target.value))}/>
             </label>
             
             <label>Weight:
-                <input type="text" value={weight} onChange={(e) => updateWeight(e.target.value)}/>
+                <input placeholder="0" value={weight || ''} type="number"  onChange={(e) => updateWeight(Number(e.target.value))}/>
             </label>
         </form>        
 
