@@ -23,7 +23,7 @@ export default function DayContent({date}: {date: string}){
         loadWorkout()
     }, [date])
 
-    const loggedExercises = workout?.exercises.map(exercise => (
+    const loggedExercises = workout?.exercises?.map(exercise => (
         <LoggedExercise key={exercise.exerciseId} exercise={exercise}/>
     ))
     return(

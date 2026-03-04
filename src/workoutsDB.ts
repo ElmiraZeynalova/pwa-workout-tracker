@@ -29,7 +29,16 @@ export async function saveWorkout(date: string, exercises: Exercise[]){
     return new Promise<void>((resolve, reject) => {
         const transaction = db.transaction(STORE_NAME, "readwrite")
         const store = transaction.objectStore(STORE_NAME)
-        store.put({date, exercises})
+        
+        const request = store.get(date)
+        request.onsuccess = () => {
+            const data = request.result
+            const toSave = data 
+                ? { date, exercises: [...data.exercises, ...exercises] }
+                : { date, exercises }
+            store.put(toSave)
+        }
+        
 
         transaction.oncomplete = () => resolve()
         transaction.onerror = () => reject(transaction.error)

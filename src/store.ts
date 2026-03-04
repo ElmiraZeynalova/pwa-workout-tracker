@@ -15,7 +15,9 @@ export type Exercise = {
 type WorkoutStore = {
     exercises: Exercise[],
     addNewExercises: (newExercisesNames: string[]) => void
+    deleteExercise: (exerciseId: string) => void
     addNewSet: (exerciseId: string) => void
+    deleteSet: (exerciseId: string, setIdx: number) => void
     updateSet: (exerciseId: string, setIdx: number, fieldName: string, value: number) => void
     clearWorkout: () => void
 }
@@ -58,6 +60,10 @@ export const useWorkoutStore = create<WorkoutStore>((set) => ({
                 ))
             ]
         })),
+    deleteExercise: (exerciseId) =>
+        set(state => ({
+            exercises: state.exercises.filter(e => e.exerciseId !== exerciseId)
+        })),
     addNewSet: (exerciseId) => 
         set(state => ({
             exercises: state.exercises.map(e => 
@@ -66,6 +72,16 @@ export const useWorkoutStore = create<WorkoutStore>((set) => ({
                     : e
             )
         })),
+
+    deleteSet: (exerciseId, setIdx) => 
+        set(state => ({
+            exercises: state.exercises.map(e => 
+                e.exerciseId === exerciseId 
+                    ? {...e, sets: e.sets.splice(setIdx, 1)}
+                    : e
+            )
+        })),
+
     updateSet: (exerciseId, setIdx, fieldName, value) => 
         set(state => ({
             exercises: state.exercises.map(e => 
