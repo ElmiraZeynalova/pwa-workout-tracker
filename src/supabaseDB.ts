@@ -47,7 +47,7 @@ export async function syncToServer(date: string){
 }
 
 export async function syncPendingWorkouts(){
-    const workouts = await getAllStoreData("workouts")
+    const workouts = await getAllStoreData("pending_sync_to_server")
     for(const workout of workouts){
         try{
             await syncToServer(workout.date)
