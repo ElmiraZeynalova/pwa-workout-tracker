@@ -1,4 +1,4 @@
-import type {Exercise} from '../store'
+import type {Exercise} from '../store/workout-store'
 
 export default function LoggedExercise({exercise}: {exercise: Exercise}){
     const sets = exercise.sets.map((set, id) => (

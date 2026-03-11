@@ -1,5 +1,5 @@
 import SetForm from "./SetForm"
-import { useWorkoutStore } from "../store"
+import { useWorkoutStore } from "../store/workout-store"
 
 export default function Exercise({exerciseId}:{exerciseId: string}){
     const exercise = useWorkoutStore((state) => state.exercises.find(e => e.exerciseId === exerciseId))

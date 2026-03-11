@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom"
 import {useState} from 'react'
 import exercises from '../exercises.json'
-import { useWorkoutStore } from "../store"
+import { useWorkoutStore } from "../store/workout-store"
 import clsx from 'clsx';
 
 export default function AddExercise(){

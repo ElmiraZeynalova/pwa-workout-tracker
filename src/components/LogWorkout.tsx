@@ -1,7 +1,9 @@
 import { NavLink, useNavigate } from "react-router-dom"
 import {useState} from 'react'
-import { useWorkoutStore, useDateStore } from "../store"
-import { saveWorkout } from "../workoutsDB"
+import { useWorkoutStore} from "../store/workout-store"
+import { useDateStore } from "../store/date-store"
+import { saveWorkout, deleteWorkoutByDate } from "../indexedDB"
+import { syncToServer } from "../supabaseDB"
 import Exercise from "./Exercise"
 import clsx from 'clsx'
 
@@ -30,9 +32,18 @@ export default function LogWorkout(){
                 }))
                 .filter(e => e.sets.length > 0)
 
-            await saveWorkout(currentWorkoutDate, cleanedExercises)
+            await saveWorkout("workouts", currentWorkoutDate, cleanedExercises)
+            await saveWorkout("pending_sync_to_server", currentWorkoutDate, cleanedExercises)
             clearWorkoutStore()
             navigate("/") 
+
+            try {
+                await syncToServer(currentWorkoutDate)
+                await deleteWorkoutByDate("pending_sync_to_server", currentWorkoutDate)
+            } catch (err) {
+                
+            }
+     
         }else{
             setShowFinishModal(true)
         }
@@ -100,37 +111,5 @@ export default function LogWorkout(){
 
 
 
-// type ExerciseSet = {
-//     reps: number,
-//     weight?: number
-// }
 
-// type Exercise = {
-//     id: string,
-//     exerciseName: string,
-//     sets: ExerciseSet[]
-// }
 
-// type Workout = {
-//     id: string,
-//     date: string,
-//     exercises: Exercise[]
-// }
-
-// const workouts: Workout[] = [
-//     {
-//         id: crypto.randomUUID(),
-//         date: "2025-12-20",
-//         exercises: [
-//             {
-//                 id: crypto.randomUUID(),
-//                 exerciseName: "Bicep curls",
-//                 sets: [
-//                     {reps: 12, weight: 25},
-//                     {reps: 11, weight: 25},
-//                     {reps: 10, weight: 25}
-//                 ]
-//             },
-//         ]
-//     }
-// ]

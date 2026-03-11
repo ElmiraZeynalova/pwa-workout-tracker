@@ -2,7 +2,7 @@ import DayContent from './DayContent'
 import dayjs from 'dayjs'
 import type { Dayjs } from 'dayjs'
 import { useMemo, useRef, useEffect} from 'react'
-import {useDateStore} from "../store"
+import {useDateStore} from "../store/date-store"
 import { Swiper, SwiperSlide } from 'swiper/react';
 import type { Swiper as SwiperType } from 'swiper'
 import 'swiper/css'
