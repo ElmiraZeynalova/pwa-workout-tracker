@@ -14,24 +14,14 @@ function App() {
   const userId = useUserStore((state) => state.userId)
 
 useEffect(() => {
-
     const { data: authListener } = supabase.auth.onAuthStateChange((_, session) => {
         if (session) {
             setUserId(session.user.id)
         }
     })
 
-    let syncing = false
-
     const handler = async () => {
-        if (syncing) return
-        syncing = true
-
-        try {
-            await syncPendingWorkouts()
-        } finally {
-            syncing = false
-        }
+      await syncPendingWorkouts()
     }
 
     window.addEventListener("online", handler)

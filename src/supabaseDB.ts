@@ -8,7 +8,6 @@ export const supabase = createClient(
 )
 
 export async function signInUser(email: string){
-    console.log(email)
     await supabase.auth.signInWithOtp({ email: email })
 }
 
@@ -18,23 +17,23 @@ export async function syncToServer(date: string){
     const exercises = exercisesData!.exercises
     const workoutId = crypto.randomUUID()
 
-    await supabase
+    const { error: workoutError } = await supabase
         .from('workouts')
         .insert([
             { id: workoutId, user_id: userId, date: date }
         ])
-        .select()
+    if(workoutError) return { error: workoutError }
 
-    await supabase
+    const {error: exerciseError} = await supabase
         .from('exercises')
         .insert(
             exercises.map(e => (
                 { id: e.exerciseId, name: e.exerciseName, workout_id: workoutId }
             ))
         )
-        .select()
+    if(exerciseError) return { error: exerciseError }
 
-    await supabase
+    const {error: setError} = await supabase
         .from('sets')
         .insert(
             exercises.flatMap(e => (
@@ -43,7 +42,8 @@ export async function syncToServer(date: string){
                 ))
             ))
         )
-        .select()
+    if(setError) return { error: setError }
+    return { error: null }
 }
 
 export async function syncPendingWorkouts(){

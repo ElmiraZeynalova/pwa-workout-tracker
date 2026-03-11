@@ -37,11 +37,11 @@ export default function LogWorkout(){
             clearWorkoutStore()
             navigate("/") 
 
-            try {
-                await syncToServer(currentWorkoutDate)
+            const { error } = await syncToServer(currentWorkoutDate)
+            if(error) {
+                console.warn("Sync failed", error)
+            } else {
                 await deleteWorkoutByDate("pending_sync_to_server", currentWorkoutDate)
-            } catch (err) {
-                
             }
      
         }else{
