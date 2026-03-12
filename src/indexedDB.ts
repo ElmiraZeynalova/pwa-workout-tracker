@@ -53,6 +53,25 @@ export async function saveWorkout(storeName: string, date: string, exercises: Ex
     })
 }
 
+export async function overWrightWorkoutFromServer(storeName: string, date: string, exercises: Exercise[]){
+    const db = await openDB()
+
+    return new Promise<void>((resolve, reject) => {
+        const transaction = db.transaction(storeName, "readwrite")
+        const store = transaction.objectStore(storeName)
+        
+        const request = store.get(date)
+        request.onsuccess = () => {
+            const data ={ date, exercises }
+            store.put(data)
+        }
+        request.onerror = () => reject(request.error)
+
+        transaction.oncomplete = () => resolve()
+        transaction.onerror = () => reject(transaction.error)  
+    })
+}
+
 export async function getWorkoutByDate(date: string): Promise<Workout | undefined>{
     const storeName = "workouts"
     const db = await openDB()

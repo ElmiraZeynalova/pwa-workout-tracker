@@ -23,7 +23,10 @@ export default function LogWorkout(){
     const notValid = currentWorkoutExercises.every(e => e.sets.every(s => s.reps === null))
     const isValid = currentWorkoutExercises.some(e => e.sets.some(s => s.reps !== null && s.reps > 0))
 
-
+// CHECK FOR VALID EMAIL FORM
+// DESIGN SIGN IN PAGE
+// MAKE SUPABASE -> IDB "WORKOUTS" SYNC
+// DESIGN STATUS BAR
     async function handleFinish(){
         if(exerciseCards.length > 0 && isValid){
             const cleanedExercises = currentWorkoutExercises
