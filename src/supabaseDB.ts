@@ -97,10 +97,12 @@ export async function syncIdbWithServer(userId: string){
         .from('workouts')
         .select("*")
         .eq('user_id', userId)
-    if(!workouts){
+    
+    if(workouts && workouts.length === 0){
         await clearStoreMemory("workouts")
         return
     }
+    if(!workouts) return
     for(const workout of workouts){
         const { data: exercises} = await supabase
             .from('exercises')
