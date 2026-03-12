@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
-import { getWorkoutByDate, getAllStoreData, deleteWorkoutByDate, overWrightWorkoutFromServer } from "./indexedDB"
+import { getWorkoutByDate, getAllStoreData, deleteWorkoutByDate, overWrightWorkoutFromServer, clearStoreMemory } from "./indexedDB"
 import { useUserStore } from "./store/user-store"
 
 export const supabase = createClient(
@@ -97,7 +97,10 @@ export async function syncIdbWithServer(userId: string){
         .from('workouts')
         .select("*")
         .eq('user_id', userId)
-    if(!workouts) return 
+    if(!workouts){
+        await clearStoreMemory("workouts")
+        return
+    }
     for(const workout of workouts){
         const { data: exercises} = await supabase
             .from('exercises')

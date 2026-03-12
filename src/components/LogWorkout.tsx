@@ -25,7 +25,7 @@ export default function LogWorkout(){
 
 // CHECK FOR VALID EMAIL FORM
 // DESIGN SIGN IN PAGE
-// MAKE SUPABASE -> IDB "WORKOUTS" SYNC
+// scroll when lots of exercises added is absent both on phone and laptop
 // DESIGN STATUS BAR
     async function handleFinish(){
         if(exerciseCards.length > 0 && isValid){
