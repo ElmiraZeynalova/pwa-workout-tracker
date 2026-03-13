@@ -13,7 +13,7 @@ function App() {
   const setUserId = useUserStore((state) => state.setUserId)
   const userId = useUserStore((state) => state.userId)
 
-  const [reRenderAfterSync, setReRenderAfterSync] = useState(0)
+  const [, forceRender] = useState(0)
 
 useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange((_, session) => {
@@ -28,7 +28,7 @@ useEffect(() => {
         if (!session) return
         console.log("Syncing from server...")
         await syncIDBWithServer(session.user.id)
-        setReRenderAfterSync(prev => prev + 1)
+        forceRender(prev => prev + 1)
         console.log("Synced")
       }
       catch (err) {
@@ -47,7 +47,7 @@ useEffect(() => {
       console.log("Synced pending")
       console.log("Syncing from server...")
       await syncIDBWithServer(session.user.id)
-      setReRenderAfterSync(prev => prev + 1)
+      forceRender(prev => prev + 1)
       console.log("Synced")
     }
 
