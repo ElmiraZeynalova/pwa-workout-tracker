@@ -3,14 +3,14 @@ import {getWorkoutByDate} from "../indexedDB"
 import {useEffect, useState} from "react"
 import type {Exercise} from '../store/workout-store'
 import LoggedExercise from './LoggedExercise'
-
+import {useForceRerenderStore} from "../store/force-rerender-store"
 type Workout = {
     date: string,
     exercises: Exercise[]
 }
 
 export default function DayContent({date}: {date: string}){
-
+    const rerender = useForceRerenderStore(state => state.forceRerender)
     const [workout, setWorkout] = useState<Workout | null>(null)
     const [loading, setLoading] = useState(true)
 
@@ -21,7 +21,7 @@ export default function DayContent({date}: {date: string}){
             setLoading(false)
         }
         loadWorkout()
-    }, [date])
+    }, [date, rerender])
 
     const loggedExercises = workout?.exercises?.map(exercise => (
         <LoggedExercise key={exercise.exerciseId} exercise={exercise}/>

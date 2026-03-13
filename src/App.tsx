@@ -1,19 +1,18 @@
-import { useEffect, useState } from 'react'
+import { useEffect} from 'react'
 import { createBrowserRouter, RouterProvider} from 'react-router-dom'
 import Home from './components/Home'
 import Calendar from './components/Calendar'
 import SignIn from './components/SignIn'
 import LogWorkout from './components/LogWorkout'
 import AddExercise from './components/AddExercise'
-
+import {useForceRerenderStore} from "./store/force-rerender-store"
 import { supabase, syncPendingWorkouts, syncIDBWithServer} from './supabaseDB'
 import {useUserStore} from './store/user-store'
 
 function App() {
   const setUserId = useUserStore((state) => state.setUserId)
   const userId = useUserStore((state) => state.userId)
-
-  const [, forceRender] = useState(0)
+  const forceRerender = useForceRerenderStore(state => state.setForceRerender)
 
 useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange((_, session) => {
@@ -28,7 +27,7 @@ useEffect(() => {
         if (!session) return
         console.log("Syncing from server...")
         await syncIDBWithServer(session.user.id)
-        forceRender(prev => prev + 1)
+        forceRerender()
         console.log("Synced")
       }
       catch (err) {
@@ -47,7 +46,7 @@ useEffect(() => {
       console.log("Synced pending")
       console.log("Syncing from server...")
       await syncIDBWithServer(session.user.id)
-      forceRender(prev => prev + 1)
+      forceRerender()
       console.log("Synced")
     }
 
