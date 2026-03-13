@@ -6,7 +6,7 @@ import SignIn from './components/SignIn'
 import LogWorkout from './components/LogWorkout'
 import AddExercise from './components/AddExercise'
 
-import { supabase, syncPendingWorkouts, syncIdbWithServer} from './supabaseDB'
+import { supabase, syncPendingWorkouts, syncIDBWithServer} from './supabaseDB'
 import {useUserStore} from './store/user-store'
 
 function App() {
@@ -21,10 +21,16 @@ useEffect(() => {
     })
 
     const init = async() => {
-      const { data: { session } } = await supabase.auth.getSession()
-      if(!session) return
-      console.log("Syncing from server...")
-      await syncIdbWithServer(session.user.id)
+      try {
+        const { data: { session } } = await supabase.auth.getSession()
+        if (!session) return
+        console.log("Syncing from server...")
+        await syncIDBWithServer(session.user.id)
+        console.log("Synced")
+      }
+      catch (err) {
+        console.error("Error syncing from server:", err)
+      }
     }
 
     init()
@@ -35,14 +41,16 @@ useEffect(() => {
 
       console.log("Syncing pending workouts...")
       await syncPendingWorkouts()
+      console.log("Synced pending")
       console.log("Syncing from server...")
-      await syncIdbWithServer(session.user.id)
+      await syncIDBWithServer(session.user.id)
+      console.log("Synced")
     }
 
     window.addEventListener("online", handler)
 
     return () => {
-        authListener.subscription.unsubscribe()
+        authListener?.subscription.unsubscribe()
         window.removeEventListener("online", handler)
     }
 

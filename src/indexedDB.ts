@@ -39,7 +39,13 @@ export async function saveWorkout(storeName: string, date: string, exercises: Ex
         request.onsuccess = () => {
             const data = request.result
             const toSave = data 
-                ? { date, exercises: [...data.exercises, ...exercises] }
+                ? { 
+                    date, 
+                    exercises: [
+                        ...data.exercises.filter((e: Exercise) => !exercises.some(ne => ne.exerciseId === e.exerciseId)), 
+                        ...exercises
+                    ] 
+                }
                 : { date, exercises }
             const putRequest = store.put(toSave)
             putRequest.onerror = () => reject(putRequest.error)
@@ -53,22 +59,21 @@ export async function saveWorkout(storeName: string, date: string, exercises: Ex
     })
 }
 
-export async function overWrightWorkoutFromServer(storeName: string, date: string, exercises: Exercise[]){
+export async function syncWorkoutWithServer(storeName: string, date: string, exercises: Exercise[]){
     const db = await openDB()
 
     return new Promise<void>((resolve, reject) => {
         const transaction = db.transaction(storeName, "readwrite")
         const store = transaction.objectStore(storeName)
-        
-        const request = store.get(date)
-        request.onsuccess = () => {
-            const data ={ date, exercises }
-            store.put(data)
-        }
-        request.onerror = () => reject(request.error)
 
-        transaction.oncomplete = () => resolve()
-        transaction.onerror = () => reject(transaction.error)  
+        const toSave = { date, exercises }
+        const putRequest = store.put(toSave)
+
+        putRequest.onsuccess = () => resolve()
+        putRequest.onerror = () => reject(putRequest.error)
+    
+        transaction.onerror = () => reject(transaction.error)
+ 
     })
 }
 

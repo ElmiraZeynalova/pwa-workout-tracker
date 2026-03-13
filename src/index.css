@@ -82,7 +82,19 @@ main {
 
 .log-workout-layout {
   padding: 10px;
-  min-height: 100dvh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+.all-exercise-cards {
+  flex: 1;
+
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.exercise-card {
+  border: 1px solid black;
+  padding: 0px 10px;
 }
 
 .log-workout-layout.modal-window-mode::before {
@@ -195,7 +207,6 @@ main {
 }
 
 .all-exercises-layout {
-  overflow-y: auto;
   padding: 10px;
   .cancel-btn {
     text-decoration: none;
@@ -261,16 +272,6 @@ main {
 }
 .add-exercise-btn:active {
   opacity: 0.5;
-}
-.all-exercise-cards {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 10px;
-}
-.exercise-card {
-  border: 1px solid black;
-  padding: 0px 10px;
 }
 
 .add-set-btn {

@@ -36,15 +36,18 @@ export default function LogWorkout(){
                 .filter(e => e.sets.length > 0)
 
             await saveWorkout("workouts", currentWorkoutDate, cleanedExercises)
+            console.log("Saved to IDB")
             await saveWorkout("pending_sync_to_server", currentWorkoutDate, cleanedExercises)
             clearWorkoutStore()
             navigate("/") 
 
             const { error } = await syncToServer(currentWorkoutDate)
+            console.log("Synced with server")
             if(error) {
                 console.warn("Sync failed", error)
             } else {
                 await deleteWorkoutByDate("pending_sync_to_server", currentWorkoutDate)
+                console.log("Deleted from pending")
             }
      
         }else{
@@ -85,22 +88,23 @@ export default function LogWorkout(){
             </div>
         }
 
-        {exerciseCards.length > 0 && 
-            <div className="all-exercise-cards">{exerciseCards}</div>
-        }
-        {exerciseCards.length === 0 && 
-            <>
-                <h2>Get started</h2>
-                <p>Add an exercise to start your workout</p>
-            </>
-        }        
-        <NavLink to="/workouts/new/exercises" className="add-exercise-btn">
-            <svg className="plus-icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="18" height="18" viewBox="0 0 24 24">
-                <path fillRule="evenodd" d="M 11 2 L 11 11 L 2 11 L 2 13 L 11 13 L 11 22 L 13 22 L 13 13 L 22 13 L 22 11 L 13 11 L 13 2 Z"></path>
-            </svg>
-            Add Exercise
-        </NavLink>
+            <div className="all-exercise-cards">
+                {exerciseCards.length > 0 && exerciseCards }
 
+                {exerciseCards.length === 0 && 
+                    <>
+                        <h2>Get started</h2>
+                        <p>Add an exercise to start your workout</p>
+                    </>
+                }    
+                <NavLink to="/workouts/new/exercises" className="add-exercise-btn">
+                    <svg className="plus-icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="18" height="18" viewBox="0 0 24 24">
+                        <path fillRule="evenodd" d="M 11 2 L 11 11 L 2 11 L 2 13 L 11 13 L 11 22 L 13 22 L 13 13 L 22 13 L 22 11 L 13 11 L 13 2 Z"></path>
+                    </svg>
+                     Add Exercise
+                </NavLink>
+            </div>
+        
     </div>
         
     )
