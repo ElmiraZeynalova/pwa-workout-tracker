@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { createBrowserRouter, RouterProvider} from 'react-router-dom'
 import Home from './components/Home'
 import Calendar from './components/Calendar'
@@ -13,6 +13,8 @@ function App() {
   const setUserId = useUserStore((state) => state.setUserId)
   const userId = useUserStore((state) => state.userId)
 
+  const [reRenderAfterSync, setReRenderAfterSync] = useState(0)
+
 useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange((_, session) => {
         if (session) {
@@ -20,12 +22,13 @@ useEffect(() => {
         }
     })
 
-    const init = async() => {
+    const syncFromServer = async() => {
       try {
         const { data: { session } } = await supabase.auth.getSession()
         if (!session) return
         console.log("Syncing from server...")
         await syncIDBWithServer(session.user.id)
+        setReRenderAfterSync(prev => prev + 1)
         console.log("Synced")
       }
       catch (err) {
@@ -33,7 +36,7 @@ useEffect(() => {
       }
     }
 
-    init()
+    syncFromServer()
 
     const handler = async () => {
       const { data: { session } } = await supabase.auth.getSession()
@@ -44,6 +47,7 @@ useEffect(() => {
       console.log("Synced pending")
       console.log("Syncing from server...")
       await syncIDBWithServer(session.user.id)
+      setReRenderAfterSync(prev => prev + 1)
       console.log("Synced")
     }
 
