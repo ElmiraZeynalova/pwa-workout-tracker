@@ -23,25 +23,15 @@ body {
 header {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   padding: 0px 15px;
 
-  background: rgb(104, 162, 254);
-  h1 {
-    font-weight: 600;
+  background: white;
+  p {
+    font-weight: 400;
     font-size: 16px;
-    flex-grow: 1;
   }
-  .header-btns {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    .plus-icon.calendar-icon {
-      width: 22px;
-      height: 22px;
-    }
-  }
-  .header-btns:active {
+  .header-btn:active {
     opacity: 0.5;
   }
 }
@@ -54,29 +44,17 @@ main {
   min-height: 0;
 }
 
-.date-bar {
-  font-size: 13px;
-  font-weight: 600;
-  padding: 4px 10px 0px 10px;
-  background: rgb(5, 5, 5);
-  color: white;
+.day {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  border-bottom: 3px solid rgb(45, 124, 251);
-  p {
-    margin: 0;
+  .dayOfWeek {
   }
-  .nav-arrow {
-    background: none;
-    border: none;
+  .number {
     cursor: pointer;
-    margin: 0;
-    padding: 0;
-    svg {
-      width: 28px;
-      height: 28px;
-    }
+  }
+  .numer:active {
+    opacity: 0.5;
   }
 }
 

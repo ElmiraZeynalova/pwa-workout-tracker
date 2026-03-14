@@ -1,30 +1,92 @@
-import {useDateStore} from "../store/date-store"
-import dayjs from 'dayjs'
+import { useDateStore } from "../store/date-store"
+import dayjs from "dayjs"
+import isoWeek from "dayjs/plugin/isoWeek"
+import { Swiper, SwiperSlide } from "swiper/react"
+import type { Swiper as SwiperType } from "swiper"
+import "swiper/css"
+import { useState, useRef, useEffect, useMemo } from "react"
 
-function configureDate(date: string){
-    if(dayjs().format('YYYY-MM-DD') === date){
-        return "TODAY"
-    }else if(dayjs().add(1, 'day').format('YYYY-MM-DD') === date){
-        return "TOMORROW"
-    }else if(dayjs().subtract(1, 'day').format('YYYY-MM-DD') === date){
-        return "YESTERDAY"
-    }else{
-        return dayjs(date).format('dddd, MMMM D').toUpperCase()
+dayjs.extend(isoWeek)
+
+function generateWeeks(centerWeek: dayjs.Dayjs) {
+  return [
+    centerWeek.subtract(1, "week"),
+    centerWeek,
+    centerWeek.add(1, "week"),
+  ]
+}
+
+export default function DateBar() {
+  const selectedDate = useDateStore((state) => state.selectedDate)
+  const setSelectedDate = useDateStore((state) => state.setSelectedDate)
+
+  const [centerWeek, setCenterWeek] = useState(
+    () => dayjs(selectedDate).startOf("isoWeek")
+  )
+  const swiperRef = useRef<SwiperType | null>(null)
+
+  const weeks = useMemo(() => generateWeeks(centerWeek), [centerWeek])
+
+  useEffect(() => {
+    if (!swiperRef.current) return
+
+    const weekStart = dayjs(selectedDate).startOf("isoWeek")
+    const index = weeks.findIndex((w) => w.isSame(weekStart, "day"))
+
+    if (index === -1) {
+      setCenterWeek(weekStart)
+      return
     }
+
+    if (swiperRef.current.activeIndex !== index) {
+      swiperRef.current.slideTo(index)
+    }
+  }, [selectedDate, weeks])
+
+  function generateWeek(date: dayjs.Dayjs) {
+    return Array.from({ length: 7 }, (_, i) => date.startOf("isoWeek").add(i, "day"))
+  }
+
+  function handleSlideChange(swiper: SwiperType) {
+    const index = swiper.activeIndex
+    const weekday = dayjs(selectedDate).isoWeekday() - 1
+
+    const newDate = weeks[index].add(weekday, "day")
+    setSelectedDate(newDate.format("YYYY-MM-DD"))
+
+    if (index === 0 || index === weeks.length - 1) {
+      setCenterWeek(weeks[index])
+    }
+  }
+
+  return (
+    <Swiper
+      key={centerWeek.format("YYYY-MM-DD")} 
+      initialSlide={1}
+      slidesPerView={1}
+      spaceBetween={50}
+      onSwiper={(swiper) => (swiperRef.current = swiper)}
+      onSlideChange={handleSlideChange}
+      style={{ display: "flex", width: "100%" }}
+    >
+      {weeks.map((date) => (
+        <SwiperSlide
+          key={date.format("YYYY-MM-DD")}
+          style={{ display: "flex", width: "100%", justifyContent: "space-around" }}
+        >
+          {generateWeek(date).map((day, idx) => (
+            <div key={idx} className="day">
+              <div className="dayOfWeek">{day.format("dd")[0]}</div>
+              <div
+                onClick={() => setSelectedDate(day.format("YYYY-MM-DD"))}
+                className="number"
+              >
+                {day.format("D")}
+              </div>
+            </div>
+          ))}
+        </SwiperSlide>
+      ))}
+    </Swiper>
+  )
 }
-
-export default function DateBar(){
-    const selectedDate = useDateStore((state) => state.selectedDate)
-    const goPrev= useDateStore((state) => state.goPrevDay)
-    const goNext= useDateStore((state) => state.goNextDay)
-    const date = configureDate(selectedDate)
-    return(
-        <div className="date-bar">
-            <button onClick={goPrev} className="nav-arrow"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" transform="matrix(-1, 0, 0, 1, 0, 0)"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M9.71069 18.2929C10.1012 18.6834 10.7344 18.6834 11.1249 18.2929L16.0123 13.4006C16.7927 12.6195 16.7924 11.3537 16.0117 10.5729L11.1213 5.68254C10.7308 5.29202 10.0976 5.29202 9.70708 5.68254C9.31655 6.07307 9.31655 6.70623 9.70708 7.09676L13.8927 11.2824C14.2833 11.6729 14.2833 12.3061 13.8927 12.6966L9.71069 16.8787C9.32016 17.2692 9.32016 17.9023 9.71069 18.2929Z" fill="#ffffff"></path> </g></svg></button>
-            <p>{date}</p>
-           <button onClick={goNext} className="nav-arrow"> <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" ><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M9.71069 18.2929C10.1012 18.6834 10.7344 18.6834 11.1249 18.2929L16.0123 13.4006C16.7927 12.6195 16.7924 11.3537 16.0117 10.5729L11.1213 5.68254C10.7308 5.29202 10.0976 5.29202 9.70708 5.68254C9.31655 6.07307 9.31655 6.70623 9.70708 7.09676L13.8927 11.2824C14.2833 11.6729 14.2833 12.3061 13.8927 12.6966L9.71069 16.8787C9.32016 17.2692 9.32016 17.9023 9.71069 18.2929Z" fill="#ffffff"></path> </g></svg></button>
-        </div>
-    )
-}
-
-
