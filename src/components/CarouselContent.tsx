@@ -60,10 +60,10 @@ export default function CarouselContent(){
             slidesPerView={1}
             onSwiper={(swiper) => { swiperRef.current = swiper }}
             onSlideChange={handleSlideChange}
-            style={{ width: '100%', height: '100vh' }}
+            style={{ width: '100%', flex: 1, minHeight: 0 }}
         >
         {dates.map((date) => (
-            <SwiperSlide key={date}>
+            <SwiperSlide key={date} style={{ overflowY: 'auto' }}>
                 <DayContent date={date} />
             </SwiperSlide>
         ))}

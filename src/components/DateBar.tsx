@@ -4,7 +4,7 @@ import isoWeek from "dayjs/plugin/isoWeek"
 import { Swiper, SwiperSlide } from "swiper/react"
 import type { Swiper as SwiperType } from "swiper"
 import "swiper/css"
-import { useState, useRef, useEffect, useMemo } from "react"
+import { useState, useRef, useEffect, useLayoutEffect, useMemo } from "react"
 
 dayjs.extend(isoWeek)
 
@@ -26,6 +26,17 @@ export default function DateBar() {
   const swiperRef = useRef<SwiperType | null>(null)
 
   const weeks = useMemo(() => generateWeeks(centerWeek), [centerWeek])
+
+    useLayoutEffect(() => {
+    const el = document.querySelector(`.swiper-slide-active [data-date="${selectedDate}"]`)
+    const parent = document.querySelector('.date-bar')
+    if (el && parent) {
+        const rect = el.getBoundingClientRect()
+        const parentRect = parent.getBoundingClientRect()
+        const x = rect.left - parentRect.left + rect.width / 2 - 20
+        document.documentElement.style.setProperty('--move-x', `${x}px`)
+    }
+    }, [selectedDate, centerWeek])
 
   useEffect(() => {
     if (!swiperRef.current) return
@@ -60,33 +71,42 @@ export default function DateBar() {
   }
 
   return (
-    <Swiper
-      key={centerWeek.format("YYYY-MM-DD")} 
-      initialSlide={1}
-      slidesPerView={1}
-      spaceBetween={50}
-      onSwiper={(swiper) => (swiperRef.current = swiper)}
-      onSlideChange={handleSlideChange}
-      style={{ display: "flex", width: "100%" }}
-    >
-      {weeks.map((date) => (
-        <SwiperSlide
-          key={date.format("YYYY-MM-DD")}
-          style={{ display: "flex", width: "100%", justifyContent: "space-around" }}
+    <div className="date-bar">
+        <div className="selector"></div>
+        <Swiper
+        key={centerWeek.format("YYYY-MM-DD")} 
+        initialSlide={1}
+        slidesPerView={1}
+        spaceBetween={30}
+        onSwiper={(swiper) => (swiperRef.current = swiper)}
+        onSlideChange={handleSlideChange}
+        style={{ display: "flex", width: "100%" }}
         >
-          {generateWeek(date).map((day, idx) => (
-            <div key={idx} className="day">
-              <div className="dayOfWeek">{day.format("dd")[0]}</div>
-              <div
-                onClick={() => setSelectedDate(day.format("YYYY-MM-DD"))}
-                className="number"
-              >
-                {day.format("D")}
-              </div>
-            </div>
-          ))}
-        </SwiperSlide>
-      ))}
-    </Swiper>
+        {weeks.map((date) => (
+            <SwiperSlide
+            key={date.format("YYYY-MM-DD")}
+            style={{ display: "flex", width: "100%", justifyContent: "space-evenly" }}
+            >
+            {generateWeek(date).map((day, idx) => (
+                <div key={idx} className="day">
+                <div className="dayOfWeek">{day.format("dd")[0]}</div>
+                <div
+                    data-date={day.format("YYYY-MM-DD")}
+                    onClick={(e) => {
+                        setSelectedDate(day.format("YYYY-MM-DD"))
+                        const rect = e.currentTarget.getBoundingClientRect()
+                        const x = rect.left + rect.width / 2 - 20
+                        document.documentElement.style.setProperty('--move-x', `${x}px`)
+                    }}
+                    className="number"
+                >
+                    {day.format("D")}
+                </div>
+                </div>
+            ))}
+            </SwiperSlide>
+        ))}
+        </Swiper>
+    </div>
   )
 }
