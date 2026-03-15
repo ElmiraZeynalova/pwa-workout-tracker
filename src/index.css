@@ -32,8 +32,8 @@ header {
 
   background: white;
   p {
-    font-weight: 400;
-    font-size: 18px;
+    font-weight: 500;
+    font-size: 16px;
   }
   .header-btn:active {
     opacity: 0.5;
