@@ -31,6 +31,12 @@ main {
   flex-direction: column;
   flex: 1 1 auto;
   min-height: 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.layout main::-webkit-scrollbar {
+  display: none;
 }
 
 .swiper {
@@ -134,7 +140,6 @@ header {
 }
 
 .exercise-card {
-  border: 1px solid black;
   padding: 0px 10px;
 }
 
@@ -217,12 +222,6 @@ header {
 
 .all-exercises-layout {
   padding: 10px;
-  .cancel-btn {
-    text-decoration: none;
-    color: rgb(38, 103, 209);
-    font-size: 16px;
-    font-weight: 500;
-  }
 }
 
 .exercise {
