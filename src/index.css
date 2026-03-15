@@ -1,8 +1,13 @@
 html,
 body {
-  height: 100%;
   margin: 0;
-  overflow: hidden;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE / Edge */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none; /* Chrome / Safari */
 }
 
 body {
@@ -10,8 +15,8 @@ body {
 }
 
 #root {
-  height: 100%;
-  overflow: hidden;
+  height: 100vh;
+  /* overflow: hidden; */
   display: flex;
   flex-direction: column;
 }
@@ -24,13 +29,15 @@ body {
 }
 
 header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgb(255, 255, 255);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0px 15px;
-  flex-shrink: 0;
 
-  background: white;
   p {
     font-weight: 500;
     font-size: 16px;
@@ -43,15 +50,15 @@ header {
 main {
   display: flex;
   flex-direction: column;
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
+  padding-bottom: 40px;
 }
 
 .date-bar {
-  position: relative;
-  margin-bottom: 15px;
+  position: sticky;
+  top: 53px;
+  background: rgb(255, 255, 255);
+  z-index: 9;
+  padding-bottom: 15px;
 }
 
 :root {
@@ -86,7 +93,7 @@ main {
   height: 44px;
   border-radius: 100%;
   background: rgba(187, 187, 192, 0.407);
-  top: 13px;
+  top: 12px;
   left: 0;
   transform: translateX(var(--move-x));
   transition: transform 0.4s ease;
@@ -323,7 +330,6 @@ main {
 
 .day-content {
   height: 100%;
-  /* overflow-y: auto; */
 }
 
 .no-workout-day {
@@ -331,18 +337,17 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: hidden;
+  gap: 20px;
 }
 
 .no-workout-day p {
-  margin: auto;
+  margin-top: 30px;
   font-size: 18px;
   font-weight: 500;
   color: #707070;
 }
 
 .start-workout-btn {
-  margin-bottom: 15dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -361,7 +366,6 @@ main {
   opacity: 0.5;
 }
 .workout-day {
-  overflow-y: auto;
   height: 100%;
   padding: 15px;
   display: flex;
@@ -382,7 +386,7 @@ main {
   table {
     margin: 6px;
     text-align: left;
-    width: 50%;
+    width: 70%;
     text-align: center;
     thead {
       font-size: 14px;
