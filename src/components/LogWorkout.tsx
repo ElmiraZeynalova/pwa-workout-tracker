@@ -97,7 +97,7 @@ export default function LogWorkout(){
                     <p>Log Workout</p>
                     <button className="header-btn" onClick={handleFinish}>Finish</button>
                 </header>
-                <main>
+                <main style={{overflowY: 'auto', height: 0}}>
                     <div className="all-exercise-log-cards">
                         {exerciseCards.length > 0 && exerciseCards }
 
