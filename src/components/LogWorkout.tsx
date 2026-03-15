@@ -25,7 +25,6 @@ export default function LogWorkout(){
 
 // CHECK FOR VALID EMAIL FORM
 // DESIGN SIGN IN PAGE
-// scroll when lots of exercises added is absent both on phone and laptop
 // DESIGN STATUS BAR
     async function handleFinish(){
         if(exerciseCards.length > 0 && isValid){

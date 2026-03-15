@@ -1,22 +1,34 @@
 import {NavLink} from 'react-router-dom'
-
+import {useDateStore} from "../store/date-store"
+import dayjs from 'dayjs'
 export default function Header(){
+    const selectedDate = useDateStore(state => state.selectedDate)
     return(
         <header>
-            <h1>Home</h1>
-            <div className="header-btns">
-                <NavLink to="/workouts/new">
-                    <svg className="plus-icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="18" height="18" viewBox="0 0 24 24">
-                        <path fillRule="evenodd" d="M 11 2 L 11 11 L 2 11 L 2 13 L 11 13 L 11 22 L 13 22 L 13 13 L 22 13 L 22 11 L 13 11 L 13 2 Z"></path>
-                    </svg>
-                </NavLink>
-                <NavLink className="calendar-btn" to="/calendar">
-                    <svg className="calendar-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> 
-                        <path d="M3 9H21M7 3V5M17 3V5M6 12H8M11 12H13M16 12H18M6 15H8M11 15H13M16 15H18M6 18H8M11 18H13M16 18H18M6.2 21H17.8C18.9201 21 19.4802 21 19.908 20.782C20.2843 20.5903 20.5903 20.2843 20.782 19.908C21 19.4802 21 18.9201 21 17.8V8.2C21 7.07989 21 6.51984 20.782 6.09202C20.5903 5.71569 20.2843 5.40973 19.908 5.21799C19.4802 5 18.9201 5 17.8 5H6.2C5.0799 5 4.51984 5 4.09202 5.21799C3.71569 5.40973 3.40973 5.71569 3.21799 6.09202C3 6.51984 3 7.07989 3 8.2V17.8C3 18.9201 3 19.4802 3.21799 19.908C3.40973 20.2843 3.71569 20.5903 4.09202 20.782C4.51984 21 5.07989 21 6.2 21Z" stroke="#000000" strokeWidth="1.3" strokeLinecap="round" ></path> </g>
-                    </svg>
-                  
-                </NavLink>
-            </div>
+            <NavLink to="/workouts/new">
+                <svg className="header-btn" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="22" height="22" viewBox="0 0 24 24">
+                    <path fillRule="evenodd" d="M 11 2 L 11 11 L 2 11 L 2 13 L 11 13 L 11 22 L 13 22 L 13 13 L 22 13 L 22 11 L 13 11 L 13 2 Z"></path>
+                </svg>
+            </NavLink>
+            <p className="date">{dayjs(selectedDate).format('MMMM D')}</p>
+            <NavLink className="header-btn" to="/calendar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="-2 -2 18 18" fill="currentColor">
+
+                    <rect x="0.5" y="0.5" width="14" height="14" rx="3.2" ry="3.2" fill="none"  stroke="black" strokeWidth="1.2"/>
+
+                    <line x1="0" y1="4.2" x2="15" y2="4.2" stroke="black" strokeWidth="1.2"/>
+
+                    <rect x="3.8" y="-0.7" width="1.2" height="2.5" rx="0.6" fill="black"/>
+                    <rect x="10.2" y="-0.7" width="1.2" height="2.5" rx="0.6" fill="black"/>
+
+                    <circle cx="4" cy="8" r="0.8" fill="black"/>
+                    <circle cx="7.5" cy="8" r="0.8" fill="black"/>
+                    <circle cx="11" cy="8" r="0.8" fill="black"/>
+                    <circle cx="4" cy="10.5" r="0.8" fill="black"/>
+                    <circle cx="7.5" cy="10.5" r="0.8" fill="black"/>
+                    <circle cx="11" cy="10.5" r="0.8" fill="black"/>
+                </svg>
+            </NavLink>
         </header>
     )
 }

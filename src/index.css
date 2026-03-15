@@ -12,83 +12,93 @@ body {
 #root {
   height: 100%;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .home-page-layout {
   display: flex;
   flex-direction: column;
-  min-height: 100dvh;
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 header {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   padding: 0px 15px;
+  flex-shrink: 0;
 
-  background: rgb(104, 162, 254);
-  h1 {
-    font-weight: 600;
-    font-size: 16px;
-    flex-grow: 1;
+  background: white;
+  p {
+    font-weight: 400;
+    font-size: 18px;
   }
-  .header-btns {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    .plus-icon.calendar-icon {
-      width: 22px;
-      height: 22px;
-    }
-  }
-  .header-btns:active {
+  .header-btn:active {
     opacity: 0.5;
   }
 }
 
 main {
   display: flex;
-  overflow: hidden;
   flex-direction: column;
   flex: 1 1 auto;
   min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .date-bar {
-  font-size: 13px;
-  font-weight: 600;
-  padding: 4px 10px 0px 10px;
-  background: rgb(5, 5, 5);
-  color: white;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+:root {
+  --move-x: 0px;
+}
+
+.day {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  border-bottom: 3px solid rgb(45, 124, 251);
-  p {
-    margin: 0;
+  gap: 12px;
+  .dayOfWeek {
+    font-size: 10px;
+    font-weight: 300;
+    color: #585858;
   }
-  .nav-arrow {
-    background: none;
-    border: none;
+  .number {
     cursor: pointer;
-    margin: 0;
-    padding: 0;
-    svg {
-      width: 28px;
-      height: 28px;
-    }
+    position: relative;
+    z-index: 1;
+  }
+  .numer:active {
+    opacity: 0.5;
   }
 }
 
+.selector {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  background: rgba(187, 187, 192, 0.407);
+  top: 15px;
+  left: 0;
+  transform: translateX(var(--move-x));
+  transition: transform 0.3s ease;
+  pointer-events: none;
+  z-index: 0;
+}
 .log-workout-layout {
   padding: 10px;
-  height: 100dvh;
+  height: 100%;
   display: flex;
   flex-direction: column;
 }
 .all-exercise-cards {
   flex: 1;
-
   overflow-y: scroll;
   overflow-x: hidden;
 }

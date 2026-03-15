@@ -7,7 +7,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import type { Swiper as SwiperType } from 'swiper'
 import 'swiper/css'
 
-const RANGE = 7
+const RANGE = 14
 
 function generateDateRange(centerDate: Dayjs) {
   return Array.from({ length: RANGE * 2 + 1 }, (_, i) =>
@@ -44,13 +44,15 @@ export default function CarouselContent(){
     const handleSlideChange = (swiper: SwiperType) => {
         const index = swiper.activeIndex
         const newDate = dates[index]
-        setSelectedDate(newDate)
+
+        if (newDate !== selectedDate) {
+            setSelectedDate(newDate)
+        }
 
         if (index === 0 || index === dates.length - 1) {
             setCenterDate(newDate)
         }
     }
-
     return (
         <Swiper
             key={centerDate}
@@ -58,10 +60,10 @@ export default function CarouselContent(){
             slidesPerView={1}
             onSwiper={(swiper) => { swiperRef.current = swiper }}
             onSlideChange={handleSlideChange}
-            style={{ width: '100%', height: '100vh' }}
+            style={{ width: '100%', flex: 1, minHeight: 0 }}
         >
         {dates.map((date) => (
-            <SwiperSlide key={date}>
+            <SwiperSlide key={date} style={{ overflowY: 'auto' }}>
                 <DayContent date={date} />
             </SwiperSlide>
         ))}
