@@ -51,7 +51,7 @@ main {
 
 .date-bar {
   position: relative;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 :root {
@@ -64,30 +64,31 @@ main {
   align-items: center;
   gap: 12px;
   .dayOfWeek {
-    font-size: 10px;
-    font-weight: 300;
-    color: #585858;
+    font-size: 9px;
+    font-weight: 400;
+    color: #494949;
+  }
+  .today {
+    color: black;
+    font-weight: 700;
   }
   .number {
     cursor: pointer;
     position: relative;
     z-index: 1;
   }
-  .numer:active {
-    opacity: 0.5;
-  }
 }
 
 .selector {
   position: absolute;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 100%;
   background: rgba(187, 187, 192, 0.407);
-  top: 15px;
+  top: 13px;
   left: 0;
   transform: translateX(var(--move-x));
-  transition: transform 0.3s ease;
+  transition: transform 0.4s ease;
   pointer-events: none;
   z-index: 0;
 }
@@ -329,6 +330,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: hidden;
 }
 
 .no-workout-day p {

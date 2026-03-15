@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react"
 import type { Swiper as SwiperType } from "swiper"
 import "swiper/css"
 import { useState, useRef, useEffect, useLayoutEffect, useMemo } from "react"
-
+import clsx from 'clsx'
 dayjs.extend(isoWeek)
 
 function generateWeeks(centerWeek: dayjs.Dayjs) {
@@ -33,7 +33,7 @@ export default function DateBar() {
     if (el && parent) {
         const rect = el.getBoundingClientRect()
         const parentRect = parent.getBoundingClientRect()
-        const x = rect.left - parentRect.left + rect.width / 2 - 20
+        const x = rect.left - parentRect.left + rect.width / 2 - 22
         document.documentElement.style.setProperty('--move-x', `${x}px`)
     }
     }, [selectedDate, centerWeek])
@@ -88,11 +88,15 @@ export default function DateBar() {
             style={{ display: "flex", width: "100%", justifyContent: "space-evenly" }}
             >
             {generateWeek(date).map((day, idx) => (
+              
                 <div key={idx} className="day">
-                <div className="dayOfWeek">{day.format("dd")[0]}</div>
+                <div className={clsx("dayOfWeek", dayjs().format("YYYY-MM-DD") === day.format("YYYY-MM-DD") && "today")}>
+                  {dayjs().format("YYYY-MM-DD") === day.format("YYYY-MM-DD") ? "TODAY" : day.format("dd")[0]}</div>
                 <div
                     data-date={day.format("YYYY-MM-DD")}
                     onClick={(e) => {
+                      console.log(dayjs().format("YYYY-MM-DD") === day.format("YYYY-MM-DD"))
+                      console.log(day.format("YYYY-MM-DD"))
                         setSelectedDate(day.format("YYYY-MM-DD"))
                         const rect = e.currentTarget.getBoundingClientRect()
                         const x = rect.left + rect.width / 2 - 20
