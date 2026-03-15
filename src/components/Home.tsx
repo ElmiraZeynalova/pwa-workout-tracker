@@ -1,5 +1,5 @@
 import DateBar from './DateBar'
-import CarouselContent from './CarouselContent'
+import MainContent from './MainContent'
 import {NavLink} from 'react-router-dom'
 import {useDateStore} from "../store/date-store"
 import dayjs from 'dayjs'
@@ -10,9 +10,9 @@ export default function Home(){
         <div className="layout">
             <header>
                 <NavLink className="header-btn" to="/workouts/new">
-                    <svg x="0px" y="0px" width="22" height="22" strokeWidth="2" viewBox="0 0 24 24"> 
-                        <line x1="0" y1="12" x2="20" y2="12" stroke="black" strokeWidth="2"/>
-                        <line x1="10" y1="2" x2="10" y2="22" stroke="black" strokeWidth="2"/>
+                    <svg x="0px" y="0px" width="22" height="22" strokeWidth="1.8" viewBox="0 0 24 24"> 
+                        <line x1="0" y1="12" x2="20" y2="12" stroke="black" strokeWidth="1.8"/>
+                        <line x1="10" y1="2" x2="10" y2="22" stroke="black" strokeWidth="1.8"/>
                     </svg>
                 </NavLink>
                 <p className="date">{dayjs(selectedDate).format('MMMM D')}</p>
@@ -37,7 +37,7 @@ export default function Home(){
             </header>
             <main>
                 <DateBar />
-                <CarouselContent/>
+                <MainContent/>
             </main>
         </div>
 

@@ -142,15 +142,15 @@ header {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.3);
-  z-index: 2;
+  z-index: 11;
 }
 
 .modal-window {
   position: absolute;
-  z-index: 3;
+  z-index: 12;
   background-color: white;
   border-radius: 10px;
-  top: 35%;
+  top: 40%;
   left: 10%;
   right: 10%;
   display: flex;

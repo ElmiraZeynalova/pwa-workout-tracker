@@ -69,52 +69,54 @@ export default function LogWorkout(){
     }
     
     return(
-    <div className={clsx("layout", (showDiscardModal || showFinishModal) && "modal-window-mode")}>
-   
-        <header>
-            <button className="header-btn" onClick={() => setShowDiscardModal(true)}>
-                <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="15 18 9 12 15 6" />
-                </svg>
-            </button>
-            <p>Log Workout</p>
-            <button className="header-btn" onClick={handleFinish}>Finish</button>
-        </header>
-        {showDiscardModal && 
-            <div className="modal-window">
-                <p>Are you sure you want to discard this workout?</p>
-                <button className="discard-btn" onClick={handleDiscard}>Discard Workout</button>
-                <button className="cancel-btn" onClick={() => setShowDiscardModal(false)}>Cancel</button>
-            </div>
-        }
+        <>
+            {showDiscardModal && 
+                <div className="modal-window">
+                    <p>Are you sure you want to discard this workout?</p>
+                    <button className="discard-btn" onClick={handleDiscard}>Discard Workout</button>
+                    <button className="cancel-btn" onClick={() => setShowDiscardModal(false)}>Cancel</button>
+                </div>
+            }
         
-        {showFinishModal && 
-            <div className="modal-window">
-                {exerciseCards.length === 0 && <p>Add an exercise</p>}
-                {(exerciseCards.length > 0 && notValid) && <p>Your workout has no set values</p>}
- 
-                <button className="ok-btn" onClick={() => setShowFinishModal(false)}>Ok</button>
-            </div>
-        }
-        <div className="all-exercise-log-cards">
-            {exerciseCards.length > 0 && exerciseCards }
+            {showFinishModal && 
+                <div className="modal-window">
+                    {exerciseCards.length === 0 && <p>Add an exercise</p>}
+                    {(exerciseCards.length > 0 && notValid) && <p>Your workout has no set values</p>}
+    
+                    <button className="ok-btn" onClick={() => setShowFinishModal(false)}>Ok</button>
+                </div>
+            }
 
-            {exerciseCards.length === 0 && 
-                <>
-                    <h2>Get started</h2>
-                    <p>Add an exercise to start your workout</p>
-                </>
-            }    
-            <NavLink to="/workouts/new/exercises" className="add-exercise-btn">
-                <svg className="plus-icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="18" height="18" viewBox="0 0 24 24">
-                    <path fillRule="evenodd" d="M 11 2 L 11 11 L 2 11 L 2 13 L 11 13 L 11 22 L 13 22 L 13 13 L 22 13 L 22 11 L 13 11 L 13 2 Z"></path>
-                </svg>
-                    Add Exercise
-            </NavLink>
-        </div>
-                
-    </div>
-        
+            <div className={clsx("layout", (showDiscardModal || showFinishModal) && "modal-window-mode")}>
+                <header>
+                    <button className="header-btn" onClick={() => setShowDiscardModal(true)}>
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="15 18 9 12 15 6" />
+                        </svg>
+                    </button>
+                    <p>Log Workout</p>
+                    <button className="header-btn" onClick={handleFinish}>Finish</button>
+                </header>
+                <main>
+                    <div className="all-exercise-log-cards">
+                        {exerciseCards.length > 0 && exerciseCards }
+
+                        {exerciseCards.length === 0 && 
+                            <>
+                                <h2>Get started</h2>
+                                <p>Add an exercise to start your workout</p>
+                            </>
+                        }    
+                        <NavLink to="/workouts/new/exercises" className="add-exercise-btn">
+                            <svg className="plus-icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="18" height="18" viewBox="0 0 24 24">
+                                <path fillRule="evenodd" d="M 11 2 L 11 11 L 2 11 L 2 13 L 11 13 L 11 22 L 13 22 L 13 13 L 22 13 L 22 11 L 13 11 L 13 2 Z"></path>
+                            </svg>
+                                Add Exercise
+                        </NavLink>
+                    </div>
+                </main>     
+            </div>
+        </>  
     )
 }
 
