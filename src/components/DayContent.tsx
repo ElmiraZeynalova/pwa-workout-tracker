@@ -14,6 +14,7 @@ export default function DayContent({date}: {date: string}){
     const [workout, setWorkout] = useState<Workout | null>(null)
     const [loading, setLoading] = useState(true)
 
+
     useEffect(() => {
         async function loadWorkout(){
             const data = await getWorkoutByDate(date)
@@ -28,7 +29,7 @@ export default function DayContent({date}: {date: string}){
     ))
     return(
        <div className="day-content">
-        {!loading && workout === null && 
+        {!loading && workout === null && (
             <div className="no-workout-day">
                 <p>Workout Log Is Empty</p>
                 <NavLink to="/workouts/new" className="start-workout-btn">
@@ -38,7 +39,7 @@ export default function DayContent({date}: {date: string}){
                     Start New Workout
                 </NavLink>
             </div>
-        }
+        )}
         {!loading && workout && <div className="workout-day">{loggedExercises}</div>}
     </div>
         
