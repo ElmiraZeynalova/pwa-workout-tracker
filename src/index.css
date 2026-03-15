@@ -33,7 +33,7 @@ header {
   background: white;
   p {
     font-weight: 400;
-    font-size: 16px;
+    font-size: 18px;
   }
   .header-btn:active {
     opacity: 0.5;
@@ -64,7 +64,7 @@ main {
   align-items: center;
   gap: 12px;
   .dayOfWeek {
-    font-size: 9px;
+    font-size: 10px;
     font-weight: 300;
     color: #585858;
   }

@@ -6,13 +6,13 @@ export default function Header(){
     return(
         <header>
             <NavLink to="/workouts/new">
-                <svg className="header-btn" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="18" height="18" viewBox="0 0 24 24">
+                <svg className="header-btn" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="22" height="22" viewBox="0 0 24 24">
                     <path fillRule="evenodd" d="M 11 2 L 11 11 L 2 11 L 2 13 L 11 13 L 11 22 L 13 22 L 13 13 L 22 13 L 22 11 L 13 11 L 13 2 Z"></path>
                 </svg>
             </NavLink>
-            <p>{dayjs(selectedDate).format('MMMM D')}</p>
+            <p className="date">{dayjs(selectedDate).format('MMMM D')}</p>
             <NavLink className="header-btn" to="/calendar">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="-2 -2 18 18" fill="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="-2 -2 18 18" fill="currentColor">
 
                     <rect x="0.5" y="0.5" width="14" height="14" rx="3.2" ry="3.2" fill="none"  stroke="black" strokeWidth="1.2"/>
 
