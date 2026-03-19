@@ -74,14 +74,13 @@ export default function DateBar() {
     <div className="date-bar">
         <div className="selector"></div>
         <Swiper
-        key={centerWeek.format("YYYY-MM-DD")} 
-        initialSlide={1}
-        slidesPerView={1}
-        spaceBetween={30}
-        onSwiper={(swiper) => (swiperRef.current = swiper)}
-        onSlideChange={handleSlideChange}
-        style={{ display: "flex", width: "100%" }}
-        >
+          key={centerWeek.format("YYYY-MM-DD")} 
+          initialSlide={1}
+          slidesPerView={1}
+          spaceBetween={30}
+          onSwiper={(swiper) => (swiperRef.current = swiper)}
+          onSlideChange={handleSlideChange}
+          style={{ display: "flex", width: "100%" }}>
         {weeks.map((date) => (
             <SwiperSlide
             key={date.format("YYYY-MM-DD")}

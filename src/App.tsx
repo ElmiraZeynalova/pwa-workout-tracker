@@ -2,7 +2,7 @@ import { useEffect} from 'react'
 import { createBrowserRouter, RouterProvider} from 'react-router-dom'
 import Home from './components/Home'
 import Calendar from './components/Calendar'
-import SignIn from './components/SignIn'
+import LogIn from './components/LogIn'
 import LogWorkout from './components/LogWorkout'
 import AddExercise from './components/AddExercise'
 import {useForceRerenderStore} from "./store/force-rerender-store"
@@ -62,7 +62,7 @@ useEffect(() => {
 const router = createBrowserRouter([
   {
     path: "/",
-    element: userId ? <Home/> : <SignIn/>
+    element: userId ? <Home/> : <LogIn/>
   },
   {
     path: "/calendar",

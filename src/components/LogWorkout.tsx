@@ -23,8 +23,6 @@ export default function LogWorkout(){
     const notValid = currentWorkoutExercises.every(e => e.sets.every(s => s.reps === null))
     const isValid = currentWorkoutExercises.some(e => e.sets.some(s => s.reps !== null && s.reps > 0))
 
-// CHECK FOR VALID EMAIL FORM
-
 // DESIGN SIGN IN PAGE
 // DESIGN NO WORKOUT DAY
 // DESIGN EXERCISES LIST PAGE

@@ -14,7 +14,7 @@ function generateDateRange(centerDate: Dayjs) {
     centerDate.add(i - RANGE, 'day').format('YYYY-MM-DD')
   )
 }
-export default function CarouselContent(){
+export default function MainContent(){
 
     const selectedDate = useDateStore((state) => state.selectedDate)
     const setSelectedDate = useDateStore((state) => state.setSelectedDate)
