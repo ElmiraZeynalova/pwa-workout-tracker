@@ -19,10 +19,11 @@ export default defineConfig({
         name: "Forge",
         short_name: "Forge",
         description: "Workout tracker app",
-        theme_color: "#ffffff",
+        theme_color: "#f3f3f3",
         start_url: '/',
         display: 'standalone',
-        background_color: '#ffffff',
+        display_override: ["window-controls-overlay", "standalone"],
+        background_color: '#f3f3f3',
         icons: [
           {
             src: '/pwa-192x192.png',

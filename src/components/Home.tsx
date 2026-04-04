@@ -18,8 +18,8 @@ export default function Home(){
                 <MdOutlineCalendarMonth size={22} color="black"/>
                 </NavLink>
             </header>
+            <DateBar />
             <main>
-                <DateBar />
                 <MainContent/>
             </main>
         </div>

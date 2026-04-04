@@ -60,7 +60,7 @@ export default function MainContent(){
             slidesPerView={1}
             onSwiper={(swiper) => { swiperRef.current = swiper }}
             onSlideChange={handleSlideChange}
-            style={{width: '100%'}}
+            style={{width: '100%', height: '100%'}}
         >
         {dates.map((date) => (
             <SwiperSlide key={date} style={{}}>
