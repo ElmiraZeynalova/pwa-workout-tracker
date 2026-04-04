@@ -1,21 +1,25 @@
 import { useUserStore } from "../store/user-store"
 import {signInUser, verifyOtp} from "../supabaseDB"
 import {useState} from 'react'
-
+import { FaRegEnvelope } from "react-icons/fa";
+import { BiDialpadAlt } from "react-icons/bi";
 export default function LogIn(){
     const email = useUserStore((state) => state.email)
     const setEmail = useUserStore((state) => state.setEmail)
     const [error, setError] = useState('')
     const [code, setCode] = useState('')
     const [loginStep, setLoginStep] = useState<'email' | 'otp'>('email')
+    const [loading, setLoading] = useState(false)
 
     async function handleLogin() {
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email ?? '')) {
             setError('Invalid email address')
             return
         }
+        setLoading(true)
         setError('')
         const { error } = await signInUser(email!)
+        setLoading(false)
         if (error) {
             setError(error.message)
             return
@@ -27,12 +31,11 @@ export default function LogIn(){
             setError('Enter 6-digit code')
             return
         }
-
+        setLoading(true)
         setError('')
 
         const { data, error } = await verifyOtp(email!, code)
-
-        console.log('VERIFY RESULT:', data, error)
+        setLoading(false)
 
         if (error) {
             setError(error.message)
@@ -45,8 +48,11 @@ export default function LogIn(){
     return (
         <>
             {loginStep === 'email' && 
+            <div className="login-page-layout">
+                <h1>Login</h1>
+                <p>Please Sign in to continue</p>
                 <form>
-                    <label>Email:
+                    <FaRegEnvelope color="black" size={20} />
                     <input 
                         placeholder="example@gmail.com" 
                         value={email ?? ''} 
@@ -56,13 +62,17 @@ export default function LogIn(){
                             setError('')
                         }}
                     />
-                    </label>
+                </form>
                     {error && <p className="error">{error}</p>}
-                    <button type="button" disabled={!email} onClick={handleLogin}>Log in</button>
-                </form>}
+                    <button type="button" disabled={!email || loading} onClick={handleLogin}>{loading ? 'Sending...' : 'Login'}</button>
+                
+            </div>}
             {loginStep === 'otp' && 
+            <div className="login-page-layout">
+                <h1>Verify your email</h1>
+                <p>Enter the code sent to {email}:</p>
                 <form>
-                    <label>6-digit code:
+                    <BiDialpadAlt color="black" size={20}/>
                     <input 
                         type="text" 
                         inputMode="numeric" 
@@ -74,10 +84,10 @@ export default function LogIn(){
                             setError('')
                         }}
                     />
-                    </label>
+                    </form>
                     {error && <p className="error">{error}</p>}
-                    <button type="button" disabled={!code} onClick={handleVerify}>Verify</button>
-                </form>}
+                     <button type="button" disabled={code.length !== 6 || loading} onClick={handleVerify}>{loading ? 'Verifying...' : 'Verify'}</button>
+                </div>}
         </>
     )
 }

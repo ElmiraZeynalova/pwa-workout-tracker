@@ -77,14 +77,14 @@ export default function DateBar() {
           key={centerWeek.format("YYYY-MM-DD")} 
           initialSlide={1}
           slidesPerView={1}
-          spaceBetween={30}
+          spaceBetween={40}
           onSwiper={(swiper) => (swiperRef.current = swiper)}
           onSlideChange={handleSlideChange}
-          style={{ display: "flex", width: "100%" }}>
+          style={{ display: "flex", width: "100%", height: "70px" }}>
         {weeks.map((date) => (
             <SwiperSlide
             key={date.format("YYYY-MM-DD")}
-            style={{ display: "flex", width: "100%", justifyContent: "space-evenly" }}
+            style={{ display: "flex", width: "100%", alignItems: "center", justifyContent:'space-around' }}
             >
             {generateWeek(date).map((day, idx) => (
               
@@ -94,14 +94,12 @@ export default function DateBar() {
                 <div
                     data-date={day.format("YYYY-MM-DD")}
                     onClick={(e) => {
-                      console.log(dayjs().format("YYYY-MM-DD") === day.format("YYYY-MM-DD"))
-                      console.log(day.format("YYYY-MM-DD"))
                         setSelectedDate(day.format("YYYY-MM-DD"))
                         const rect = e.currentTarget.getBoundingClientRect()
                         const x = rect.left + rect.width / 2 - 20
                         document.documentElement.style.setProperty('--move-x', `${x}px`)
                     }}
-                    className="number"
+                    className={clsx("number", day.format("YYYY-MM-DD") === selectedDate && "selected")}
                 >
                     {day.format("D")}
                 </div>
