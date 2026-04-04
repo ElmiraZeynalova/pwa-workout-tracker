@@ -34,7 +34,7 @@ export default function LogIn(){
         setLoading(true)
         setError('')
 
-        const { data, error } = await verifyOtp(email!, code)
+        const { error } = await verifyOtp(email!, code)
         setLoading(false)
 
         if (error) {
