@@ -1,80 +1,71 @@
-import { useEffect} from 'react'
+import { useEffect, useRef} from 'react'
 import { createBrowserRouter, RouterProvider} from 'react-router-dom'
-import Home from './components/Home'
-import Calendar from './components/Calendar'
-import LogIn from './components/LogIn'
-import LogWorkout from './components/LogWorkout'
-import AddExercise from './components/AddExercise'
-import {useForceRerenderStore} from "./store/force-rerender-store"
-import { supabase, syncPendingWorkouts, syncIDBWithServer} from './supabaseDB'
-import {useUserStore} from './store/user-store'
+import HomePage from './components/HomePage'
+import CalendarPage from './components/CalendarPage'
+import LoginPage from './components/LoginPage'
+import LogWorkoutPage from './components/LogWorkoutPage'
+import ExercisesListPage from './components/ExercisesListPage'
+import {useForceRerenderStore} from "./zustand_store/force-rerender-store"
+import { supabase, syncWorkouts, syncIDBWithServer } from './supabaseDB'
+import {useUserStore} from './zustand_store/user-store'
+import EditExercisePage from './components/EditExercisePage'
 
 function App() {
   const setUserId = useUserStore((state) => state.setUserId)
   const userId = useUserStore((state) => state.userId)
   const forceRerender = useForceRerenderStore(state => state.setForceRerender)
+  const isSyncing = useRef(false)
+  const init = useRef(async () => {
+    if (isSyncing.current) return
+    isSyncing.current = true
+    try {
+        await syncWorkouts()
+        console.log("Server is synced with IDB")
+        await syncIDBWithServer()
+        console.log("IDB is synced with Server")
+        forceRerender() 
+    } catch (err) {
+        console.warn("Sync failed, will retry when online", err)
+    } finally {
+        isSyncing.current = false
+    }
+  })
 
-useEffect(() => {
+  useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange((_, session) => {
         if (session) {
             setUserId(session.user.id)
+            init.current()
         }
     })
 
-    const syncFromServer = async() => {
-      try {
-        const { data: { session } } = await supabase.auth.getSession()
-        if (!session) return
-        console.log("Syncing from server...")
-        await syncIDBWithServer(session.user.id)
-        forceRerender()
-        console.log("Synced")
-      }
-      catch (err) {
-        console.error("Error syncing from server:", err)
-      }
-    }
-
-    syncFromServer()
-
-    const handler = async () => {
-      const { data: { session } } = await supabase.auth.getSession()
-      if (!session) return
-
-      console.log("Syncing pending workouts...")
-      await syncPendingWorkouts()
-      console.log("Synced pending")
-      console.log("Syncing from server...")
-      await syncIDBWithServer(session.user.id)
-      forceRerender()
-      console.log("Synced")
-    }
-
-    window.addEventListener("online", handler)
-
+    window.addEventListener("online", init.current)
     return () => {
         authListener?.subscription.unsubscribe()
-        window.removeEventListener("online", handler)
+        window.removeEventListener("online", init.current)
     }
-
 }, [])
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: userId ? <Home/> : <LogIn/>
+    element: userId ? <HomePage/> : <LoginPage/>
   },
   {
     path: "/calendar",
-    element: <Calendar/>
+    element: <CalendarPage/>
   },
   {
     path: "/workouts/new",
-    element: <LogWorkout/>
+    element: <LogWorkoutPage/>
   },
   {
     path: "/workouts/new/exercises",
-    element: <AddExercise/>
+    element: <ExercisesListPage/>
+  },
+  {
+    path: "/exercises/edit",
+    element: <EditExercisePage/>
   }
 ])
 

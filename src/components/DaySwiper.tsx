@@ -2,7 +2,7 @@ import DayContent from './DayContent'
 import dayjs from 'dayjs'
 import type { Dayjs } from 'dayjs'
 import { useMemo, useRef, useEffect} from 'react'
-import {useDateStore} from "../store/date-store"
+import {useDateStore} from "../zustand_store/date-store"
 import { Swiper, SwiperSlide } from 'swiper/react';
 import type { Swiper as SwiperType } from 'swiper'
 import 'swiper/css'
@@ -14,7 +14,7 @@ function generateDateRange(centerDate: Dayjs) {
     centerDate.add(i - RANGE, 'day').format('YYYY-MM-DD')
   )
 }
-export default function MainContent(){
+export default function DaySwiper(){
 
     const selectedDate = useDateStore((state) => state.selectedDate)
     const setSelectedDate = useDateStore((state) => state.setSelectedDate)

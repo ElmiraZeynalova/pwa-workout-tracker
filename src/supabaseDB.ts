@@ -1,7 +1,18 @@
 import { createClient } from '@supabase/supabase-js'
-import { getWorkoutByDate, getAllStoreData, deleteWorkoutByDate, syncWorkoutWithServer} from "./indexedDB"
-import { useUserStore } from "./store/user-store"
-import type {Exercise, SetInfo} from './store/workout-store'
+import { useUserStore } from './zustand_store/user-store'
+import {getUnsyncedWorkouts, markWorkoutSynced, clearStoreMemory, saveWorkout} from './indexed_db/crud'
+
+type SetInfo = {
+    setId: string
+    reps: number | null
+    weight?: number | null
+}
+
+type Exercise = {
+    exerciseId: string
+    exerciseName: string
+    sets: SetInfo[]
+}
 
 export const supabase = createClient(
     import.meta.env.VITE_SUPABASE_URL,
@@ -23,94 +34,123 @@ export async function verifyOtp(email: string, code: string) {
     return { data, error }
 }
 
-export async function syncToServer(date: string){
-    const exercisesData = await getWorkoutByDate(date)
+export async function syncWorkouts(){
     const userId = useUserStore.getState().userId
-    const exercises = exercisesData!.exercises
+    const workoutsData = await getUnsyncedWorkouts()
+    if(!workoutsData) return 
 
-    const { data: workout, error: workoutError } = await supabase
-        .from('workouts')
-        .upsert(
-            { user_id: userId, date: date },
-            { onConflict: 'date'}
-        )
-        .select()
-        .single()
+    for(const w of workoutsData){
+        if(w.exercises.length === 0){
+            const {data: workoutData} = await supabase
+                .from('workouts')
+                .select('id')
+                .eq('date', w.date)
+                .eq('user_id', userId)
+                .single()
+            const workoutId = workoutData?.id
+            const {data: exercises} = await supabase
+                .from('exercises')
+                .select('id')
+                .eq('workout_id', workoutId)
 
-    if(workoutError) return { error: workoutError }
-    const workoutId = workout.id
+            const exerciseIds = exercises?.map(e => e.id) || []
 
-    const {error: exerciseError} = await supabase
-        .from('exercises')
-        .upsert(
-            exercises.map(e => (
-                { id: e.exerciseId, name: e.exerciseName, workout_id: workoutId }
-            ))
-        )
-    if(exerciseError) return { error: exerciseError }
+            if(exerciseIds && exerciseIds.length > 0){
+                await supabase.from('sets').delete().in('exercise_id', exerciseIds)
+                await supabase.from('exercises').delete().in('id', exerciseIds)
+            }
 
-    const {error: setError} = await supabase
-        .from('sets')
-        .upsert(
-            exercises.flatMap(e => (
-                e.sets.map(set => (
-                    { id: set.setId, exercise_id: e.exerciseId, reps: set.reps, weight: set.weight }
+            if(workoutId){
+                await supabase.from('workouts').delete().eq('id', workoutId)
+            }
+            await markWorkoutSynced(w.date)
+            continue
+        }
+        const { data: workout, error: upsertWorkoutError } = await supabase
+            .from('workouts')
+            .upsert(
+                { user_id: userId, date: w.date },
+                { onConflict: 'user_id,date' }
+            )
+            .select()
+            .single()
+
+        if(upsertWorkoutError) return { error: upsertWorkoutError}
+        const workoutId = workout.id
+
+        const {data: exercises, error: getExerciseError} = await supabase
+            .from('exercises')
+            .select()
+            .eq('workout_id', workoutId)
+
+        if(getExerciseError) return { error: getExerciseError }
+        const exerciseIds = exercises.map(e => e.id) || []
+
+        const {error: deleteSetsError} = await supabase
+            .from('sets')
+            .delete()
+            .in('exercise_id', exerciseIds)
+        if(deleteSetsError) return { error: deleteSetsError }
+
+        const {error: deleteExercisesError} = await supabase
+            .from('exercises')
+            .delete()
+            .eq('workout_id', workoutId)
+
+        if(deleteExercisesError) return { error: deleteExercisesError }
+
+        const {error: insertExercisesError} = await supabase
+            .from('exercises')
+            .insert(
+                w.exercises.map(e => (
+                    {id: e.exerciseId, name: e.exerciseName, workout_id: workoutId}
                 ))
-            ))
-        )
-    if(setError) return { error: setError }
+            )
+        if(insertExercisesError) return { error: insertExercisesError}
+
+        const {error: insertSetsError} = await supabase
+            .from('sets')
+            .insert(
+                w.exercises.flatMap(e => 
+                    e.sets.map(s => (
+                        {id: s.setId, exercise_id: e.exerciseId, reps: s.reps, weight: s.weight}
+                    )
+                ))
+            )
+        if(insertSetsError) return { error: insertSetsError}
+
+        await markWorkoutSynced(w.date)
+    }
     return {error: null}
 }
 
-
-
-
-export async function syncPendingWorkouts(){
-    const workouts = await getAllStoreData("pending_sync_to_server")
-    for(const workout of workouts){
-        try{
-            await syncToServer(workout.date)
-            await deleteWorkoutByDate("pending_sync_to_server", workout.date)
-        }
-        catch(e){
-            break
-        }
-    }
-}   
-
-export async function syncIDBWithServer(userId: string){
-    const { data: workouts} = await supabase
+export async function syncIDBWithServer(){
+    const userId = useUserStore.getState().userId
+    const {data: workoutData, error: workoutError} = await supabase
         .from('workouts')
-        .select("*")
+        .select()
         .eq('user_id', userId)
+    if(workoutError) return { error: workoutError }
+    await clearStoreMemory()
 
-    if(!workouts) return
-    for(const workout of workouts){
-        const { data: exercises} = await supabase
+    for(const w of workoutData){
+        const {data: exercises} = await supabase
             .from('exercises')
-            .select("*")
-            .eq('workout_id', workout.id)
-        if(!exercises) continue
+            .select()
+            .eq('workout_id', w.workoutId)
 
-       const exercisesList: Exercise[] = await Promise.all(
-            exercises.map(async e => {
-                const { data: sets } = await supabase
-                    .from('sets')
-                    .select("*")
-                    .eq('exercise_id', e.id)
-                const setsList: SetInfo[] = sets?.map(s => ({
-                    setId: s.id,
-                    reps: s.reps,
-                    weight: s.weight
-                })) || []
-                return {
-                    exerciseId: e.id,
-                    exerciseName: e.name,
-                    sets: setsList
-                }
-            })
-        )
-        await syncWorkoutWithServer("workouts", workout.date, exercisesList)
-    } 
+        const exerciseIds = exercises?.map(e => e.id) || []
+        const {data: sets} = await supabase
+            .from('sets')
+            .select()
+            .in('exercise_id', exerciseIds)
+        
+        const exercisesList: Exercise[] = exercises?.map(e => ({
+            exerciseId: e.id, 
+            exerciseName: e.name, 
+            sets: sets?.filter(s => s.exercise_id === e.id) || []
+        })) || []
+        await saveWorkout(w.date, exercisesList, 1)
+    }
 }
 

@@ -1,9 +1,9 @@
-import { useUserStore } from "../store/user-store"
+import { useUserStore } from "../zustand_store/user-store"
 import {signInUser, verifyOtp} from "../supabaseDB"
 import {useState} from 'react'
 import { FaRegEnvelope } from "react-icons/fa";
 import { BiDialpadAlt } from "react-icons/bi";
-export default function LogIn(){
+export default function LoginPage(){
     const email = useUserStore((state) => state.email)
     const setEmail = useUserStore((state) => state.setEmail)
     const [error, setError] = useState('')

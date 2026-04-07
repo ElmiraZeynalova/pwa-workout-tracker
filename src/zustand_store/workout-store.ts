@@ -4,6 +4,7 @@ export type SetInfo = {
     setId: string
     reps: number | null
     weight?: number | null
+    checked: boolean
 }
 
 export type Exercise = {
@@ -19,7 +20,9 @@ type WorkoutStore = {
     addNewSet: (exerciseId: string) => void
     deleteSet: (exerciseId: string, setIdx: number) => void
     updateSet: (exerciseId: string, setIdx: number, fieldName: string, value: number) => void
+    toggleChecked: (exerciseId: string, setIdx: number) => void
     clearWorkout: () => void
+    loadExerciseForEdit: (exercise: Exercise) => void
 }
 
 export const useWorkoutStore = create<WorkoutStore>((set) => ({
@@ -28,7 +31,7 @@ export const useWorkoutStore = create<WorkoutStore>((set) => ({
         set(state => ({
             exercises: [...state.exercises, 
                 ...newExercisesNames.map(newName => (
-                {exerciseId: crypto.randomUUID(), exerciseName: newName, sets: [{setId: crypto.randomUUID(), reps: null, weight: 0}]}
+                {exerciseId: crypto.randomUUID(), exerciseName: newName, sets: [{setId: crypto.randomUUID(), reps: 5, weight: null, checked: true}]}
                 ))
             ]
         })),
@@ -40,7 +43,7 @@ export const useWorkoutStore = create<WorkoutStore>((set) => ({
         set(state => ({
             exercises: state.exercises.map(e => 
                 e.exerciseId === exerciseId 
-                    ? {...e, sets: [...e.sets, {setId: crypto.randomUUID(), reps: null, weight: 0}]}
+                    ? {...e, sets: [...e.sets, {setId: crypto.randomUUID(), reps:5, weight: null, checked: true}]}
                     : e
             )
         })),
@@ -67,7 +70,24 @@ export const useWorkoutStore = create<WorkoutStore>((set) => ({
                     : e
             )
         })),
+    toggleChecked: (exerciseId, setIdx) => 
+        set(state => ({
+            exercises: state.exercises.map(e =>
+                e.exerciseId === exerciseId
+                ? {
+                    ...e, sets: e.sets.map((set, idx) =>
+                    idx === setIdx ? {...set, checked: !set.checked} : set
+                )
+            }
+                : e
+            )
+        })),
     clearWorkout: () => 
-        set({exercises: []})
+        set({exercises: []}),
+
+    loadExerciseForEdit: (exercise: Exercise) => 
+        set(() => ({
+            exercises: [exercise]
+    }))
     
 }))

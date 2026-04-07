@@ -1,11 +1,23 @@
 import {NavLink} from 'react-router-dom'
-import {getWorkoutByDate} from "../indexedDB"
+import {getWorkoutByDate} from '../indexed_db/crud'
 import {useEffect, useState} from "react"
-import type {Exercise} from '../store/workout-store'
-import LoggedExercise from './LoggedExercise'
-import {useForceRerenderStore} from "../store/force-rerender-store"
+import LoggedExerciseCard from './LoggedExerciseCard'
+import {useForceRerenderStore} from "../zustand_store/force-rerender-store"
 import { AiOutlinePlus } from "react-icons/ai";
+
+type SetInfo = {
+    setId: string
+    reps: number | null
+    weight?: number | null
+}
+
+type Exercise = {
+    exerciseId: string
+    exerciseName: string
+    sets: SetInfo[]
+}
 type Workout = {
+    isSynced: number
     date: string,
     exercises: Exercise[]
 }
@@ -15,18 +27,24 @@ export default function DayContent({date}: {date: string}){
     const [workout, setWorkout] = useState<Workout | null>(null)
     const [loading, setLoading] = useState(true)
 
-
     useEffect(() => {
-        async function loadWorkout(){
-            const data = await getWorkoutByDate(date)
-            setWorkout(data ?? null)
+        loadWorkout()
+    }, [rerender])
+
+    async function loadWorkout(){
+        const data = await getWorkoutByDate(date)
+        if(data && data.exercises.length > 0){
+            setWorkout(data)
+            setLoading(false)
+        }else{
+            setWorkout(null)
             setLoading(false)
         }
-        loadWorkout()
-    }, [date, rerender])
+
+    }
 
     const loggedExercises = workout?.exercises?.map(exercise => (
-        <LoggedExercise key={exercise.exerciseId} exercise={exercise}/>
+        <LoggedExerciseCard key={exercise.exerciseId} date={date} exercise={exercise} onDelete={loadWorkout}/>
     ))
     return(
        <div className="day-content">
@@ -39,7 +57,7 @@ export default function DayContent({date}: {date: string}){
                 </NavLink>
             </div>
         )}
-        {!loading && workout && <div className="workout-day">{loggedExercises}</div>}
+        {!loading && workout !== null && <div className="workout-day">{loggedExercises}</div>}
     </div>
         
     )

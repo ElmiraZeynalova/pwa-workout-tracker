@@ -1,4 +1,4 @@
-import { useDateStore } from "../store/date-store"
+import { useDateStore } from "../zustand_store/date-store"
 import dayjs from "dayjs"
 import isoWeek from "dayjs/plugin/isoWeek"
 import { Swiper, SwiperSlide } from "swiper/react"
@@ -16,7 +16,7 @@ function generateWeeks(centerWeek: dayjs.Dayjs) {
   ]
 }
 
-export default function DateBar() {
+export default function WeekSwiper() {
   const selectedDate = useDateStore((state) => state.selectedDate)
   const setSelectedDate = useDateStore((state) => state.setSelectedDate)
 
