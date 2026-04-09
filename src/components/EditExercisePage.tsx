@@ -6,6 +6,7 @@ import { FaChevronLeft } from "react-icons/fa";
 import { useLocation } from 'react-router-dom'
 import {getExerciseDataByDateAndId, deleteExerciseById, editExercise, markWorkoutUnsynced} from '../indexed_db/crud'
 import LogExerciseCard from "./LogExerciseCard";
+import { syncServerWithIDB } from '../supabaseDB'
 
 type SetInfo = {
     setId: string
@@ -61,6 +62,9 @@ export default function EditExercisePage(){
         }
         clearWorkoutStore()
         navigate('/')
+
+        syncServerWithIDB()
+        console.log("Server is synced with IDB")
     }
 
     function handleExitEditPage(){

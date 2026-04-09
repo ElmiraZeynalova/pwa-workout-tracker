@@ -8,6 +8,7 @@ import { FaChevronLeft } from "react-icons/fa";
 import dumbbellIcon from "../assets/grey_dumbbell.svg"
 import { AiOutlinePlus } from "react-icons/ai";
 import * as Dialog from '@radix-ui/react-dialog';
+import { syncServerWithIDB } from '../supabaseDB'
 
 type SetInfo = {
     setId: string
@@ -50,8 +51,12 @@ export default function LogWorkoutPage(){
 
             await saveWorkout(currentWorkoutDate, cleanedExercises, 0)
             console.log("Saved to IDB")
+
             clearWorkoutStore()
             navigate("/") 
+
+            syncServerWithIDB()
+            console.log("Server is synced with IDB")
         }else{
             setShowFinishModal(true)
         }

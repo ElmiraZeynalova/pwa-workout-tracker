@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { RiEditLine } from "react-icons/ri";
 import { RiDeleteBinLine } from "react-icons/ri";
 import {deleteExerciseById, markWorkoutUnsynced} from '../indexed_db/crud'
+import { syncServerWithIDB } from '../supabaseDB'
 
 type SetInfo = {
     setId: string
@@ -39,6 +40,9 @@ export default function LoggedExerciseCard({exercise, date, onDelete}: {exercise
         }
         setShowModal(false)
         onDelete()
+
+        await syncServerWithIDB()
+        console.log("Server is synced with IDB")
     }
 
     async function handleEditExr(){
