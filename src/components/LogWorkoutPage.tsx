@@ -42,8 +42,8 @@ export default function LogWorkoutPage(){
               .map(e => ({
                   ...e, sets: e.sets
                           .filter(s => s.checked === true)
-                          .flatMap(s => ({setId: s.setId, reps: s.reps, weight: s.weight}))
-                          .flatMap(s => s.weight === null ? {...s, weight: 0} : s)
+                          .map(s => ({setId: s.setId, reps: s.reps, weight: s.weight}))
+                          .map(s => s.weight === null ? {...s, weight: 0} : s)
                           .filter(s => s.reps !== null && s.reps > 0)
               }))
               .filter(e => e.sets.length > 0)

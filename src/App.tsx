@@ -6,7 +6,7 @@ import LoginPage from './components/LoginPage'
 import LogWorkoutPage from './components/LogWorkoutPage'
 import ExercisesListPage from './components/ExercisesListPage'
 import {useForceRerenderStore} from "./zustand_store/force-rerender-store"
-import { supabase, syncWorkouts, syncIDBWithServer } from './supabaseDB'
+import { supabase, syncServerWithIDB, syncIDBWithServer } from './supabaseDB'
 import {useUserStore} from './zustand_store/user-store'
 import EditExercisePage from './components/EditExercisePage'
 
@@ -19,7 +19,7 @@ function App() {
     if (isSyncing.current) return
     isSyncing.current = true
     try {
-        await syncWorkouts()
+        await syncServerWithIDB()
         console.log("Server is synced with IDB")
         await syncIDBWithServer()
         console.log("IDB is synced with Server")

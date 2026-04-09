@@ -44,11 +44,10 @@ export default function EditExercisePage(){
             exerciseName: editingExercise.exerciseName,
             sets: editingExercise.sets
                     .filter(s => s.checked === true)
-                    .flatMap(s => ({setId: s.setId, reps: s.reps, weight: s.weight}))
+                    .map(s => ({setId: s.setId, reps: s.reps, weight: s.weight}))
                     .filter(s => s.reps !== null && s.reps > 0)
-                    .flatMap(s => s.weight === null ? {...s, weight: 0} : s)
+                    .map(s => s.weight === null ? {...s, weight: 0} : s)
         }
-        console.log(cleanExerciseData)
         if(cleanExerciseData.sets.length === 0) {
             await deleteExerciseById(workoutDate, exerciseId)
         }else{

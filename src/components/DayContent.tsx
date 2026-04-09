@@ -35,11 +35,10 @@ export default function DayContent({date}: {date: string}){
         const data = await getWorkoutByDate(date)
         if(data && data.exercises.length > 0){
             setWorkout(data)
-            setLoading(false)
         }else{
             setWorkout(null)
-            setLoading(false)
         }
+        setLoading(false)
 
     }
 

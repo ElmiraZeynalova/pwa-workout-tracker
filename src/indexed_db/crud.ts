@@ -2,6 +2,7 @@ import {openDB} from './open_db'
 
 type Workout = {
     isSynced: number
+    updated_at: string,
     date: string
     exercises: Exercise[]
 }
@@ -28,16 +29,18 @@ export async function saveWorkout(date: string, exercises: Exercise[], status: n
         const request = store.get(date)
         request.onsuccess = () => {
             const data = request.result
+            const now = new Date().toISOString()
             const toSave = data 
                 ? { 
                     isSynced: status,
-                    date, 
+                    updated_at: now,
+                    date: date, 
                     exercises: [
                         ...data.exercises.filter((e: Exercise) => !exercises.some(ne => ne.exerciseId === e.exerciseId)), 
                         ...exercises
                     ] 
                 }
-                : { status, date, exercises }
+                : { isSynced: status, updated_at: now, date: date, exercises: exercises }
             const putRequest = store.put(toSave)
             putRequest.onerror = () => reject(putRequest.error)
         }
@@ -66,12 +69,12 @@ export async function editExercise(workoutDate: string, cleanExerciseData: Exerc
                 reject(new Error("Workout not found"))
                 return
             }
-
+            const now = new Date().toISOString()
             const updatedExercises = workout.exercises.map((e: Exercise) => (
                 e.exerciseId === cleanExerciseData.exerciseId ? {...e, sets: cleanExerciseData.sets} : e
             ))
 
-            store.put({ ...workout, exercises: updatedExercises })
+            store.put({ ...workout, updated_at: now, exercises: updatedExercises })
         }
         transaction.oncomplete = () => resolve()
         transaction.onerror = () => reject(transaction.error)
@@ -94,13 +97,28 @@ export async function deleteExerciseById(workoutDate: string, exerciseId: string
                 reject(new Error("Workout not found"))
                 return
             }
-
+            const now = new Date().toISOString()
             const updated = {
                 ...workout,
+                updated_at: now,
                 exercises: workout.exercises.filter((e: Exercise) => e.exerciseId !== exerciseId)
             }
             store.put(updated)
         }
+        transaction.oncomplete = () => resolve()
+        transaction.onerror = () => reject(transaction.error)
+    })
+}
+
+export async function deleteWorkoutByDate(workoutDate: string){
+    const db = await openDB()
+
+    return new Promise<void>((resolve, reject) => {
+        const transaction = db.transaction(STORE_NAME, "readwrite")
+        const store = transaction.objectStore(STORE_NAME)
+
+        store.delete(workoutDate)
+
         transaction.oncomplete = () => resolve()
         transaction.onerror = () => reject(transaction.error)
     })
@@ -208,7 +226,7 @@ export async function getUnsyncedWorkouts(){
             const allWorkouts = request.result
             
             if (!allWorkouts) {
-                reject(new Error("No workouts found"))
+                resolve([]) 
                 return
             }
 
