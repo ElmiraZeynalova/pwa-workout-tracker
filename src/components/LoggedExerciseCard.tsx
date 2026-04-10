@@ -20,7 +20,7 @@ type Exercise = {
     sets: SetInfo[]
 }
 
-export default function LoggedExerciseCard({exercise, date, onDelete}: {exercise: Exercise, date: string, onDelete: () => void}){
+export default function LoggedExerciseCard({exercise, date}: {exercise: Exercise, date: string}){
     const [showModal, setShowModal] = useState<boolean>(false)
     const navigate = useNavigate()
     const sets = exercise.sets.map((set, idx) => (
@@ -39,7 +39,6 @@ export default function LoggedExerciseCard({exercise, date, onDelete}: {exercise
             console.warn("Failed to mark workout unsynced:", e)
         }
         setShowModal(false)
-        onDelete()
 
         await syncServerWithIDB()
         console.log("Server is synced with IDB")

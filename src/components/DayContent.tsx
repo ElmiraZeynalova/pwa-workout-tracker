@@ -1,53 +1,17 @@
 import {NavLink} from 'react-router-dom'
-import {getWorkoutByDate} from '../indexed_db/crud'
-import {useEffect, useState} from "react"
 import LoggedExerciseCard from './LoggedExerciseCard'
-import {useForceRerenderStore} from "../zustand_store/force-rerender-store"
 import { AiOutlinePlus } from "react-icons/ai";
-
-type SetInfo = {
-    setId: string
-    reps: number | null
-    weight?: number | null
-}
-
-type Exercise = {
-    exerciseId: string
-    exerciseName: string
-    sets: SetInfo[]
-}
-type Workout = {
-    isSynced: number
-    date: string,
-    exercises: Exercise[]
-}
+import {useRenderWorkoutOnScreenStore} from '../zustand_store/render-workout-store'
 
 export default function DayContent({date}: {date: string}){
-    const rerender = useForceRerenderStore(state => state.forceRerender)
-    const [workout, setWorkout] = useState<Workout | null>(null)
-    const [loading, setLoading] = useState(true)
-
-    useEffect(() => {
-        loadWorkout()
-    }, [rerender])
-
-    async function loadWorkout(){
-        const data = await getWorkoutByDate(date)
-        if(data && data.exercises.length > 0){
-            setWorkout(data)
-        }else{
-            setWorkout(null)
-        }
-        setLoading(false)
-
-    }
+    const workout = useRenderWorkoutOnScreenStore((state) => state.workouts[date])
 
     const loggedExercises = workout?.exercises?.map(exercise => (
-        <LoggedExerciseCard key={exercise.exerciseId} date={date} exercise={exercise} onDelete={loadWorkout}/>
+        <LoggedExerciseCard key={exercise.exerciseId} date={date} exercise={exercise}/>
     ))
     return(
        <div className="day-content">
-        {!loading && workout === null && (
+        {!workout && (
             <div className="no-workout-day">
                 <p>Workout Log Is Empty</p>
                 <NavLink to="/workouts/new" className="start-workout-btn">
@@ -56,7 +20,7 @@ export default function DayContent({date}: {date: string}){
                 </NavLink>
             </div>
         )}
-        {!loading && workout !== null && <div className="workout-day">{loggedExercises}</div>}
+        {workout && <div className="workout-day">{loggedExercises}</div>}
     </div>
         
     )

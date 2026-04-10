@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 import { useUserStore } from './zustand_store/user-store'
 import {getUnsyncedWorkouts, markWorkoutSynced, clearStoreMemory, saveWorkout, getWorkoutByDate, deleteWorkoutByDate, getAllWorkouts} from './indexed_db/crud'
+import {useRenderWorkoutOnScreenStore} from './zustand_store/render-workout-store'
 
 type SetInfo = {
     setId: string
@@ -98,6 +99,8 @@ export async function syncServerWithIDB(){
 
 export async function syncIDBWithServer(){
     const userId = useUserStore.getState().userId
+    const removeWorkout = useRenderWorkoutOnScreenStore.getState().removeWorkout
+    const setWorkout = useRenderWorkoutOnScreenStore.getState().setWorkout
     const {data: workoutsData, error: workoutError} = await supabase
         .from('workouts')
         .select()
@@ -106,6 +109,7 @@ export async function syncIDBWithServer(){
     
     if(workoutsData.length === 0){
         await clearStoreMemory()
+        useRenderWorkoutOnScreenStore.getState().setMany([])
         return
     } 
 
@@ -115,6 +119,7 @@ export async function syncIDBWithServer(){
     for (const local of localWorkouts) {
         if (!serverDates.has(local.date) && local.isSynced === 1) {
             await deleteWorkoutByDate(local.date)
+            removeWorkout(local.date)
         }
     }
 
@@ -125,6 +130,8 @@ export async function syncIDBWithServer(){
                 if(localWorkout) await deleteWorkoutByDate(w.date)
                 const exercisesToSave = await getExercisesData(w.id)
                 await saveWorkout(w.date, exercisesToSave, 1)
+                setWorkout(w.date, exercisesToSave)
+
             } catch(error) {
                 console.error('Failed to fetch exercises:', error)
             }

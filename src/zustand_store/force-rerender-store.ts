@@ -2,13 +2,12 @@ import { create } from 'zustand'
 
 
 type RenderStore = {
-    forceRerender: boolean,
-    setForceRerender: () => void,
-
+    rerenderKey: number
+    trigger: () => void
 }
 
 export const useForceRerenderStore = create<RenderStore>((set) => ({
-   forceRerender:  false,
-   setForceRerender: () => 
-        set(state => ({forceRerender: !state.forceRerender}))
+    rerenderKey: 0,
+    trigger: () =>
+        set(state => ({ rerenderKey: state.rerenderKey + 1 }))
 }))
