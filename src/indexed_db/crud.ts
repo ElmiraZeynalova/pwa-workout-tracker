@@ -137,6 +137,19 @@ export async function getWorkoutByDate(date: string){
     })
 }
 
+export async function getAllWorkouts(){
+    const db = await openDB()
+
+    return new Promise<Workout[]>((resolve, reject) => {
+        const transaction = db.transaction(STORE_NAME, "readonly")
+        const store = transaction.objectStore(STORE_NAME)
+
+        const request = store.getAll()
+        request.onsuccess = () => resolve(request.result)
+        request.onerror = () => reject(request.error)
+    })
+}
+
 export async function getExerciseDataByDateAndId(workoutDate: string, exerciseId: string) {
     const db = await openDB()
 

@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 import { useUserStore } from './zustand_store/user-store'
-import {getUnsyncedWorkouts, markWorkoutSynced, clearStoreMemory, saveWorkout, getWorkoutByDate, deleteWorkoutByDate} from './indexed_db/crud'
+import {getUnsyncedWorkouts, markWorkoutSynced, clearStoreMemory, saveWorkout, getWorkoutByDate, deleteWorkoutByDate, getAllWorkouts} from './indexed_db/crud'
 
 type SetInfo = {
     setId: string
@@ -109,6 +109,15 @@ export async function syncIDBWithServer(){
         return
     } 
 
+    const serverDates = new Set(workoutsData.map(w => w.date))
+    const localWorkouts = await getAllWorkouts()
+
+    for (const local of localWorkouts) {
+        if (!serverDates.has(local.date) && local.isSynced === 1) {
+            await deleteWorkoutByDate(local.date)
+        }
+    }
+
     for(const w of workoutsData){
         const localWorkout = await getWorkoutByDate(w.date)
         if(!localWorkout || (localWorkout.isSynced === 1 && w.updated_at > localWorkout.updated_at)){
@@ -121,6 +130,7 @@ export async function syncIDBWithServer(){
             }
         }
     }
+
 }
 
 async function getExercisesData(workoutId: string): Promise<Exercise[]> {
