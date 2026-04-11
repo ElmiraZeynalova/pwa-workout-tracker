@@ -9,9 +9,10 @@ export default function DayContent({date}: {date: string}){
     const loggedExercises = workout?.exercises?.map(exercise => (
         <LoggedExerciseCard key={exercise.exerciseId} date={date} exercise={exercise}/>
     ))
+    const hasWorkout = workout && workout.exercises.length > 0
     return(
        <div className="day-content">
-        {!loggedExercises && (
+        {!hasWorkout && (
             <div className="no-workout-day">
                 <p>Workout Log Is Empty</p>
                 <NavLink to="/workouts/new" className="start-workout-btn">
@@ -20,7 +21,7 @@ export default function DayContent({date}: {date: string}){
                 </NavLink>
             </div>
         )}
-        {loggedExercises && <div className="workout-day">{loggedExercises}</div>}
+        {hasWorkout && <div className="workout-day">{loggedExercises}</div>}
     </div>
         
     )
