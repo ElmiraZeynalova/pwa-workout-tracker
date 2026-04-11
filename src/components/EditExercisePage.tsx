@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom"
 import {useEffect} from 'react'
-import { useWorkoutStore} from "../zustand_store/workout-store"
+import { useEditExerciseStore} from "../zustand_store/edit-exercise-store"
 import { useDateStore } from "../zustand_store/date-store"
 import { FaChevronLeft } from "react-icons/fa";
 import { useLocation } from 'react-router-dom'
-import {getExerciseDataByDateAndId, deleteExerciseById, editExercise, markWorkoutUnsynced} from '../indexed_db/crud'
-import LogExerciseCard from "./LogExerciseCard";
+import { deleteExerciseById, editExercise, markWorkoutUnsynced} from '../indexed_db/crud'
+import EditExerciseCard from "./EditExerciseCard";
 import { syncServerWithIDB } from '../supabaseDB'
+import {useRenderWorkoutOnScreenStore} from '../zustand_store/render-workout-store'
 
 type SetInfo = {
     setId: string
@@ -25,19 +26,27 @@ export default function EditExercisePage(){
     const { state } = useLocation()
     const exerciseId = state.exerciseId
     const workoutDate = useDateStore(state => state.selectedDate)
-    const loadExerciseForEdit = useWorkoutStore(state => state.loadExerciseForEdit)
-    const editingExercise = useWorkoutStore((state) => state.exercises[0])
-    const clearWorkoutStore = useWorkoutStore((state) => state.clearWorkout) 
-
+    const setExerciseForEdit = useEditExerciseStore(state => state.setExerciseForEdit)
+    const editingExercise = useEditExerciseStore((state) => state.editingExercise)
+    const workout = useRenderWorkoutOnScreenStore((state) => state.workouts[workoutDate])
+    const exercise = workout?.exercises.find(e => e.exerciseId === exerciseId)
+    const removeExercise = useRenderWorkoutOnScreenStore((state) => state.removeExercise)
+    const updateExercise = useRenderWorkoutOnScreenStore((state) => state.updateExercise)
     useEffect(() => {
-        const loadExercise = async() => {
-            const data = await getExerciseDataByDateAndId(workoutDate, exerciseId)
-            if(!data) return
-            const formatedExercise: Exercise = {...data, sets: data.sets.map((s :any) => ({setId: s.setId, reps: s.reps, weight: s.weight, checked: true}))}
-            loadExerciseForEdit(formatedExercise)
+        if (!exercise) return
+
+        const formattedExercise: Exercise = {
+            ...exercise,
+            sets: exercise.sets.map(s => ({
+                setId: s.setId,
+                reps: s.reps,
+                weight: s.weight,
+                checked: true
+            }))
         }
-        loadExercise()
-    }, [])
+
+        setExerciseForEdit(formattedExercise)
+    }, [exercise?.exerciseId])
 
     async function handleSave(){
         const cleanExerciseData = {
@@ -50,8 +59,10 @@ export default function EditExercisePage(){
                     .map(s => s.weight === null ? {...s, weight: 0} : s)
         }
         if(cleanExerciseData.sets.length === 0) {
+            removeExercise(workoutDate, cleanExerciseData.exerciseId)
             await deleteExerciseById(workoutDate, exerciseId)
         }else{
+            updateExercise(workoutDate, cleanExerciseData)
             await editExercise(workoutDate, cleanExerciseData)
         }
 
@@ -60,15 +71,11 @@ export default function EditExercisePage(){
         } catch(e) {
             console.warn("Failed to mark workout unsynced:", e)
         }
-        clearWorkoutStore()
         navigate('/')
-
-        syncServerWithIDB()
-        console.log("Server is synced with IDB")
+        syncServerWithIDB().catch(console.warn)
     }
 
     function handleExitEditPage(){
-        clearWorkoutStore()
         navigate('/')
     }
    
@@ -84,7 +91,7 @@ export default function EditExercisePage(){
 
             <main style={{overflowY: 'auto'}}>
                 <div className="edit-exersise-page">
-                    <LogExerciseCard exerciseId={exerciseId}/>
+                    <EditExerciseCard />
                 </div>
             </main>     
         </div>

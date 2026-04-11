@@ -7,6 +7,7 @@ import { RiEditLine } from "react-icons/ri";
 import { RiDeleteBinLine } from "react-icons/ri";
 import {deleteExerciseById, markWorkoutUnsynced} from '../indexed_db/crud'
 import { syncServerWithIDB } from '../supabaseDB'
+import {useRenderWorkoutOnScreenStore} from '../zustand_store/render-workout-store'
 
 type SetInfo = {
     setId: string
@@ -21,6 +22,7 @@ type Exercise = {
 }
 
 export default function LoggedExerciseCard({exercise, date}: {exercise: Exercise, date: string}){
+    const removeExercise = useRenderWorkoutOnScreenStore((state) => state.removeExercise)
     const [showModal, setShowModal] = useState<boolean>(false)
     const navigate = useNavigate()
     const sets = exercise.sets.map((set, idx) => (
@@ -32,6 +34,7 @@ export default function LoggedExerciseCard({exercise, date}: {exercise: Exercise
     ))
 
     async function handleDeleteExr(){
+        removeExercise(date, exercise.exerciseId)
         await deleteExerciseById(date, exercise.exerciseId)
         try {
             await markWorkoutUnsynced(date)

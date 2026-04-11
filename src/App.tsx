@@ -13,7 +13,7 @@ import {useRenderWorkoutOnScreenStore} from './zustand_store/render-workout-stor
 
 function App() {
   const setUserId = useUserStore((state) => state.setUserId)
-  const setManyWorkouts = useRenderWorkoutOnScreenStore((state) => state.setMany)
+  const setAllWorkouts = useRenderWorkoutOnScreenStore((state) => state.setAll)
   const userId = useUserStore((state) => state.userId)
   const isSyncing = useRef(false)
   const init = useCallback(async () => {
@@ -21,7 +21,7 @@ function App() {
       isSyncing.current = true
       try {
           const workouts = await getAllWorkouts()
-          setManyWorkouts(workouts)
+          setAllWorkouts(workouts)
           await syncServerWithIDB()
           await syncIDBWithServer()
       } catch (err) {

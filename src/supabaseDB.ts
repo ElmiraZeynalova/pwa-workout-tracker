@@ -109,7 +109,7 @@ export async function syncIDBWithServer(){
     
     if(workoutsData.length === 0){
         await clearStoreMemory()
-        useRenderWorkoutOnScreenStore.getState().setMany([])
+        useRenderWorkoutOnScreenStore.getState().setAll([])
         return
     } 
 

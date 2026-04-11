@@ -1,19 +1,21 @@
 import ExerciseSetForm from "./ExerciseSetForm"
-import { useWorkoutStore } from "../zustand_store/workout-store"
 import dumbbellIcon from "../assets/dumbbell.svg"
 import { RxCross2 } from "react-icons/rx";
-export default function LogExerciseCard({exerciseId}:{exerciseId: string}){
-    const exercise = useWorkoutStore((state) => state.exercises.find(e => e.exerciseId === exerciseId))
+import { useEditExerciseStore} from "../zustand_store/edit-exercise-store"
+
+export default function EditExerciseCard(){
+    const exercise = useEditExerciseStore((state) => state.editingExercise)
     const exerciseSets = exercise?.sets
-    const addNewSet = useWorkoutStore((state) => state.addNewSet)
-    const updateSet = useWorkoutStore((state) => state.updateSet)
-    const toggleChecked = useWorkoutStore(state => state.toggleChecked)
+    const addNewSet = useEditExerciseStore((state) => state.addNewSet)
+    const updateSet = useEditExerciseStore((state) => state.updateSet)
+    const toggleChecked = useEditExerciseStore((state) => state.toggleChecked)
+
     function handleAddSetBtnClick(){
-        addNewSet(exerciseId)
+        addNewSet()
     }
   
     const setForms = exerciseSets?.map((set, idx) => {
-        return <ExerciseSetForm key={idx} idx={idx} checked={set.checked}  onToggle={() => toggleChecked(exerciseId, set.setId)} reps={set.reps} weight={set.weight} updateReps={(v) => updateSet(exerciseId, set.setId, "reps", v)} updateWeight={(v) => updateSet(exerciseId, set.setId, "weight", v)}/>
+        return <ExerciseSetForm key={idx} idx={idx} checked={set.checked} onToggle={() => toggleChecked(set.setId)} reps={set.reps} weight={set.weight} updateReps={(v) => updateSet(set.setId, "reps", v)} updateWeight={(v) => updateSet(set.setId, "weight", v)}/>
     })
 
     return(

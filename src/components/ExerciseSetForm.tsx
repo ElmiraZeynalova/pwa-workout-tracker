@@ -6,8 +6,8 @@ type Props = {
     onToggle: () => void
     reps: number | null
     weight?: number | null
-    updateReps: (reps: number) => void
-    updateWeight: (weight: number) => void
+    updateReps: (reps: number | null) => void
+    updateWeight: (weight: number | null) => void
 }
 export default function ExerciseSetForm({idx, checked, onToggle, reps, weight, updateReps, updateWeight}: Props){
 

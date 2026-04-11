@@ -9,6 +9,7 @@ import dumbbellIcon from "../assets/grey_dumbbell.svg"
 import { AiOutlinePlus } from "react-icons/ai";
 import * as Dialog from '@radix-ui/react-dialog';
 import { syncServerWithIDB } from '../supabaseDB'
+import {useRenderWorkoutOnScreenStore} from '../zustand_store/render-workout-store'
 
 type SetInfo = {
     setId: string
@@ -22,7 +23,7 @@ type Exercise = {
     sets: SetInfo[]
 }
 export default function LogWorkoutPage(){
-
+    const addExercises = useRenderWorkoutOnScreenStore((state) => state.addExercises)
     const currentWorkoutExercises = useWorkoutStore((state) => state.exercises)
     const currentWorkoutDate = useDateStore((state) => state.selectedDate)
     const clearWorkoutStore = useWorkoutStore((state) => state.clearWorkout)
@@ -49,15 +50,19 @@ export default function LogWorkoutPage(){
               }))
               .filter(e => e.sets.length > 0)
 
-            await saveWorkout(currentWorkoutDate, cleanedExercises, 0)
-            console.log("Saved to IDB")
 
-            clearWorkoutStore()
-            navigate("/") 
+            try {
+                addExercises(currentWorkoutDate, cleanedExercises)
+                navigate("/")
+                await saveWorkout(currentWorkoutDate, cleanedExercises, 0)
+                clearWorkoutStore()
+                syncServerWithIDB().catch(console.error)
 
-            syncServerWithIDB()
-            console.log("Server is synced with IDB")
-        }else{
+            } catch (error) {
+                console.error(error)
+            }
+
+        } else {
             setShowFinishModal(true)
         }
     }

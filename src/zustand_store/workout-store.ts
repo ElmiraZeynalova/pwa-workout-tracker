@@ -18,11 +18,10 @@ type WorkoutStore = {
     addNewExercises: (newExercisesNames: string[]) => void
     deleteExercise: (exerciseId: string) => void
     addNewSet: (exerciseId: string) => void
-    deleteSet: (exerciseId: string, setIdx: number) => void
-    updateSet: (exerciseId: string, setIdx: number, fieldName: string, value: number) => void
-    toggleChecked: (exerciseId: string, setIdx: number) => void
+    deleteSet: (exerciseId: string, setId: string) => void
+    updateSet: (exerciseId: string, setId: string, fieldName: "reps" | "weight", value: number | null) => void
+    toggleChecked: (exerciseId: string, setId: string) => void
     clearWorkout: () => void
-    loadExerciseForEdit: (exercise: Exercise) => void
 }
 
 export const useWorkoutStore = create<WorkoutStore>((set) => ({
@@ -48,46 +47,41 @@ export const useWorkoutStore = create<WorkoutStore>((set) => ({
             )
         })),
 
-    deleteSet: (exerciseId, setIdx) => 
+    deleteSet: (exerciseId, setId) => 
         set(state => ({
             exercises: state.exercises.map(e => 
                 e.exerciseId === exerciseId 
-                    ? {...e, sets: e.sets.splice(setIdx, 1)}
+                    ? {...e, sets: e.sets.filter(s => s.setId !== setId)}
                     : e
             )
         })),
 
-    updateSet: (exerciseId, setIdx, fieldName, value) => 
+    updateSet: (exerciseId, setId, fieldName, value) => 
         set(state => ({
             exercises: state.exercises.map(e => 
                 e.exerciseId === exerciseId 
                     ? {
                         ...e, 
-                        sets: e.sets.map((set, idx) => 
-                            idx === setIdx ? {...set, [fieldName]: value} : set
+                        sets: e.sets.map((set) => 
+                            set.setId === setId ? {...set, [fieldName]: value} : set
                     )
                 }
                     : e
             )
         })),
-    toggleChecked: (exerciseId, setIdx) => 
+    toggleChecked: (exerciseId, setId) => 
         set(state => ({
             exercises: state.exercises.map(e =>
                 e.exerciseId === exerciseId
                 ? {
-                    ...e, sets: e.sets.map((set, idx) =>
-                    idx === setIdx ? {...set, checked: !set.checked} : set
+                    ...e, sets: e.sets.map((set) =>
+                    set.setId === setId ? {...set, checked: !set.checked} : set
                 )
             }
                 : e
             )
         })),
     clearWorkout: () => 
-        set({exercises: []}),
+        set({exercises: []})
 
-    loadExerciseForEdit: (exercise: Exercise) => 
-        set(() => ({
-            exercises: [exercise]
-    }))
-    
 }))

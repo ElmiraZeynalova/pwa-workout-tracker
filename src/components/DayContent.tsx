@@ -11,7 +11,7 @@ export default function DayContent({date}: {date: string}){
     ))
     return(
        <div className="day-content">
-        {!workout && (
+        {!loggedExercises && (
             <div className="no-workout-day">
                 <p>Workout Log Is Empty</p>
                 <NavLink to="/workouts/new" className="start-workout-btn">
@@ -20,7 +20,7 @@ export default function DayContent({date}: {date: string}){
                 </NavLink>
             </div>
         )}
-        {workout && <div className="workout-day">{loggedExercises}</div>}
+        {loggedExercises && <div className="workout-day">{loggedExercises}</div>}
     </div>
         
     )
