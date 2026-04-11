@@ -503,16 +503,16 @@ div.exercise-in-list:last-of-type {
     background: white;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 18px;
     border-radius: 16px;
-    padding: 15px 0;
-    margin-bottom: 15px;
+    padding: 18px 0;
+    margin-bottom: 18px;
 
     .modal-action-btn {
       display: flex;
-      gap: 20px;
+      gap: 18px;
       align-items: center;
-      padding: 0 20px;
+      padding: 0 18px;
       color: black;
       font-size: 17px;
       font-weight: 400;
@@ -523,7 +523,7 @@ div.exercise-in-list:last-of-type {
     }
     .modal-action-btn:first-child {
       border-bottom: 0.2px solid #c7c7c76a;
-      padding-bottom: 15px;
+      padding-bottom: 18px;
     }
   }
 }
@@ -658,21 +658,21 @@ div.exercise-in-list:last-of-type {
     font-size: 17px;
     font-weight: 400;
     text-align: center;
-    margin: 0 0 12px 0;
+    margin: 0 0 15px 0;
   }
 
   .discard-btn,
   .ok-btn {
     cursor: pointer;
     text-decoration: none;
-    border: 1.5px solid #ff5526;
+    border: 1px solid #ff5526;
     text-align: center;
     border-radius: 18px;
-    padding: 6px 18px;
-    width: 80%;
+    padding: 8px 18px;
+    width: 85%;
     color: #ff5526;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 400;
     background: none;
     margin: 0;
     transition: transform 0.08s ease;
@@ -680,16 +680,16 @@ div.exercise-in-list:last-of-type {
   .cancel-btn {
     cursor: pointer;
     text-decoration: none;
-    border: 1.5px solid #666666;
+    border: 1px solid #767676;
     text-align: center;
     border-radius: 18px;
-    padding: 6px 18px;
-    width: 80%;
+    padding: 8px 18px;
+    width: 85%;
     color: #5b5b5b;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 400;
     background: none;
-    margin: 12px 0 0 0;
+    margin: 15px 0 0 0;
     transition: transform 0.08s ease;
   }
   .cancel-btn:active,
