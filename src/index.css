@@ -20,6 +20,7 @@ body::-webkit-scrollbar {
 }
 
 a,
+div,
 .nav-link {
   -webkit-tap-highlight-color: transparent;
 }
@@ -670,12 +671,12 @@ div.exercise-in-list:last-of-type {
   .ok-btn {
     cursor: pointer;
     text-decoration: none;
-    border: 1px solid #ff5526;
+    background: #ff5526;
     text-align: center;
     border-radius: 18px;
     padding: 8px 18px;
     width: 85%;
-    color: #ff5526;
+    color: #ffffff;
     font-size: 16px;
     font-weight: 500;
     background: none;
@@ -703,8 +704,6 @@ div.exercise-in-list:last-of-type {
   .discard-btn:active,
   .ok-btn:active {
     transform: scale(0.97);
-    background: #ff5526;
-    color: white;
   }
 }
 
