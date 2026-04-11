@@ -679,7 +679,6 @@ div.exercise-in-list:last-of-type {
     color: #ffffff;
     font-size: 16px;
     font-weight: 500;
-    background: none;
     margin: 0;
     transition: transform 0.08s ease;
   }
