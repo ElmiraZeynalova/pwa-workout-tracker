@@ -139,6 +139,11 @@ header {
   background: none;
   padding: 0;
   margin: 0;
+  transition: transform 0.08s ease;
+}
+
+.header-btn:active {
+  transform: scale(0.97);
 }
 
 .finish-btn,
@@ -153,6 +158,12 @@ header {
   font-weight: 500;
   background: none;
   margin: 0;
+  transition: transform 0.08s ease;
+}
+
+.finish-btn:active,
+.save-btn:active {
+  transform: scale(0.97);
 }
 
 .date-bar {
@@ -186,6 +197,10 @@ header {
     cursor: pointer;
     position: relative;
     z-index: 1;
+    transition: transform 0.08s ease;
+  }
+  .number:active {
+    transform: scale(0.97);
   }
   .selected {
     color: white;
@@ -265,6 +280,11 @@ header {
   margin: 0 auto;
   font-size: 15px;
   font-weight: 500;
+  transition: transform 0.08s ease;
+}
+
+.add-exercise-btn-log-screen:active {
+  transform: scale(0.97);
 }
 
 .exercises-list-page-content {
@@ -306,7 +326,7 @@ header {
   gap: 12px;
   padding: 10px 0;
   border-bottom: 0.3px solid #c7c7c76a;
-
+  transition: transform 0.08s ease;
   .selected-exercise {
     background: #bbbbbbb2;
     width: 5px;
@@ -332,7 +352,12 @@ header {
     }
   }
 }
-
+.exercise-in-list:active {
+  transform: scale(0.97);
+}
+div.exercise-in-list:last-of-type {
+  border: 0;
+}
 .add-exercise-btn-list-screen {
   position: absolute;
   bottom: 20px;
@@ -350,6 +375,11 @@ header {
   margin: 0 auto;
   font-size: 15px;
   font-weight: 500;
+  transition: transform 0.08s ease;
+}
+
+.add-exercise-btn-list-screen:active {
+  transform: scale(0.97);
 }
 
 .no-search-results {
@@ -379,11 +409,11 @@ header {
 .logged-exercise-card {
   display: flex;
   flex-direction: column;
-  background: white;
   gap: 15px;
   border-radius: 15px;
   padding: 10px;
-
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   .top {
     display: flex;
     align-items: center;
@@ -429,8 +459,21 @@ header {
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.55);
   z-index: 99;
+}
+.cross-btn {
+  transition: transform 0.08s ease;
+}
+.cross-btn:active {
+  transform: scale(0.97);
+}
+
+.menu-btn {
+  transition: transform 0.08s ease;
+}
+.menu-btn:active {
+  transform: scale(0.97);
 }
 
 .edit-exrc-modal {
@@ -444,21 +487,25 @@ header {
   outline: 0;
   .modal-cancel-btn {
     background: white;
-    border-radius: 10px;
-    padding: 16px 0;
+    border-radius: 16px;
+    padding: 15px 0;
     color: #ff5526;
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 500;
     text-align: center;
+    transition: transform 0.08s ease;
+  }
+  .modal-cancel-btn:active {
+    transform: scale(0.97);
   }
 
   .modal-action-btns {
     background: white;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    border-radius: 10px;
-    padding: 20px 0;
+    gap: 15px;
+    border-radius: 16px;
+    padding: 15px 0;
     margin-bottom: 15px;
 
     .modal-action-btn {
@@ -467,12 +514,16 @@ header {
       align-items: center;
       padding: 0 20px;
       color: black;
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 400;
+      transition: transform 0.08s ease;
+    }
+    .modal-action-btn:active {
+      transform: scale(0.97);
     }
     .modal-action-btn:first-child {
       border-bottom: 0.2px solid #c7c7c76a;
-      padding-bottom: 20px;
+      padding-bottom: 15px;
     }
   }
 }
@@ -480,7 +531,8 @@ header {
   display: flex;
   flex-direction: column;
   flex: 1;
-  background: white;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   gap: 15px;
   border-radius: 15px;
   padding: 10px;
@@ -512,6 +564,10 @@ header {
     font-size: 12px;
     font-weight: 500;
     background: white;
+    transition: transform 0.08s ease;
+  }
+  .add-set-btn:active {
+    transform: scale(0.97);
   }
 }
 
@@ -587,7 +643,7 @@ header {
   align-items: center;
   justify-content: center;
   background: white;
-  border-radius: 10px;
+  border-radius: 18px;
   position: fixed;
   left: 30px;
   right: 30px;
@@ -596,35 +652,50 @@ header {
   z-index: 100;
   border: 0;
   outline: 0;
+  padding: 12px;
   p {
     color: black;
     font-size: 17px;
     font-weight: 400;
     text-align: center;
-    padding: 15px;
-    margin: 0;
-  }
-
-  p.finish {
-    border-bottom: 0.2px solid #c7c7c76a;
+    margin: 0 0 12px 0;
   }
 
   .discard-btn,
   .ok-btn {
+    cursor: pointer;
+    text-decoration: none;
+    border: 1.5px solid #ff5526;
+    text-align: center;
+    border-radius: 18px;
+    padding: 6px 18px;
+    width: 80%;
     color: #ff5526;
-    border-bottom: 0.2px solid #c7c7c76a;
-    padding: 15px 0;
-    font-weight: 600;
     font-size: 16px;
     font-weight: 500;
-    text-align: center;
+    background: none;
+    margin: 0;
+    transition: transform 0.08s ease;
   }
   .cancel-btn {
-    color: black;
-    padding: 15px 0;
+    cursor: pointer;
+    text-decoration: none;
+    border: 1.5px solid #666666;
+    text-align: center;
+    border-radius: 18px;
+    padding: 6px 18px;
+    width: 80%;
+    color: #5b5b5b;
     font-size: 16px;
     font-weight: 500;
-    text-align: center;
+    background: none;
+    margin: 12px 0 0 0;
+    transition: transform 0.08s ease;
+  }
+  .cancel-btn:active,
+  .discard-btn:active,
+  .ok-btn:active {
+    transform: scale(0.97);
   }
 }
 
@@ -658,8 +729,11 @@ header {
   text-decoration: none;
   color: #00000072;
   margin-bottom: 20px;
+  transition: transform 0.08s ease;
 }
-
+.start-workout-btn:active {
+  transform: scale(0.97);
+}
 .workout-day {
   padding: 12px;
   display: flex;

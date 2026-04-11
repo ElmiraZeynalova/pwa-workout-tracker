@@ -76,7 +76,7 @@ export default function LoggedExerciseCard({exercise, date}: {exercise: Exercise
                 <div className="top">
                     <img src={dumbbellIcon} alt="exercise icon" width={40} height={40}/>
                     <p className="exercise-name">{exercise.exerciseName}</p>
-                    <BsThreeDotsVertical onClick={() => setShowModal(true)} size={18} color='#FF5526'/>
+                    <BsThreeDotsVertical className="menu-btn" onClick={() => setShowModal(true)} size={18} color='#FF5526'/>
                 </div>
                 <div className="set-rows">
                     {sets.map(set => (

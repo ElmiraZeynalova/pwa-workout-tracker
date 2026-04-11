@@ -8,6 +8,7 @@ export default function LogExerciseCard({exerciseId}:{exerciseId: string}){
     const addNewSet = useWorkoutStore((state) => state.addNewSet)
     const updateSet = useWorkoutStore((state) => state.updateSet)
     const toggleChecked = useWorkoutStore(state => state.toggleChecked)
+    const deleteExercise = useWorkoutStore(state => state.deleteExercise)
     function handleAddSetBtnClick(){
         addNewSet(exerciseId)
     }
@@ -21,7 +22,7 @@ export default function LogExerciseCard({exerciseId}:{exerciseId: string}){
             <div className="top">
                 <img src={dumbbellIcon} alt="exercise icon" width={40} height={40}/>
                 <h3 className="exercise-name">{exercise?.exerciseName}</h3>   
-                <RxCross2 size={20} color="#858585"/>
+                <RxCross2 size={20} className="cross-btn" color="#858585" onClick={() => deleteExercise(exerciseId)}/>
             </div>
             
             <div className="set-forms">{setForms}</div>  
