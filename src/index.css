@@ -19,6 +19,11 @@ body::-webkit-scrollbar {
   display: none;
 }
 
+a,
+.nav-link {
+  -webkit-tap-highlight-color: transparent;
+}
+
 #root {
   height: 100dvh;
   display: flex;
@@ -672,7 +677,7 @@ div.exercise-in-list:last-of-type {
     width: 85%;
     color: #ff5526;
     font-size: 16px;
-    font-weight: 400;
+    font-weight: 500;
     background: none;
     margin: 0;
     transition: transform 0.08s ease;
@@ -687,15 +692,19 @@ div.exercise-in-list:last-of-type {
     width: 85%;
     color: #5b5b5b;
     font-size: 16px;
-    font-weight: 400;
+    font-weight: 500;
     background: none;
     margin: 15px 0 0 0;
     transition: transform 0.08s ease;
   }
-  .cancel-btn:active,
+  .cancel-btn:active {
+    transform: scale(0.97);
+  }
   .discard-btn:active,
   .ok-btn:active {
     transform: scale(0.97);
+    background: #ff5526;
+    color: white;
   }
 }
 
