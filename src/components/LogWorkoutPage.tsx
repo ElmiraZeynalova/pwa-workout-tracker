@@ -101,7 +101,7 @@ export default function LogWorkoutPage(){
             <div className="layout">
                 <header>
                     <button className="header-btn" onClick={() => setShowDiscardModal(true)}>
-                        <FaChevronLeft size={16}/>
+                        <FaChevronLeft size={16} color="black"/>
                     </button>
                     <p style={{marginLeft: '50px'}}>Log Workout</p>
                     <button className="finish-btn" onClick={handleFinish}>Finish</button>

@@ -83,7 +83,7 @@ export default function EditExercisePage(){
         <div className="layout">
             <header>
                 <button className="header-btn" onClick={handleExitEditPage}>
-                    <FaChevronLeft size={16}/>
+                    <FaChevronLeft size={16} color="black"/>
                 </button>
                 <p style={{marginLeft: '50px'}}>Edit Exercise</p>
                 <button className="save-btn" onClick={handleSave}>Save</button>
