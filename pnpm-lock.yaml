@@ -35,6 +35,9 @@ importers:
       react-router-dom:
         specifier: ^7.13.1
         version: 7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      react-virtualized-auto-sizer:
+        specifier: ^2.0.3
+        version: 2.0.3(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react-window:
         specifier: ^1.8.7
         version: 1.8.7(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -60,6 +63,9 @@ importers:
       '@types/react-modal':
         specifier: ^3.16.3
         version: 3.16.3
+      '@types/react-virtualized-auto-sizer':
+        specifier: ^1.0.4
+        version: 1.0.8(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@types/react-window':
         specifier: ^1.8.8
         version: 1.8.8
@@ -1391,6 +1397,10 @@ packages:
   '@types/react-modal@3.16.3':
     resolution: {integrity: sha512-xXuGavyEGaFQDgBv4UVm8/ZsG+qxeQ7f77yNrW3n+1J6XAstUy5rYHeIHPh1KzsGc6IkCIdu6lQ2xWzu1jBTLg==}
 
+  '@types/react-virtualized-auto-sizer@1.0.8':
+    resolution: {integrity: sha512-keJpNyhiwfl2+N12G1ocCVA5ZDBArbPLe/S90X3kt7fam9naeHdaYYWbpe2sHczp70JWJ+2QLhBE8kLvLuVNjA==}
+    deprecated: This is a stub types definition. react-virtualized-auto-sizer provides its own type definitions, so you do not need this installed.
+
   '@types/react-window@1.8.8':
     resolution: {integrity: sha512-8Ls660bHR1AUA2kuRvVG9D/4XpRC6wjAaPT9dil7Ckc76eP9TKWZwwmgfq8Q1LANX3QNDnoU4Zp48A3w+zK69Q==}
 
@@ -2430,6 +2440,12 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
+
+  react-virtualized-auto-sizer@2.0.3:
+    resolution: {integrity: sha512-nonmCSUIh5HtbzazGcQ1NhnMFps/ZBu/UKJyhCt0Fhi7ondLAUZNETtRCWM8RWYZDzVlMYOQGgBmIxUutIhqgw==}
+    peerDependencies:
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
 
   react-window@1.8.7:
     resolution: {integrity: sha512-JHEZbPXBpKMmoNO1bNhoXOOLg/ujhL/BU4IqVU9r8eQPcy5KQnGHIHDRkJ0ns9IM5+Aq5LNwt3j8t3tIrePQzA==}
@@ -4237,6 +4253,13 @@ snapshots:
     dependencies:
       '@types/react': 19.2.14
 
+  '@types/react-virtualized-auto-sizer@1.0.8(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+    dependencies:
+      react-virtualized-auto-sizer: 2.0.3(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+    transitivePeerDependencies:
+      - react
+      - react-dom
+
   '@types/react-window@1.8.8':
     dependencies:
       '@types/react': 19.2.14
@@ -5367,6 +5390,11 @@ snapshots:
       tslib: 2.8.1
     optionalDependencies:
       '@types/react': 19.2.14
+
+  react-virtualized-auto-sizer@2.0.3(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
+    dependencies:
+      react: 19.2.4
+      react-dom: 19.2.4(react@19.2.4)
 
   react-window@1.8.7(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
     dependencies:
