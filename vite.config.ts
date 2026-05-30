@@ -23,7 +23,7 @@ export default defineConfig({
         start_url: '/',
         display: 'standalone',
         display_override: ["window-controls-overlay", "standalone"],
-        background_color: '#f3f3f3',
+        background_color: '#FD5528',
         icons: [
           {
             "src": "icons/web-app-manifest-192x192.png",
