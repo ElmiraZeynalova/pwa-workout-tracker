@@ -48,8 +48,6 @@ export async function saveWorkout(date: string, exercises: Exercise[], status: n
 
         transaction.oncomplete = () => resolve()
         transaction.onerror = () => reject(transaction.error)
-
-        
     })
 }
 

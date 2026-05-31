@@ -5,7 +5,10 @@ import dayjs from "dayjs"
 import {useState, useRef, useLayoutEffect} from 'react'
 import { FixedSizeList as List } from 'react-window'
 import type { ListChildComponentProps } from 'react-window'
-
+import { useRenderWorkoutOnScreenStore } from "../zustand_store/render-workout-store";
+import * as Dialog from '@radix-ui/react-dialog';
+import { RxCross2 } from "react-icons/rx";
+import dumbbellIcon from "../assets/dumbbell.svg"
 
 const TOTAL_MONTHS = 3000
 const CENTER_INDEX = Math.floor(TOTAL_MONTHS / 2)
@@ -29,7 +32,9 @@ export default function CalendarPage(){
     const initialMonthIndex = CENTER_INDEX
     const [height, setHeight] = useState(0)
     const mainRef = useRef<HTMLDivElement>(null)
-
+    const [showWorkoutSummary, setShowWorkoutSummary] = useState<boolean>(false)
+    const workout = useRenderWorkoutOnScreenStore(state => state.workouts[selectedDate])
+   
     useLayoutEffect(() => {
         if (!mainRef.current) return
 
@@ -61,13 +66,41 @@ export default function CalendarPage(){
                     offset={month.offset}
                     selectedDate={selectedDate}
                     onSelectedDate={setSelectedDate}
+                    toggleShowWorkoutSummary={setShowWorkoutSummary}
                 />
             </div>
             </div>
         )
     }
     
+    const exercisesPerformed = workout?.exercises.map(e => {
+        const setCount = e.sets.length
+        return <div className="exercise">
+            <img src={dumbbellIcon} alt="exercise icon" width={40} height={40}/>
+            <p>{setCount} {setCount > 1 ? "sets" : "set"} {e.exerciseName}</p>
+        </div>
+    })
+
     return(
+        <>
+        {(showWorkoutSummary && workout) && 
+            <Dialog.Root open={showWorkoutSummary} onOpenChange={setShowWorkoutSummary}>
+            <Dialog.Portal>
+                <Dialog.Overlay className="overlay" /> 
+                <Dialog.Title></Dialog.Title>
+                <Dialog.Content aria-describedby={undefined} className="calendar-workout-summary">
+                        <div className="summary-top">
+                            <p>{dayjs(selectedDate).format("dddd, MMMM DD YYYY")}</p>
+                            <RxCross2 size={20} className="cross-btn" color="#858585" onClick={() => setShowWorkoutSummary(false)}/>
+                        </div>
+                        <main>{exercisesPerformed}</main>
+                        <NavLink to="/" className="go-to-btn">
+                            Go to
+                        </NavLink>
+                </Dialog.Content>
+            </Dialog.Portal>
+            </Dialog.Root>
+            }
         <div className="layout" style={{ height: "100vh", overflow: "hidden" }}>
             <header>
                 <NavLink className="header-btn" to="/">
@@ -93,6 +126,7 @@ export default function CalendarPage(){
                     )}
             </main>
         </div>
+        </>
     )
 }
 
