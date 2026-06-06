@@ -6,8 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import { RiEditLine } from "react-icons/ri";
 import { RiDeleteBinLine } from "react-icons/ri";
 import {deleteExerciseById, markWorkoutUnsynced} from '../indexed_db/crud'
-import { syncServerWithIDB } from '../supabaseDB'
-import {useRenderWorkoutOnScreenStore} from '../zustand_store/render-workout-store'
+import { syncServerWithIDB } from '../supabase/supabaseDB'
+import {useRenderWorkoutOnScreenStore} from '../store/render-workout-store'
+import styles from './LoggedExerciseCard.module.css'
 
 type SetInfo = {
     setId: string
@@ -56,31 +57,31 @@ export default function LoggedExerciseCard({exercise, date}: {exercise: Exercise
         <>
             <Dialog.Root open={showModal} onOpenChange={setShowModal}>
             <Dialog.Portal>
-                <Dialog.Overlay className="overlay" /> 
+                <Dialog.Overlay className={styles.overlay} /> 
                 <Dialog.Title></Dialog.Title>
-                <Dialog.Content aria-describedby={undefined} className="edit-exrc-modal">
-                    <div className="modal-action-btns">
-                        <div className="modal-action-btn" onClick={handleEditExr}>
+                <Dialog.Content aria-describedby={undefined} className={styles.editExrcModal}>
+                    <div className={styles.modalActionBtns}>
+                        <div className={styles.modalActionBtn} onClick={handleEditExr}>
                             <RiEditLine size={20} color="#8e8e8e"/>
                             Edit exercise</div>
-                        <div className="modal-action-btn" onClick={handleDeleteExr}>
+                        <div className={styles.modalActionBtn} onClick={handleDeleteExr}>
                             <RiDeleteBinLine size={20} color="#8e8e8e"/>
                             Delete exercise</div>
                     </div>
-                    <div className="modal-cancel-btn" onClick={() => setShowModal(false)}>Cancel</div>
+                    <div className={styles.modalCancelBtn} onClick={() => setShowModal(false)}>Cancel</div>
                 </Dialog.Content>
             </Dialog.Portal>
             </Dialog.Root>
 
-            <div className="logged-exercise-card">
-                <div className="top">
+            <div className={styles.loggedExerciseCard}>
+                <div className={styles.top}>
                     <img src={dumbbellIcon} alt="exercise icon" width={40} height={40}/>
-                    <p className="exercise-name">{exercise.exerciseName}</p>
-                    <BsThreeDotsVertical className="menu-btn" onClick={() => setShowModal(true)} size={18} color='#FF5526'/>
+                    <p className={styles.exerciseName}>{exercise.exerciseName}</p>
+                    <BsThreeDotsVertical className={styles.menuBtn} onClick={() => setShowModal(true)} size={18} color='#FF5526'/>
                 </div>
-                <div className="set-rows">
+                <div className={styles.setRows}>
                     {sets.map(set => (
-                        <div className="set-row" key={set.id}>
+                        <div className={styles.setRow} key={set.id}>
                             <span style={{width: 20}}>{set.id}</span>
                             <p>{set.weight} <span>kgs</span></p>
                             <p>{set.reps} <span>reps</span></p>

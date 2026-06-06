@@ -1,8 +1,8 @@
 import ExerciseSetForm from "./ExerciseSetForm"
 import dumbbellIcon from "../assets/dumbbell.svg"
 import { RxCross2 } from "react-icons/rx";
-import { useEditExerciseStore} from "../zustand_store/edit-exercise-store"
-
+import { useEditExerciseStore} from "../store/edit-exercise-store"
+import styles from './LoggingExerciseCard.module.css'
 export default function EditExerciseCard(){
     const exercise = useEditExerciseStore((state) => state.editingExercise)
     const exerciseSets = exercise?.sets
@@ -19,15 +19,15 @@ export default function EditExerciseCard(){
     })
 
     return(
-        <div className="log-exercise-card">
-            <div className="top">
+        <div className={styles.loggingExerciseCard}>
+            <div className={styles.top}>
                 <img src={dumbbellIcon} alt="exercise icon" width={40} height={40}/>
-                <h3 className="exercise-name">{exercise?.exerciseName}</h3>   
+                <h3 className={styles.exerciseName}>{exercise?.exerciseName}</h3>   
                 <RxCross2 size={20} color="#858585"/>
             </div>
             
-            <div className="set-forms">{setForms}</div>  
-            <button className="add-set-btn" onClick={handleAddSetBtnClick}>Add Set</button>
+            <div className={styles.setForms}>{setForms}</div>  
+            <button className={styles.addSetBtn} onClick={handleAddSetBtnClick}>Add Set</button>
         </div>
     )
 }

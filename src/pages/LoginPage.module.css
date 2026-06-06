@@ -1,0 +1,55 @@
+.loginPageLayout {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  padding: 30px;
+  justify-content: center;
+  h1 {
+    color: "black";
+    font-weight: 700;
+    font-size: 35;
+    margin: 0 0 15px 0;
+  }
+  p {
+    color: #7a7a7a;
+    font-weight: 400;
+    font-size: 17;
+    margin: 0 0 30px 0;
+  }
+  form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    border-radius: 40px;
+    padding: 10px 15px;
+    margin: 0 0 30px 0;
+
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+  }
+  input {
+    flex-grow: 1;
+    border: 0;
+    margin: 0;
+    padding: 0;
+  }
+  input:focus {
+    outline: none;
+    border: none;
+  }
+  button {
+    padding: 10px 50px;
+    border-radius: 20px;
+    background: #ff5526;
+    color: white;
+    text-align: center;
+    font-weight: 500;
+    font-size: 16px;
+    border: 0;
+  }
+  button:disabled {
+    background: #ccc;
+    color: #666;
+  }
+}

@@ -1,0 +1,66 @@
+.swiper {
+  height: 100%;
+}
+
+.swiperSlide {
+  height: 100%;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.swiperSlide::-webkit-scrollbar {
+  display: none;
+}
+
+.dateBar {
+  position: sticky;
+  top: 53px;
+  background: #f3f3f3;
+  z-index: 9;
+  padding: 0 6px 6px 6px;
+}
+
+.day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  .dayOfWeek {
+    font-size: 9px;
+    font-weight: 400;
+    color: #494949;
+  }
+  .today {
+    color: black;
+    font-weight: 700;
+  }
+  .number {
+    font-size: 16px;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.08s ease;
+  }
+  .number:active {
+    transform: scale(0.97);
+  }
+  .selected {
+    color: white;
+    font-weight: 500;
+  }
+}
+
+.selector {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  border-radius: 100%;
+  background: #ff5526;
+  top: 25px;
+  left: 0;
+  transform: translateX(var(--move-x));
+  transition: transform 0.4s ease;
+  pointer-events: none;
+  z-index: 0;
+}

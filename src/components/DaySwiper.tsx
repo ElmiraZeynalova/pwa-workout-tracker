@@ -2,10 +2,11 @@ import DayContent from './DayContent'
 import dayjs from 'dayjs'
 import type { Dayjs } from 'dayjs'
 import { useMemo, useRef, useEffect} from 'react'
-import {useDateStore} from "../zustand_store/date-store"
+import {useDateStore} from "../store/date-store"
 import { Swiper, SwiperSlide } from 'swiper/react';
 import type { Swiper as SwiperType } from 'swiper'
 import 'swiper/css'
+import styles from './DaySwiper.module.css'
 
 const RANGE = 14
 
@@ -55,6 +56,7 @@ export default function DaySwiper(){
     }
     return (
         <Swiper
+            className={styles.swiper}
             key={centerDate}
             initialSlide={initialSlideIndex}
             slidesPerView={1}
@@ -63,7 +65,7 @@ export default function DaySwiper(){
             style={{width: '100%', height: '100%'}}
         >
         {dates.map((date) => (
-            <SwiperSlide key={date} style={{}}>
+            <SwiperSlide className={styles.swiperSlide} key={date} style={{}}>
                 <DayContent date={date} />
             </SwiperSlide>
         ))}

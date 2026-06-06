@@ -1,4 +1,4 @@
-html,
+/* html,
 body {
   margin: 0;
   padding: 0;
@@ -106,8 +106,8 @@ main {
 
 .layout main::-webkit-scrollbar {
   display: none;
-}
-.swiper {
+} */
+/* .swiper {
   height: 100%;
 }
 
@@ -120,8 +120,8 @@ main {
 
 .swiper-slide::-webkit-scrollbar {
   display: none;
-}
-
+} */
+/* 
 header {
   position: sticky;
   top: 0;
@@ -150,9 +150,9 @@ header {
 
 .header-btn:active {
   transform: scale(0.97);
-}
+} */
 
-.finish-btn,
+/* .finish-btn,
 .save-btn {
   cursor: pointer;
   text-decoration: none;
@@ -170,20 +170,20 @@ header {
 .finish-btn:active,
 .save-btn:active {
   transform: scale(0.97);
-}
+} */
 
-.date-bar {
+/* .date-bar {
   position: sticky;
   top: 53px;
   background: #f3f3f3;
   z-index: 9;
   padding: 0 6px 6px 6px;
-}
+} */
 
-:root {
+/* :root {
   --move-x: 0px;
-}
-
+} */
+/* 
 .day {
   display: flex;
   flex-direction: column;
@@ -226,17 +226,17 @@ header {
   transition: transform 0.4s ease;
   pointer-events: none;
   z-index: 0;
-}
+} */
 
-.edit-exersise-page {
+/* .edit-exersise-page {
   display: flex;
   flex-direction: column;
   padding: 12px;
   scrollbar-width: none;
   -ms-overflow-style: none;
-}
+} */
 
-.log-screen-with-exercises-added {
+/* .log-screen-with-exercises-added {
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -291,9 +291,9 @@ header {
 
 .add-exercise-btn-log-screen:active {
   transform: scale(0.97);
-}
+} */
 
-.exercises-list-page-content {
+/* .exercises-list-page-content {
   display: flex;
   flex-direction: column;
   padding: 12px;
@@ -410,9 +410,9 @@ div.exercise-in-list:last-of-type {
     color: #7a7a7a;
     text-align: center;
   }
-}
+} */
 
-.logged-exercise-card {
+/* .logged-exercise-card {
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -460,28 +460,28 @@ div.exercise-in-list:last-of-type {
       }
     }
   }
-}
+} */
 
-.overlay {
+/* .overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.55);
   z-index: 99;
-}
-.cross-btn {
+} */
+/* .cross-btn {
   transition: transform 0.08s ease;
 }
 .cross-btn:active {
   transform: scale(0.97);
-}
+} */
 
-.menu-btn {
+/* .menu-btn {
   transition: transform 0.08s ease;
 }
 .menu-btn:active {
   transform: scale(0.97);
-}
-
+} */
+/* 
 .edit-exrc-modal {
   position: fixed;
   left: 15px;
@@ -532,8 +532,8 @@ div.exercise-in-list:last-of-type {
       padding-bottom: 18px;
     }
   }
-}
-.log-exercise-card {
+} */
+/* .log-exercise-card {
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -704,9 +704,9 @@ div.exercise-in-list:last-of-type {
   .ok-btn:active {
     transform: scale(0.97);
   }
-}
+} */
 
-.day-content {
+/* .day-content {
   height: 100%;
 }
 
@@ -746,13 +746,13 @@ div.exercise-in-list:last-of-type {
   display: flex;
   flex-direction: column;
   gap: 12px;
-}
+} */
 
-input[type="number"]::-webkit-inner-spin-button,
+/* input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
-}
-
+} */
+/* 
 .calendar-month {
   scroll-margin-top: 85px;
   display: flex;
@@ -912,4 +912,4 @@ input[type="number"]::-webkit-outer-spin-button {
     font-weight: 500;
     transition: transform 0.08s ease;
   }
-}
+} */

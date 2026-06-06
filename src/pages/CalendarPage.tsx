@@ -1,21 +1,23 @@
 import { FaChevronLeft } from "react-icons/fa";
-import {NavLink} from "react-router-dom"
-import CalendarMonth from './CalendarMonth'
+import {NavLink, useNavigate} from "react-router-dom"
+import CalendarMonth from '../components/CalendarMonth'
 import dayjs from "dayjs"
 import {useState, useRef, useLayoutEffect} from 'react'
 import { FixedSizeList as List } from 'react-window'
 import type { ListChildComponentProps } from 'react-window'
-import { useRenderWorkoutOnScreenStore } from "../zustand_store/render-workout-store";
+import { useRenderWorkoutOnScreenStore } from "../store/render-workout-store";
 import * as Dialog from '@radix-ui/react-dialog';
 import { RxCross2 } from "react-icons/rx";
 import dumbbellIcon from "../assets/dumbbell.svg"
+import { useDateStore } from "../store/date-store";
+import Header from "../components/Header"
+import styles from "../pages/CalendarPage.module.css"
 
 const TOTAL_MONTHS = 3000
 const CENTER_INDEX = Math.floor(TOTAL_MONTHS / 2)
 
 function getMonth(index: number) {
   const date = dayjs().add(index - CENTER_INDEX, "month")
-
   const daysCount = date.daysInMonth()
 
   return {
@@ -28,13 +30,18 @@ function getMonth(index: number) {
 }
 
 export default function CalendarPage(){
-    const [selectedDate, setSelectedDate] = useState<string>(dayjs().format("YYYY-MM-DD"))
+    const [selectedCalendarDate, setSelectedCalendarDate] = useState<string>(dayjs().format("YYYY-MM-DD"))
     const initialMonthIndex = CENTER_INDEX
     const [height, setHeight] = useState(0)
     const mainRef = useRef<HTMLDivElement>(null)
     const [showWorkoutSummary, setShowWorkoutSummary] = useState<boolean>(false)
-    const workout = useRenderWorkoutOnScreenStore(state => state.workouts[selectedDate])
+    const workout = useRenderWorkoutOnScreenStore(state => state.workouts[selectedCalendarDate])
    
+    const setCenterDate = useDateStore(state => state.setCenterDate)
+    const setSelectedDate = useDateStore(state => state.setSelectedDate)
+
+    const navigate = useNavigate()
+
     useLayoutEffect(() => {
         if (!mainRef.current) return
 
@@ -64,8 +71,8 @@ export default function CalendarPage(){
                     monthName={month.label}
                     dates={month.days}
                     offset={month.offset}
-                    selectedDate={selectedDate}
-                    onSelectedDate={setSelectedDate}
+                    selectedDate={selectedCalendarDate}
+                    onSelectedDate={setSelectedCalendarDate}
                     toggleShowWorkoutSummary={setShowWorkoutSummary}
                 />
             </div>
@@ -75,41 +82,45 @@ export default function CalendarPage(){
     
     const exercisesPerformed = workout?.exercises.map(e => {
         const setCount = e.sets.length
-        return <div className="exercise">
+        return <div className={styles.exercise}>
             <img src={dumbbellIcon} alt="exercise icon" width={40} height={40}/>
             <p>{setCount} {setCount > 1 ? "sets" : "set"} {e.exerciseName}</p>
         </div>
     })
+
+    function handleClick(){
+       setCenterDate(selectedCalendarDate)
+       setSelectedDate(selectedCalendarDate)
+       navigate("/")
+    }
 
     return(
         <>
         {(showWorkoutSummary && workout) && 
             <Dialog.Root open={showWorkoutSummary} onOpenChange={setShowWorkoutSummary}>
             <Dialog.Portal>
-                <Dialog.Overlay className="overlay" /> 
+                <Dialog.Overlay className={styles.overlay} /> 
                 <Dialog.Title></Dialog.Title>
-                <Dialog.Content aria-describedby={undefined} className="calendar-workout-summary">
-                        <div className="summary-top">
-                            <p>{dayjs(selectedDate).format("dddd, MMMM DD YYYY")}</p>
-                            <RxCross2 size={20} className="cross-btn" color="#858585" onClick={() => setShowWorkoutSummary(false)}/>
+                <Dialog.Content aria-describedby={undefined} className={styles.calendarWorkoutSummary }>
+                        <div className={styles.summaryTop}>
+                            <p>{dayjs(selectedCalendarDate).format("dddd, MMMM DD YYYY")}</p>
+                            <RxCross2 size={20} className={styles.crossBtn} color="#858585" onClick={() => setShowWorkoutSummary(false)}/>
                         </div>
                         <main>{exercisesPerformed}</main>
-                        <NavLink to="/" className="go-to-btn">
+                        <div onClick={handleClick} className={styles.goToBtn}>
                             Go to
-                        </NavLink>
+                        </div>
                 </Dialog.Content>
             </Dialog.Portal>
             </Dialog.Root>
             }
         <div className="layout" style={{ height: "100vh", overflow: "hidden" }}>
-            <header>
-                <NavLink className="header-btn" to="/">
-                    <FaChevronLeft size={16} color="black" />
-                </NavLink>
-                <p>Calendar</p>
-                <div style={{width: '16px'}}></div>
-            </header>
-            <div className="calendar-page-day-bar">
+            <Header 
+                title={<p className={styles.title}>Calendar</p>}
+                leftButton={<NavLink className={styles.headerBtn} to="/"><FaChevronLeft size={16} color="black" /></NavLink>}
+                rightButton={<div style={{width: '16px'}}></div>}
+            />
+            <div className={styles.calendarDateBar}>
                 {["M", "T", "W", "T", "F", "S", "S" ].map((d, idx) => <div key={idx}>{d}</div>)}
             </div>
             <main ref={mainRef} style={{ flex: 1 }}>

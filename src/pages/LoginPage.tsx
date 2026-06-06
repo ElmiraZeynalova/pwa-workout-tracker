@@ -1,8 +1,10 @@
-import { useUserStore } from "../zustand_store/user-store"
-import {signInUser, verifyOtp} from "../supabaseDB"
+import { useUserStore } from "../store/user-store"
+import {signInUser, verifyOtp} from "../supabase/supabaseDB"
 import {useState} from 'react'
 import { FaRegEnvelope } from "react-icons/fa";
 import { BiDialpadAlt } from "react-icons/bi";
+import styles from './LoginPage.module.css'
+
 export default function LoginPage(){
     const email = useUserStore((state) => state.email)
     const setEmail = useUserStore((state) => state.setEmail)
@@ -48,7 +50,7 @@ export default function LoginPage(){
     return (
         <>
             {loginStep === 'email' && 
-            <div className="login-page-layout">
+            <div className={styles.loginPageLayout}>
                 <h1>Login</h1>
                 <p>Please Sign in to continue</p>
                 <form>
@@ -68,7 +70,7 @@ export default function LoginPage(){
                 
             </div>}
             {loginStep === 'otp' && 
-            <div className="login-page-layout">
+            <div className={styles.loginPageLayout}>
                 <h1>Verify your email</h1>
                 <p>Enter the code sent to {email}:</p>
                 <form>

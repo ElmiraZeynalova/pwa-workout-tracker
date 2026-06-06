@@ -1,8 +1,8 @@
 import {NavLink} from 'react-router-dom'
 import LoggedExerciseCard from './LoggedExerciseCard'
 import { AiOutlinePlus } from "react-icons/ai";
-import {useRenderWorkoutOnScreenStore} from '../zustand_store/render-workout-store'
-
+import {useRenderWorkoutOnScreenStore} from '../store/render-workout-store'
+import styles from './DayContent.module.css'
 export default function DayContent({date}: {date: string}){
     const workout = useRenderWorkoutOnScreenStore((state) => state.workouts[date])
 
@@ -11,17 +11,17 @@ export default function DayContent({date}: {date: string}){
     ))
     const hasWorkout = workout && workout.exercises.length > 0
     return(
-       <div className="day-content">
+       <div className={styles.dayContent}>
         {!hasWorkout && (
-            <div className="no-workout-day">
+            <div className={styles.noWorkoutDay}>
                 <p>Workout Log Is Empty</p>
-                <NavLink to="/workouts/new" className="start-workout-btn">
+                <NavLink to="/workouts/new" className={styles.startWorkoutBtn}>
                     <AiOutlinePlus size={28} color="#ff5526"/>
                     Start New Workout
                 </NavLink>
             </div>
         )}
-        {hasWorkout && <div className="workout-day">{loggedExercises}</div>}
+        {hasWorkout && <div className={styles.workoutDay}>{loggedExercises}</div>}
     </div>
         
     )

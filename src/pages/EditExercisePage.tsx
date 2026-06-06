@@ -1,13 +1,15 @@
 import { useNavigate } from "react-router-dom"
 import {useEffect} from 'react'
-import { useEditExerciseStore} from "../zustand_store/edit-exercise-store"
-import { useDateStore } from "../zustand_store/date-store"
+import { useEditExerciseStore} from "../store/edit-exercise-store"
+import { useDateStore } from "../store/date-store"
 import { FaChevronLeft } from "react-icons/fa";
 import { useLocation } from 'react-router-dom'
 import { deleteExerciseById, editExercise, markWorkoutUnsynced} from '../indexed_db/crud'
-import EditExerciseCard from "./EditExerciseCard";
-import { syncServerWithIDB } from '../supabaseDB'
-import {useRenderWorkoutOnScreenStore} from '../zustand_store/render-workout-store'
+import EditExerciseCard from "../components/EditExerciseCard";
+import { syncServerWithIDB } from '../supabase/supabaseDB'
+import {useRenderWorkoutOnScreenStore} from '../store/render-workout-store'
+import Header from '../components/Header'
+import styles from './EditExercisePage.module.css'
 
 type SetInfo = {
     setId: string
@@ -81,16 +83,13 @@ export default function EditExercisePage(){
    
     return(
         <div className="layout">
-            <header>
-                <button className="header-btn" onClick={handleExitEditPage}>
-                    <FaChevronLeft size={16} color="black"/>
-                </button>
-                <p style={{marginLeft: '50px'}}>Edit Exercise</p>
-                <button className="save-btn" onClick={handleSave}>Save</button>
-            </header>
-
+            <Header 
+                title={<p className={styles.title} style={{marginLeft: '50px'}}>Edit Exercise</p>}
+                leftButton={<button className={styles.headerBtn} onClick={handleExitEditPage}><FaChevronLeft size={16} color="black"/></button>}
+                rightButton={<button className={styles.saveBtn} onClick={handleSave}>Save</button>}
+            />
             <main style={{overflowY: 'auto'}}>
-                <div className="edit-exersise-page">
+                <div className={styles.editExersisePage}>
                     <EditExerciseCard />
                 </div>
             </main>     

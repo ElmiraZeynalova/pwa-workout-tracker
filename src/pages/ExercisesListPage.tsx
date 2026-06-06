@@ -1,10 +1,13 @@
 import { NavLink } from "react-router-dom"
 import {useState} from 'react'
-import exercises from '../exercises.json'
-import { useWorkoutStore } from "../zustand_store/workout-store"
+import exercises from '../data/exercises.json'
+import { useWorkoutStore } from "../store/workout-store"
 import { FaChevronLeft } from "react-icons/fa";
 import { PiMagnifyingGlassBold } from "react-icons/pi";
 import dumbbellIcon from "../assets/dumbbell.svg"
+import Header from '../components/Header'
+import styles from './ExercisesListPage.module.css'
+
 export default function ExercisesListPage(){
 
     const [chosenExercises, setChosenExercises] = useState<string[]>([])
@@ -27,16 +30,16 @@ export default function ExercisesListPage(){
     const exercisesList = filteredExercises.length > 0 ?
         filteredExercises.map(e => {
             return(
-                <div key={e.exerciseName} className="exercise-in-list" onClick={() => handleExerciseChoice(e.exerciseName)}>
-                    {chosenExercises.includes(e.exerciseName) && <div className="selected-exercise"></div>}
+                <div key={e.exerciseName} className={styles.exerciseInList} onClick={() => handleExerciseChoice(e.exerciseName)}>
+                    {chosenExercises.includes(e.exerciseName) && <div className={styles.selectedExercise}></div>}
                     <img src={dumbbellIcon} alt="exercise icon" width={55} height={55}/>
-                    <div className="exercise-info">
-                        <p className="exercise-name">{e.exerciseName}</p>
-                        <p className="muscle-group">{e.muscleGroup}</p>
+                    <div className={styles.exerciseInfo}>
+                        <p className={styles.exerciseName}>{e.exerciseName}</p>
+                        <p className={styles.muscleGroup}>{e.muscleGroup}</p>
                     </div>
                 </div>
             )}) :
-                <div className="no-search-results">
+                <div className={styles.noSearchResults}>
                     <h3>Can't find {search}</h3>
                     <p>We don't have that exercise in our database yet.</p>
                 </div>
@@ -44,17 +47,14 @@ export default function ExercisesListPage(){
     return(
         <div className="layout" style={{ overflowY: 'auto'}} >
 
-            <header>
-                <NavLink className="header-btn" to="/workouts/new">
-                    <FaChevronLeft size={16} color="black"/>
-                </NavLink>
-                <p>All Exercises</p>
-                <div style={{width: '16px'}}></div>
-            </header>
-
-            <div className="search-bar">
+            <Header 
+                title={<p className={styles.title}>All Exercises</p>}
+                leftButton={<NavLink className={styles.headerBtn} to="/workouts/new"><FaChevronLeft size={16} color="black"/></NavLink>}
+                rightButton={<div style={{width: '16px'}}></div>}
+            />
+            <div className={styles.searchBar}>
                 <form>
-                    <PiMagnifyingGlassBold className="glass" size={18} color="#a7a7a7"/>
+                    <PiMagnifyingGlassBold size={18} color="#a7a7a7"/>
                     <input 
                         type="text"
                         placeholder="Search exercise"
@@ -66,9 +66,9 @@ export default function ExercisesListPage(){
             </div>
 
             <main style={{height: 0}}>
-                <div className="exercises-list-page-content">
+                <div className={styles.exercisesListPageContent}>
                     {exercisesList}
-                    {chosenExercises.length > 0 && <NavLink to="/workouts/new" className="add-exercise-btn-list-screen" onClick={saveChosenExercises}>{chosenExercises.length === 1 ? "Add 1 exercise" : `Add ${chosenExercises.length} exercises`}</NavLink>}
+                    {chosenExercises.length > 0 && <NavLink to="/workouts/new" className={styles.addExerciseBtnListScreen} onClick={saveChosenExercises}>{chosenExercises.length === 1 ? "Add 1 exercise" : `Add ${chosenExercises.length} exercises`}</NavLink>}
                 </div>
             </main>
         </div>

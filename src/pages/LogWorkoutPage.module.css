@@ -1,0 +1,164 @@
+.logScreenWithExercisesAdded {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.logScreenWithExercisesAdded::-webkit-scrollbar {
+  display: none;
+}
+
+.noExercisesLogScreen {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  gap: 5px;
+  padding: 12px;
+  margin-top: 50%;
+
+  h1 {
+    color: black;
+    font-size: 22px;
+    font-weight: 500;
+    margin: 0;
+  }
+  p {
+    color: #00000072;
+    font-size: 18px;
+    font-weight: 400;
+    margin: 0 0 20px 0;
+  }
+}
+
+.addExerciseBtnLogScreen {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  background: #ff5526;
+  color: white;
+  padding: 8px 25px;
+  border-radius: 20px;
+  border: none;
+  text-decoration: none;
+  margin: 0 auto;
+  font-size: 15px;
+  font-weight: 500;
+  transition: transform 0.08s ease;
+}
+
+.addExerciseBtnLogScreen:active {
+  transform: scale(0.97);
+}
+
+.logWrktScreenModal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 18px;
+  position: fixed;
+  left: 30px;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  border: 0;
+  outline: 0;
+  padding: 12px;
+  p {
+    color: black;
+    font-size: 17px;
+    font-weight: 400;
+    text-align: center;
+    margin: 0 0 15px 0;
+  }
+
+  .discardBtn,
+  .okBtn {
+    cursor: pointer;
+    text-decoration: none;
+    background: #ff5526;
+    text-align: center;
+    border-radius: 18px;
+    padding: 8px 18px;
+    width: 85%;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+    transition: transform 0.08s ease;
+  }
+  .cancelBtn {
+    cursor: pointer;
+    text-decoration: none;
+    border: 1px solid #000000;
+    text-align: center;
+    border-radius: 18px;
+    padding: 8px 18px;
+    width: 85%;
+    color: #000000;
+    font-size: 16px;
+    font-weight: 500;
+    background: none;
+    margin: 15px 0 0 0;
+    transition: transform 0.08s ease;
+  }
+  .cancelBtn:active {
+    transform: scale(0.97);
+  }
+  .discardBtn:active,
+  .okBtn:active {
+    transform: scale(0.97);
+  }
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 99;
+}
+
+.finishBtn {
+  cursor: pointer;
+  text-decoration: none;
+  border: 1.5px solid #ff5526;
+  border-radius: 18px;
+  padding: 6px 18px;
+  color: #ff5526;
+  font-size: 12px;
+  font-weight: 500;
+  background: none;
+  margin: 0;
+  transition: transform 0.08s ease;
+}
+
+.finishBtn:active {
+  transform: scale(0.97);
+}
+
+.title {
+  font-weight: 500;
+  font-size: 20px;
+  margin: 0;
+}
+
+.headerBtn {
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  transition: transform 0.08s ease;
+}
+
+.headerBtn:active {
+  transform: scale(0.97);
+}

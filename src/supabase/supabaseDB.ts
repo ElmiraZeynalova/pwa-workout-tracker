@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
-import { useUserStore } from './zustand_store/user-store'
-import {getUnsyncedWorkouts, markWorkoutSynced, clearStoreMemory, saveWorkout, getWorkoutByDate, deleteWorkoutByDate, getAllWorkouts} from './indexed_db/crud'
-import {useRenderWorkoutOnScreenStore} from './zustand_store/render-workout-store'
+import { useUserStore } from '../store/user-store'
+import {getUnsyncedWorkouts, markWorkoutSynced, clearStoreMemory, saveWorkout, getWorkoutByDate, deleteWorkoutByDate, getAllWorkouts} from '../indexed_db/crud'
+import {useRenderWorkoutOnScreenStore} from '../store/render-workout-store'
 
 type SetInfo = {
     setId: string

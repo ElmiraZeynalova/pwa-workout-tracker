@@ -1,8 +1,10 @@
 import ExerciseSetForm from "./ExerciseSetForm"
-import { useWorkoutStore } from "../zustand_store/workout-store"
+import { useWorkoutStore } from "../store/workout-store"
 import dumbbellIcon from "../assets/dumbbell.svg"
 import { RxCross2 } from "react-icons/rx";
-export default function LogExerciseCard({exerciseId}:{exerciseId: string}){
+import styles from './LoggingExerciseCard.module.css'
+
+export default function LoggingExerciseCard({exerciseId}:{exerciseId: string}){
     const exercise = useWorkoutStore((state) => state.exercises.find(e => e.exerciseId === exerciseId))
     const exerciseSets = exercise?.sets
     const addNewSet = useWorkoutStore((state) => state.addNewSet)
@@ -18,15 +20,15 @@ export default function LogExerciseCard({exerciseId}:{exerciseId: string}){
     })
 
     return(
-        <div className="log-exercise-card">
-            <div className="top">
+        <div className={styles.loggingExerciseCard}>
+            <div className={styles.top}>
                 <img src={dumbbellIcon} alt="exercise icon" width={40} height={40}/>
-                <h3 className="exercise-name">{exercise?.exerciseName}</h3>   
-                <RxCross2 size={20} className="cross-btn" color="#858585" onClick={() => deleteExercise(exerciseId)}/>
+                <h3 className={styles.exerciseName}>{exercise?.exerciseName}</h3>   
+                <RxCross2 size={20} className={styles.crossBtn} color="#858585" onClick={() => deleteExercise(exerciseId)}/>
             </div>
             
-            <div className="set-forms">{setForms}</div>  
-            <button className="add-set-btn" onClick={handleAddSetBtnClick}>Add Set</button>
+            <div className={styles.setForms}>{setForms}</div>  
+            <button className={styles.addSetBtn} onClick={handleAddSetBtnClick}>Add Set</button>
         </div>
     )
 }
