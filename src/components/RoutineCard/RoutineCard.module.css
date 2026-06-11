@@ -1,0 +1,33 @@
+.routineCard {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border-radius: 15px;
+  padding: 12px;
+  background: #e1e1e1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+  .top {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+
+    h1 {
+      font-weight: 600;
+      font-size: 18px;
+      flex-grow: 1;
+      margin: 0;
+    }
+  }
+
+  p {
+    color: #0000008f;
+    font-size: 15px;
+    font-weight: 400;
+    margin: 0 0 5px 0;
+  }
+
+  .startRoutineBtn {
+    align-self: flex-end;
+  }
+}

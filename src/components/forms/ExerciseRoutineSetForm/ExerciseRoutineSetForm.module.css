@@ -1,0 +1,48 @@
+.set {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin: 0 6px;
+
+  .setHeaders,
+  .setForm {
+    display: grid;
+    grid-template-columns: 1fr 1fr 130px 25px;
+    align-items: center;
+    gap: 0;
+  }
+
+  .setHeaders {
+    margin-bottom: 10px;
+    p {
+      color: #858585;
+      font-weight: 400;
+      font-size: 14px;
+      margin: 0;
+      text-align: center;
+
+      &:first-child {
+        text-align: left;
+      }
+    }
+  }
+
+  .setForm {
+    p {
+      font-weight: 500;
+      margin: 0;
+      font-size: 16px;
+      text-align: left;
+    }
+
+    input {
+      width: 100%;
+      text-align: center;
+      font-size: 16px;
+      border: none;
+      outline: none;
+      box-sizing: border-box;
+      padding: 0;
+    }
+  }
+}

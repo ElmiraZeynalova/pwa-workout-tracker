@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 import { useUserStore } from '../store/user-store'
-import {getUnsyncedWorkouts, markWorkoutSynced, clearStoreMemory, saveWorkout, getWorkoutByDate, deleteWorkoutByDate, getAllWorkouts} from '../indexed_db/crud'
-import {useRenderWorkoutOnScreenStore} from '../store/render-workout-store'
+import {getUnsyncedWorkouts, markWorkoutSynced, clearStoreMemory, saveWorkout, getWorkoutByDate, deleteWorkoutByDate, getAllWorkouts} from '../indexed_db/workouts-store-crud'
+import {useRenderDataOnScreenStore} from '../store/render-data-store'
 
 type SetInfo = {
     setId: string
@@ -99,8 +99,8 @@ export async function syncServerWithIDB(){
 
 export async function syncIDBWithServer(){
     const userId = useUserStore.getState().userId
-    const removeWorkout = useRenderWorkoutOnScreenStore.getState().removeWorkout
-    const setWorkout = useRenderWorkoutOnScreenStore.getState().setWorkout
+    const removeWorkout = useRenderDataOnScreenStore.getState().removeWorkout
+    const setWorkout = useRenderDataOnScreenStore.getState().setWorkout
     const {data: workoutsData, error: workoutError} = await supabase
         .from('workouts')
         .select()
@@ -109,7 +109,7 @@ export async function syncIDBWithServer(){
     
     if(workoutsData.length === 0){
         await clearStoreMemory()
-        useRenderWorkoutOnScreenStore.getState().setAll([])
+        useRenderDataOnScreenStore.getState().setAll([])
         return
     } 
 

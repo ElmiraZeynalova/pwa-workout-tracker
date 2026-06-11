@@ -1,0 +1,53 @@
+.discardModal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 18px;
+  position: fixed;
+  left: 30px;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  border: 0;
+  outline: 0;
+  padding: 12px;
+  p {
+    color: black;
+    font-size: 17px;
+    font-weight: 400;
+    text-align: center;
+    margin: 0 0 15px 0;
+  }
+
+  .discardBtn {
+    width: 100%;
+  }
+
+  .cancelBtn {
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 18px;
+    padding: 8px 18px;
+    width: 85%;
+    color: #000000;
+    font-size: 16px;
+    font-weight: 500;
+    background: none;
+    margin: 10px 0 0 0;
+    transition: transform 0.08s ease;
+  }
+  .cancelBtn:active {
+    transform: scale(0.97);
+  }
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 99;
+}

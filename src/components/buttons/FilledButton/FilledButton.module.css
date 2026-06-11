@@ -1,0 +1,23 @@
+.filledBtn {
+  cursor: pointer;
+  background: #ff5526;
+  color: white;
+  border-radius: 20px;
+  border: none;
+  text-decoration: none;
+  font-weight: 500;
+  transition: transform 0.08s ease;
+}
+
+.sm {
+  padding: 6px 18px;
+  font-size: 12px;
+}
+.md {
+  padding: 8px 20px;
+  font-size: 15px;
+}
+
+.filledBtn:active {
+  transform: scale(0.97);
+}

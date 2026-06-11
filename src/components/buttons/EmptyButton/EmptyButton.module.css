@@ -1,0 +1,23 @@
+.emptyBtn {
+  cursor: pointer;
+  text-decoration: none;
+  border: 1.5px solid #ff5526;
+  border-radius: 20px;
+  color: #ff5526;
+  font-weight: 500;
+  background: none;
+  transition: transform 0.08s ease;
+}
+
+.sm {
+  padding: 6px 18px;
+  font-size: 12px;
+}
+.md {
+  padding: 8px 20px;
+  font-size: 15px;
+}
+
+.emptyBtn:active {
+  transform: scale(0.97);
+}
