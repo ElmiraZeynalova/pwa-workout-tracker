@@ -6,6 +6,9 @@ import EmptyButton from '../buttons/EmptyButton/EmptyButton';
 import EditModalWindow from "../modal-windows/EditModalWindow/EditModalWindow";
 import { useExercisesStore } from "../../store/exercises-store";
 import { useRenderDataOnScreenStore } from '../../store/render-data-store';
+import { deleteRoutineById} from '../../indexed_db/routines-store-crud';
+import { syncServerWithIDB, deleteRoutineFromServer } from '../../supabase/supabase_crud'
+
 type SetInfo = {
     setId: string
     reps: number | null
@@ -35,17 +38,16 @@ export default function RoutineCard({ routineId, title, exercises }: Props) {
         navigate("/workouts/new/exercises")
     }
 
-    function handleDeleteRoutine(){
+    async function handleDeleteRoutine(){
         removeRoutine(routineId)
-        // await deleteExerciseById(date, exercise.exerciseId)
-        // try {
-        //     await markWorkoutUnsynced(date)
-        // } catch(e) {
-        //     console.warn("Failed to mark workout unsynced:", e)
-        // }
+        await deleteRoutineById(routineId)
+        try {
+            await deleteRoutineFromServer(routineId)
+        } catch(e) {
+            console.warn("Failed to delete routine from server:", e)
+        }
         setShowModal(false)
-
-        //await syncServerWithIDB()
+        syncServerWithIDB().catch(console.warn)
 
     }
 

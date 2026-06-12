@@ -249,7 +249,7 @@ export async function getUnsyncedWorkouts(){
     })
 }
 
-export async function clearStoreMemory() {
+export async function clearWorkoutsStoreMemory() {
     const db = await openDB()
     
     return new Promise<void>((resolve, reject) => {

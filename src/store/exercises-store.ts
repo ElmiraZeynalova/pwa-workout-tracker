@@ -92,6 +92,6 @@ export const useExercisesStore = create<ExercisesStore>((set) => ({
             )
         })),
     clearStore: () => 
-        set({exercises: []})
+        set({exercises: [], routineTitle: ''})
 
 }))

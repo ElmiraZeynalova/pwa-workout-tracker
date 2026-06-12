@@ -14,7 +14,7 @@ import MessageModalWindow from '../../components/modal-windows/MessageModalWindo
 import FilledButton from "../../components/buttons/FilledButton/FilledButton"
 import EmptyButton from '../../components/buttons/EmptyButton/EmptyButton'
 import RoutineTitleForm from '../../components/forms/RoutineTitleForm/RoutineTitleForm'
-
+import { syncServerWithIDB } from '../../supabase/supabase_crud'
 export default function CreateRoutinePage(){
     const setRoutine = useRenderDataOnScreenStore((state) => state.setRoutine)
     const routineExercises = useExercisesStore((state) => state.exercises)
@@ -40,7 +40,7 @@ export default function CreateRoutinePage(){
                 await saveRoutine(routineId, title, routineExercises, 0)
                 clearExercisesStore()
                 setTitle("")
-                //syncServerWithIDB().catch(console.error)
+                syncServerWithIDB().catch(console.error)
 
             } catch (error) {
                 console.error(error)

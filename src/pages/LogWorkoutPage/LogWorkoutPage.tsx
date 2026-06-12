@@ -7,7 +7,7 @@ import LoggingExerciseCard from '../../components/LoggingExerciseCard/LoggingExe
 import { FaChevronLeft } from "react-icons/fa";
 import dumbbellIcon from '../../assets/grey_dumbbell.svg'
 import { AiOutlinePlus } from "react-icons/ai";
-import { syncServerWithIDB } from '../../supabase/supabaseDB'
+import { syncServerWithIDB } from '../../supabase/supabase_crud'
 import {useRenderDataOnScreenStore} from '../../store/render-data-store'
 import Header from "../../components/Header/Header"
 import styles from './LogWorkoutPage.module.css'

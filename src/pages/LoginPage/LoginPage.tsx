@@ -1,5 +1,5 @@
 import { useUserStore } from '../../store/user-store'
-import {signInUser, verifyOtp} from '../../supabase/supabaseDB'
+import {signInUser, verifyOtp} from '../../supabase/supabase_crud'
 import {useState} from 'react'
 import { FaRegEnvelope } from "react-icons/fa";
 import { BiDialpadAlt } from "react-icons/bi";

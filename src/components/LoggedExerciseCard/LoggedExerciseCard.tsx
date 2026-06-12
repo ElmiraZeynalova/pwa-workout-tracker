@@ -3,7 +3,7 @@ import {useState} from 'react'
 import dumbbellIcon from '../../assets/dumbbell.svg'
 import { useNavigate } from 'react-router-dom';
 import {deleteExerciseById, markWorkoutUnsynced} from '../../indexed_db/workouts-store-crud'
-import { syncServerWithIDB } from '../../supabase/supabaseDB'
+import { syncServerWithIDB } from '../../supabase/supabase_crud'
 import {useRenderDataOnScreenStore} from '../../store/render-data-store'
 import styles from './LoggedExerciseCard.module.css'
 import EditModalWindow from '../modal-windows/EditModalWindow/EditModalWindow'

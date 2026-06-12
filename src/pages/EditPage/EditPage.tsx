@@ -3,7 +3,7 @@ import { useDateStore } from "../../store/date-store"
 import { FaChevronLeft } from "react-icons/fa";
 import { useLocation } from 'react-router-dom'
 import { deleteExerciseById, editExercise, markWorkoutUnsynced} from '../../indexed_db/workouts-store-crud'
-import { syncServerWithIDB } from '../../supabase/supabaseDB'
+import { syncServerWithIDB } from '../../supabase/supabase_crud'
 import {useRenderDataOnScreenStore} from '../../store/render-data-store'
 import Header from '../../components/Header/Header'
 import styles from './EditPage.module.css'
@@ -13,6 +13,7 @@ import { useExercisesStore } from "../../store/exercises-store";
 import RoutineTitleForm from '../../components/forms/RoutineTitleForm/RoutineTitleForm'
 import { AiOutlinePlus } from "react-icons/ai";
 import FilledButton from "../../components/buttons/FilledButton/FilledButton"
+import { deleteRoutineById, markRoutineUnsynced, editRoutine } from "../../indexed_db/routines-store-crud";
 
 export default function EditPage(){
     const navigate = useNavigate()
@@ -23,7 +24,6 @@ export default function EditPage(){
     const routineId = state.routineId
 
     const routineTitle = useExercisesStore(state => state.routineTitle)
-
     const editingExercise = useExercisesStore(state => state.exercises.find(e => e.exerciseId === exerciseId))
     const editingRoutineExercises = useExercisesStore(state => state.exercises)
     const clearStore = useExercisesStore(state => state.clearStore)
@@ -33,10 +33,6 @@ export default function EditPage(){
     const removeRoutine = useRenderDataOnScreenStore(state => state.removeRoutine)
     const updateRoutine = useRenderDataOnScreenStore(state => state.updateRoutine)
     const editingCardsForRoutine = editingRoutineExercises.map(e => <LoggingExerciseCard key={e.exerciseId} exerciseId={e.exerciseId} purpose="routine"/>)
-
-//MAKE SAVE FUNCTIONALITY FOR ROUTINES
-//ADD RENDER STORE METHODS FOE MODIFYING ROUTINES
-//MAKE SEPARATE COMPONENT FOR TITLE FORM
 
     async function handleSave(){
         if(headerTitle === "Exercise"){
@@ -66,10 +62,15 @@ export default function EditPage(){
         }else{
             if(editingRoutineExercises.length === 0) {
                 removeRoutine(routineId) 
-                //await deleteRoutineById() - IndexedDB
+                await deleteRoutineById(routineId)
             }else{
                 updateRoutine(routineId, routineTitle, editingRoutineExercises)
-                //await editExercise(workoutDate, cleanExerciseData) - IndexedDB
+                await editRoutine(routineId, routineTitle, editingRoutineExercises) 
+            }
+            try {
+                await markRoutineUnsynced(routineId)
+            } catch(e) {
+                console.warn("Failed to mark routine unsynced:", e)
             }
 
         }
