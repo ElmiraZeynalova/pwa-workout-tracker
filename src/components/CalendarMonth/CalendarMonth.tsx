@@ -4,26 +4,27 @@ import clsx from 'clsx'
 import styles from './CalendarMonth.module.css'
 
 interface Props {
+  device: string
   monthName: string
   dates: string[]
   offset: number
   selectedDate: string
   onSelectedDate: (date: string) => void
-  toggleShowWorkoutSummary: (status: boolean) => void
+  toggleShowWorkoutSummary?: (status: boolean) => void
 }
 
-export default function CalendarMonth({ monthName, dates, offset, selectedDate, onSelectedDate, toggleShowWorkoutSummary}: Props){
+export default function CalendarMonth({ device, monthName, dates, offset, selectedDate, onSelectedDate, toggleShowWorkoutSummary}: Props){
     const workouts = useRenderDataOnScreenStore((state) => state.workouts)
     
     function handleDateChoice(date: string){
         onSelectedDate(date)
-        toggleShowWorkoutSummary(true)
+        toggleShowWorkoutSummary?.(true)
 
     }
 
     return(
         <div className={styles.month}>
-            <h1>{monthName}</h1>
+            {device === "mobile" && <h1>{monthName}</h1>}
             <div className={styles.dates}>
                 {Array.from({ length: offset }, (_, i) => (
                     <div key={`empty-${i}`} className={styles.date} />

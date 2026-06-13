@@ -1,0 +1,67 @@
+.workoutCardLayout {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  border-radius: 15px;
+  padding: 15px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+  .top {
+    display: flex;
+    align-items: center;
+    margin: 0;
+
+    h1 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 500;
+      color: #818181;
+    }
+  }
+
+  .exercise {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #cdcdcd74;
+    .exerciseInfo {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      .exerciseName {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 500;
+      }
+      .sets {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 15px;
+        .set {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          .setIdx {
+            color: #8f8f8f;
+            font-size: 12px;
+            font-weight: 400;
+            margin: 0;
+          }
+          .setInfo {
+            font-size: 16px;
+            font-weight: 500;
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+  .exercise:last-child {
+    border: none;
+  }
+}

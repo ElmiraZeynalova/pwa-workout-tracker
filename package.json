@@ -12,8 +12,11 @@
     "host": "vite --host"
   },
   "dependencies": {
+    "@iconify/react": "^6.0.2",
+    "@phosphor-icons/react": "^2.1.10",
     "@radix-ui/react-dialog": "^1.1.15",
     "@supabase/supabase-js": "^2.98.0",
+    "@tabler/icons-react": "^3.44.0",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.19",
     "react": "^19.2.0",

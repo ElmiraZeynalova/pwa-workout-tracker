@@ -69,6 +69,7 @@ export default function CalendarPage(){
                 }}
             >
                 <CalendarMonth
+                    device="mobile"
                     monthName={month.label}
                     dates={month.days}
                     offset={month.offset}

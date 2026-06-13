@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage/LoginPage'
 import LogWorkoutPage from './pages/LogWorkoutPage/LogWorkoutPage'
 import ExercisesListPage from './pages/ExerciseListPage/ExercisesListPage'
 import CreateRoutinePage from './pages/CreateRoutinePage/CreateRoutinePage'
+import DesktopRoutinesPage from './pages/desktop/RoutinesPage/RoutinesPage'
 import {syncServerWithIDB, syncIDBWithServer } from './supabase/supabase_crud'
 import {supabase} from './supabase/supabaseClient'
 import {getAllWorkouts} from './indexed_db/workouts-store-crud'
@@ -25,6 +26,7 @@ function App() {
 
   const isDesktop = useMediaQuery('(min-width: 1024px)')
   const homeScreen = isDesktop ? <DesktopHomePage /> : <HomePage />
+  //const homeScreen = <DesktopHomePage/>
 
   const init = useCallback(async () => {
       if (isSyncing.current) return
@@ -90,6 +92,10 @@ const router = createBrowserRouter([
   {
     path: "/workouts/new/routines/new/exercises",
     element: <ExercisesListPage/>
+  },
+  {
+    path: "/routines",
+    element: <DesktopRoutinesPage/>
   }
 ])
 

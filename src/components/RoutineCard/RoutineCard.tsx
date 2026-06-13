@@ -35,7 +35,8 @@ export default function RoutineCard({ routineId, title, exercises }: Props) {
     const removeRoutine = useRenderDataOnScreenStore(state => state.removeRoutine)
 
     function handleStartRoutineClick(){
-        navigate("/workouts/new/exercises")
+        addNewExerciseToStore(exercises)
+        navigate("/workouts/new")
     }
 
     async function handleDeleteRoutine(){

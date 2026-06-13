@@ -1,0 +1,25 @@
+.mainContent {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 25px;
+  gap: 15px;
+  overflow-y: auto;
+
+  h1 {
+    margin: 0 0 15px 0;
+    font-size: 22px;
+    font-weight: 500;
+  }
+
+  .noWorkouts {
+    font-size: 22px;
+    font-weight: 400;
+    color: #6b6b6b;
+    margin: auto auto;
+  }
+}
+
+.mainContent::-webkit-scrollbar {
+  display: none;
+}

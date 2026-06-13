@@ -7,7 +7,8 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   touch-action: manipulation;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
+  overflow: hidden;
   scrollbar-width: none;
   -ms-overflow-style: none;
   overscroll-behavior: none;

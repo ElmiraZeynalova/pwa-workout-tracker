@@ -1,0 +1,33 @@
+.calendarLayout {
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  h1 {
+    flex-grow: 1;
+    margin: 0;
+    font-size: 22px;
+    font-weight: 500;
+  }
+  .buttons {
+    display: flex;
+    gap: 10px;
+  }
+}
+
+.calendarDateBar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  gap: 20px;
+  font-size: 9px;
+  font-weight: 400;
+  color: #494949;
+  border-bottom: 1px solid #6c6c6c6a;
+  padding: 0 25px 6px 25px;
+}

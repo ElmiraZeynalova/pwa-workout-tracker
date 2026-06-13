@@ -1,4 +1,6 @@
 .emptyBtn {
+  display: grid;
+  place-items: center;
   cursor: pointer;
   text-decoration: none;
   border: 1.5px solid #ff5526;

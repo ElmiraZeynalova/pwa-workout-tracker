@@ -1,0 +1,42 @@
+.sideBarLayout {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: black;
+  flex-basis: 15%;
+  padding: 25px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  .btn {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px;
+    border-radius: 25px;
+    font-size: 18px;
+    font-weight: 400;
+    color: black;
+    text-decoration: none;
+  }
+  .btn:active {
+    transform: scale(0.97);
+  }
+  .btnActive {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 25px;
+    font-size: 18px;
+    font-weight: 500;
+    text-decoration: none;
+    background: #ff5526;
+    color: white;
+  }
+}
