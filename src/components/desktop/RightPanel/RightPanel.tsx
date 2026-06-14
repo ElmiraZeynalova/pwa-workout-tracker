@@ -1,11 +1,14 @@
 import styles from './RightPanel.module.css'
-import Calendar from '../Calendar/Calendar'
-export default function RightArea(){
+import type { ReactNode } from 'react'
+
+type Props = {
+    children: ReactNode
+}
+
+export default function RightPanel({children}: Props){
     return(
-        <>
-            <div className={styles.rightPanelLayout}>
-                <Calendar/>
-            </div> 
-        </>
+        <div className={styles.rightPanelLayout}>
+            {children}
+        </div> 
     )
 }

@@ -15,11 +15,15 @@ import FilledButton from "../../components/buttons/FilledButton/FilledButton"
 import EmptyButton from '../../components/buttons/EmptyButton/EmptyButton'
 import RoutineTitleForm from '../../components/forms/RoutineTitleForm/RoutineTitleForm'
 import { syncServerWithIDB } from '../../supabase/supabase_crud'
+import { useMediaQuery } from '../../hooks/useMediaQuery'
+
 export default function CreateRoutinePage(){
     const setRoutine = useRenderDataOnScreenStore((state) => state.setRoutine)
     const routineExercises = useExercisesStore((state) => state.exercises)
     const clearExercisesStore = useExercisesStore((state) => state.clearStore)
     const navigate = useNavigate()
+
+    const isDesktop = useMediaQuery('(min-width: 1024px)')
 
     const title = useExercisesStore(state => state.routineTitle)
     const setTitle = useExercisesStore(state => state.setRoutineTitle)
@@ -27,16 +31,12 @@ export default function CreateRoutinePage(){
     const [showDiscardModal, setShowDiscardModal] = useState<boolean>(false)
     const [showSaveModal, setShowSaveModal] = useState<boolean>(false)
 
-    const exercisesCards = routineExercises.map(exercise => {
-        return <LoggingExerciseCard key={exercise.exerciseId} exerciseId={exercise.exerciseId} purpose="routine"/>
-    })
-
     async function handleSave(){
-        if(exercisesCards.length > 0 && title.length > 0){
+        if(routineExercises.length > 0 && title.length > 0){
             const routineId = crypto.randomUUID()
             try {
                 setRoutine(routineId, title, routineExercises)
-                navigate("/workouts/new")
+                isDesktop ? navigate("/routines") : navigate("/workouts/new")
                 await saveRoutine(routineId, title, routineExercises, 0)
                 clearExercisesStore()
                 setTitle("")
@@ -46,18 +46,18 @@ export default function CreateRoutinePage(){
                 console.error(error)
             }
 
-        } else if(title.length === 0 || exercisesCards.length === 0) {
+        } else if(title.length === 0 || routineExercises.length === 0) {
             setShowSaveModal(true)
         }
     }
 
-    const modalWindowMessage = title.length === 0 && exercisesCards.length === 0 ? "Add data to routine" : 
+    const modalWindowMessage = title.length === 0 && routineExercises.length === 0 ? "Add data to routine" : 
         title.length === 0 ? "Add title" : "Add exercises"
 
     function handleDiscard(){
         setTitle("")
         clearExercisesStore()
-        navigate("/workouts/new")
+        isDesktop ? navigate("/routines") : navigate("/workouts/new")
     } 
 
     function handleAddExerciseClick(){
@@ -78,18 +78,20 @@ export default function CreateRoutinePage(){
                     <div className={styles.createRoutineScreenLayout}>
                         <RoutineTitleForm />
 
-                        {exercisesCards.length === 0 &&
+                        {routineExercises.length === 0 &&
                             <div className={styles.noExercisesAddedToRoutine}>
                                 <img src={dumbbellIcon} alt="dumbbell icon" width={50} height={50}/>
+                                <h1>No exercises</h1>
                                 <p>Get started by adding exercises to your routine</p>
                             </div>
                         }
-                        {exercisesCards}
-                            
-                        <FilledButton handleClick={handleAddExerciseClick} className={styles.addExerciseBtn}>
+                        {routineExercises.map(exercise => {
+                            return <LoggingExerciseCard key={exercise.exerciseId} exerciseId={exercise.exerciseId} purpose="routine"/>
+                        })}
+                        {!isDesktop && <FilledButton handleClick={handleAddExerciseClick} className={styles.addExerciseBtn}>
                             <AiOutlinePlus size={22} color="white"/>
                             Add Exercise
-                        </FilledButton>
+                        </FilledButton>}
                     </div>
                 </main>
             </div>

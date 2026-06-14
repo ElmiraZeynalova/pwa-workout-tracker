@@ -5,7 +5,7 @@ import { useDateStore } from '../../../store/date-store'
 import { useRenderDataOnScreenStore } from '../../../store/render-data-store'
 import dayjs from 'dayjs'
 import WorkoutCard from '../../../components/desktop/WorkoutCard/WorkoutCard'
-
+import Calendar from '../../../components/desktop/Calendar/Calendar'
 export default function HomePage(){
         const selectedDate = useDateStore(state => state.selectedDate)
         const currentMonth = dayjs(selectedDate).month()
@@ -21,7 +21,9 @@ export default function HomePage(){
                 {workoutCards}
                 {workoutCards.length === 0 && <p className={styles.noWorkouts}>Workout Log Is Empty</p>}
             </div>
-            <RightPanel/>
+            <RightPanel>
+                <Calendar/>
+            </RightPanel>
         </DesktopLayout>
     )
 }

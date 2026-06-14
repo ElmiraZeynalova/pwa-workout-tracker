@@ -14,7 +14,13 @@ type Exercise = {
     sets: SetInfo[]
 }
 
-export default function WorkoutCard({date, exercises}: {date: string, exercises: Exercise[]}){
+type Props = {
+    date?: string
+    exercises: Exercise[]
+    title?: string
+}
+
+export default function WorkoutCard({date, title, exercises}: Props){
 
     const exercisesPerformed = exercises.map(e => {
         return <div key={e.exerciseId} className={styles.exercise}>
@@ -22,7 +28,7 @@ export default function WorkoutCard({date, exercises}: {date: string, exercises:
             <div className={styles.exerciseInfo}>
                 <p className={styles.exerciseName}>{e.exerciseName}</p>
                 <div className={styles.sets}>{e.sets.map((s, idx) => (
-                    <div className={styles.set}>
+                    <div key={s.setId} className={styles.set}>
                         <p className={styles.setIdx}>set {idx + 1}</p>
                         <p className={styles.setInfo}>{(s.weight !== null && s.weight !== 0) ? s.reps + " x " + s.weight + " kg" : s.reps + " reps"}</p>
                     </div>
@@ -34,7 +40,7 @@ export default function WorkoutCard({date, exercises}: {date: string, exercises:
     return(
         <div className={styles.workoutCardLayout}>
             <div className={styles.top}>
-                <h1>{dayjs(date).format("dddd, D MMMM")}</h1>
+                <h1>{title ? title : dayjs(date).format("dddd, D MMMM")}</h1>
                 <div className={styles.routineBadge}></div>
             </div>
             {exercisesPerformed}

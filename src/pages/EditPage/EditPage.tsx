@@ -14,10 +14,12 @@ import RoutineTitleForm from '../../components/forms/RoutineTitleForm/RoutineTit
 import { AiOutlinePlus } from "react-icons/ai";
 import FilledButton from "../../components/buttons/FilledButton/FilledButton"
 import { deleteRoutineById, markRoutineUnsynced, editRoutine } from "../../indexed_db/routines-store-crud";
-
+import { useMediaQuery } from "../../hooks/useMediaQuery";
 export default function EditPage(){
     const navigate = useNavigate()
     const { state } = useLocation()
+
+    const isDesktop = useMediaQuery('(min-width: 1024px)')
 
     const exerciseId = state.exerciseId
     const headerTitle = state.headerTitle
@@ -76,13 +78,17 @@ export default function EditPage(){
         }
 
         clearStore()
-        headerTitle === "Exercise" ? navigate('/') : navigate('/workouts/new')
+        if(isDesktop){
+            navigate('/routines')
+        }else{
+            headerTitle === "Exercise" ? navigate('/') : navigate('/workouts/new')
+        }
         syncServerWithIDB().catch(console.warn)
     }
 
     function handleExitEditPage(){
         clearStore()
-        navigate('/')
+        isDesktop ? navigate('/routines') : navigate('/')
     }
    
     function handleAddExerciseClick(){
@@ -101,10 +107,10 @@ export default function EditPage(){
                         <>
                             <RoutineTitleForm/>
                             {editingCardsForRoutine}
-                            <FilledButton handleClick={handleAddExerciseClick} className={styles.addExerciseBtn}>
+                            {!isDesktop && <FilledButton handleClick={handleAddExerciseClick} className={styles.addExerciseBtn}>
                                 <AiOutlinePlus size={22} color="white"/>
                                 Add Exercise
-                            </FilledButton>
+                            </FilledButton>}
                         </>
                     }
 

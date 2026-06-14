@@ -8,9 +8,13 @@ import dumbbellIcon from '../../assets/dumbbell.svg'
 import Header from '../../components/Header/Header'
 import styles from './ExercisesListPage.module.css'
 import FilledButton from '../../components/buttons/FilledButton/FilledButton'
+import { useMediaQuery } from "../../hooks/useMediaQuery";
 
 export default function ExercisesListPage(){
     const navigate = useNavigate()
+
+    const isDesktop = useMediaQuery('(min-width: 1024px)')
+
     const [chosenExercises, setChosenExercises] = useState<string[]>([])
     const addNewExercises = useExercisesStore((state) => state.addNewExercises)
     const [search, setSearch] = useState<string>("")
@@ -20,6 +24,9 @@ export default function ExercisesListPage(){
                 ? prev.filter(e => e !== exerciseName)
                 : [...prev, exerciseName]
         )
+        if(isDesktop) {
+            addNewExercises([exerciseName])
+        }
     }
 
     function saveChosenExercises(){
@@ -33,7 +40,7 @@ export default function ExercisesListPage(){
         filteredExercises.map(e => {
             return(
                 <div key={e.exerciseName} className={styles.exerciseInList} onClick={() => handleExerciseChoice(e.exerciseName)}>
-                    {chosenExercises.includes(e.exerciseName) && <div className={styles.selectedExercise}></div>}
+                    {(chosenExercises.includes(e.exerciseName) && !isDesktop) && <div className={styles.selectedExercise}></div>}
                     <img src={dumbbellIcon} alt="exercise icon" width={55} height={55}/>
                     <div className={styles.exerciseInfo}>
                         <p className={styles.exerciseName}>{e.exerciseName}</p>
@@ -51,7 +58,7 @@ export default function ExercisesListPage(){
 
             <Header 
                 title={<p className={styles.title}>All Exercises</p>}
-                leftButton={<NavLink className={styles.headerBtn} to="/workouts/new"><FaChevronLeft size={16} color="black"/></NavLink>}
+                leftButton={!isDesktop ? <NavLink className={styles.headerBtn} to="/workouts/new"><FaChevronLeft size={16} color="black"/></NavLink> : <div style={{width: '16px'}}></div>}
                 rightButton={<div style={{width: '16px'}}></div>}
             />
             <div className={styles.searchBar}>
@@ -70,7 +77,7 @@ export default function ExercisesListPage(){
             <main style={{height: 0}}>
                 <div className={styles.exercisesListPageContent}>
                     {exercisesList}
-                    {chosenExercises.length > 0 && <FilledButton className={styles.addExercisesBtn} handleClick={saveChosenExercises}>{chosenExercises.length === 1 ? "Add 1 exercise" : `Add ${chosenExercises.length} exercises`}</FilledButton>}
+                    {(chosenExercises.length > 0 && !isDesktop) && <FilledButton className={styles.addExercisesBtn} handleClick={saveChosenExercises}>{chosenExercises.length === 1 ? "Add 1 exercise" : `Add ${chosenExercises.length} exercises`}</FilledButton>}
                 </div>
             </main>
         </div>

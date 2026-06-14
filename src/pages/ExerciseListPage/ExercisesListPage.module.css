@@ -32,6 +32,7 @@
 }
 
 .exerciseInList {
+  cursor: pointer;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -118,4 +119,11 @@ div.exerciseInList:last-of-type {
   font-weight: 500;
   font-size: 20px;
   margin: 0;
+}
+
+@media (min-width: 1024px) {
+  .exerciseInList:active {
+    transform: scale(0.97);
+    opacity: 0.4;
+  }
 }

@@ -2,9 +2,8 @@ import {useRenderDataOnScreenStore} from '../../store/render-data-store'
 import dayjs from "dayjs"
 import clsx from 'clsx'
 import styles from './CalendarMonth.module.css'
-
+import { useMediaQuery } from '../../hooks/useMediaQuery'
 interface Props {
-  device: string
   monthName: string
   dates: string[]
   offset: number
@@ -13,9 +12,9 @@ interface Props {
   toggleShowWorkoutSummary?: (status: boolean) => void
 }
 
-export default function CalendarMonth({ device, monthName, dates, offset, selectedDate, onSelectedDate, toggleShowWorkoutSummary}: Props){
+export default function CalendarMonth({ monthName, dates, offset, selectedDate, onSelectedDate, toggleShowWorkoutSummary}: Props){
     const workouts = useRenderDataOnScreenStore((state) => state.workouts)
-    
+    const isDesktop = useMediaQuery('(min-width: 1024px)')
     function handleDateChoice(date: string){
         onSelectedDate(date)
         toggleShowWorkoutSummary?.(true)
@@ -24,7 +23,7 @@ export default function CalendarMonth({ device, monthName, dates, offset, select
 
     return(
         <div className={styles.month}>
-            {device === "mobile" && <h1>{monthName}</h1>}
+            { !isDesktop && <h1>{monthName}</h1>}
             <div className={styles.dates}>
                 {Array.from({ length: offset }, (_, i) => (
                     <div key={`empty-${i}`} className={styles.date} />

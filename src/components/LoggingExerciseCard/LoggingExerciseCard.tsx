@@ -4,7 +4,7 @@ import dumbbellIcon from '../../assets/dumbbell.svg'
 import { RxCross2 } from "react-icons/rx";
 import styles from './LoggingExerciseCard.module.css'
 import ExerciseRoutineSetForm from '../forms/ExerciseRoutineSetForm/ExerciseRoutineSetForm'
-
+import EmptyButton from '../buttons/EmptyButton/EmptyButton';
 export default function LoggingExerciseCard({exerciseId, purpose}:{exerciseId: string, purpose: string}){
     const exercise = useExercisesStore((state) => state.exercises.find(e => e.exerciseId === exerciseId))
     const exerciseSets = exercise?.sets
@@ -32,8 +32,8 @@ export default function LoggingExerciseCard({exerciseId, purpose}:{exerciseId: s
                 <RxCross2 size={20} className={styles.crossBtn} color="#858585" onClick={() => deleteExercise(exerciseId)}/>
             </div>
             
-            <div className={styles.setForms}>{purpose === "routine" ? routineSetForms : logWorkoutSetForms}</div>  
-            <button className={styles.addSetBtn} onClick={handleAddSetBtnClick}>Add Set</button>
+            <div className={styles.setForms}>{purpose === "routine" ? routineSetForms : logWorkoutSetForms}</div> 
+            <EmptyButton handleClick={handleAddSetBtnClick} size="sm" className={styles.addSetBtn}>Add Set</EmptyButton> 
         </div>
     )
 }

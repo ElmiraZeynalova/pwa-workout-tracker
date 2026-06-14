@@ -8,6 +8,8 @@ import { useExercisesStore } from "../../store/exercises-store";
 import { useRenderDataOnScreenStore } from '../../store/render-data-store';
 import { deleteRoutineById} from '../../indexed_db/routines-store-crud';
 import { syncServerWithIDB, deleteRoutineFromServer } from '../../supabase/supabase_crud'
+import { useMediaQuery } from '../../hooks/useMediaQuery';
+import dumbbellIcon from '../../assets/dumbbell.svg'
 
 type SetInfo = {
     setId: string
@@ -27,12 +29,14 @@ type Props = {
     exercises: Exercise[]
 }
 
-export default function RoutineCard({ routineId, title, exercises }: Props) {
+export default function RoutineCard({ routineId, title, exercises}: Props) {
     const [showModal, setShowModal] = useState<boolean>(false)
     const navigate = useNavigate()
     const addNewExerciseToStore = useExercisesStore(state => state.addNewFullExercises)
     const setRoutineTitle = useExercisesStore(state => state.setRoutineTitle)
     const removeRoutine = useRenderDataOnScreenStore(state => state.removeRoutine)
+
+    const isDesktop = useMediaQuery('(min-width: 1024px)')
 
     function handleStartRoutineClick(){
         addNewExerciseToStore(exercises)
@@ -59,6 +63,20 @@ export default function RoutineCard({ routineId, title, exercises }: Props) {
         setShowModal(false)
     }
 
+    const exercisesPerformed = exercises.map(e => {
+        return <div key={e.exerciseId} className={styles.exercise}>
+            <img src={dumbbellIcon} alt="exercise icon" width={40} height={40}/>
+            <div className={styles.exerciseInfo}>
+                <p className={styles.exerciseName}>{e.exerciseName}</p>
+                <div className={styles.sets}>{e.sets.map((s, idx) => (
+                    <div key={s.setId} className={styles.set}>
+                        <p className={styles.setIdx}>set {idx + 1}</p>
+                        <p className={styles.setInfo}>{(s.weight !== null && s.weight !== 0) ? s.reps + " x " + s.weight + " kg" : s.reps + " reps"}</p>
+                    </div>
+                ))}</div>
+            </div>
+        </div>
+    })
     return (
         <>
             <EditModalWindow showModal={showModal} setShowModal={() => setShowModal(!showModal)} btnText1="Edit routine" btnText2="Delete routine" handleDelete={handleDeleteRoutine} handleEdit={handleEditRoutine}/>
@@ -67,8 +85,8 @@ export default function RoutineCard({ routineId, title, exercises }: Props) {
                     <h1>{title}</h1>
                     <BsThreeDotsVertical className={styles.menuBtn} onClick={() => setShowModal(true)} size={18} color='#FF5526'/>
                 </div>
-                <p>{exercises.map(e => e.exerciseName).join(', ')}</p>
-                <EmptyButton handleClick={handleStartRoutineClick} size="sm" className={styles.startRoutineBtn}>Start Routine</EmptyButton>
+                {isDesktop ? exercisesPerformed : <p>{exercises.map(e => e.exerciseName).join(', ')}</p>}
+                {!isDesktop && <EmptyButton handleClick={handleStartRoutineClick} size="sm" className={styles.startRoutineBtn}>Start Routine</EmptyButton>}
             </div>
         </>
     )

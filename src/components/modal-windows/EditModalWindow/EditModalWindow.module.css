@@ -8,6 +8,7 @@
   border: 0;
   outline: 0;
   .modalCancelBtn {
+    cursor: pointer;
     background: white;
     border-radius: 16px;
     padding: 15px 0;
@@ -31,6 +32,7 @@
     margin-bottom: 18px;
 
     .modalActionBtn {
+      cursor: pointer;
       display: flex;
       gap: 18px;
       align-items: center;
@@ -55,4 +57,14 @@
   inset: 0;
   background: rgba(0, 0, 0, 0.55);
   z-index: 99;
+}
+
+@media (min-width: 768px) {
+  .editExrcModal {
+    left: 50%;
+    right: auto;
+    top: 55%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+  }
 }

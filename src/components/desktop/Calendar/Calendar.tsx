@@ -35,7 +35,6 @@ export default function Calendar(){
                 </div>
 
                 <CalendarMonth
-                    device="desktop"
                     monthName={month.label}
                     dates={month.days}
                     offset={month.offset}

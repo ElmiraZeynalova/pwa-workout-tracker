@@ -16,3 +16,21 @@
 .mainContent::-webkit-scrollbar {
   display: none;
 }
+
+.createNewRoutineBtn {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #ff5526;
+  text-decoration: none;
+  background: none;
+  border: none;
+  font-size: 18px;
+  font-weight: 500;
+  margin: 85px 0;
+}
+
+.createNewRoutineBtn:active {
+  transform: scale(0.97);
+}

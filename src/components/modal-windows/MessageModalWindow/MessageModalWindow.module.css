@@ -32,3 +32,12 @@
 .ok {
   width: 100%;
 }
+
+@media (min-width: 768px) {
+  .messageModal {
+    left: 50%;
+    right: auto;
+    transform: translate(-50%, -50%);
+    width: 400px;
+  }
+}
