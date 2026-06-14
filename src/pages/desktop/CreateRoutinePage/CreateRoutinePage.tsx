@@ -8,10 +8,10 @@ export default function CreateRoutinePage(){
     return(
         <DesktopLayout>
             <div className={styles.mainContent}>
-                <MobileCreateRoutinePage desktop={true}/>
+                <MobileCreateRoutinePage />
             </div>
             <RightPanel>
-                <ExercisesListPage desktop={true}/>
+                <ExercisesListPage/>
             </RightPanel>
         </DesktopLayout>
     )
