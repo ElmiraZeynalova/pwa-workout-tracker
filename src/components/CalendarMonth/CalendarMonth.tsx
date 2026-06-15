@@ -16,11 +16,12 @@ export default function CalendarMonth({ monthName, dates, offset, selectedDate, 
     const workouts = useRenderDataOnScreenStore((state) => state.workouts)
     const isDesktop = useMediaQuery('(min-width: 1024px)')
     function handleDateChoice(date: string){
-        onSelectedDate(date)
-        toggleShowWorkoutSummary?.(true)
-
+        if(!isDesktop){
+            onSelectedDate(date)
+            toggleShowWorkoutSummary?.(true)
+        }
     }
-
+    const today = dayjs().format("YYYY-MM-DD")
     return(
         <div className={styles.month}>
             { !isDesktop && <h1>{monthName}</h1>}
@@ -31,12 +32,18 @@ export default function CalendarMonth({ monthName, dates, offset, selectedDate, 
                 {dates.map(date => (
                     <div key={date} className={styles.date}>
                         <span className={styles.todayLabel}>
-                            {dayjs().format("YYYY-MM-DD") === date ? "TODAY" : ""}
+                            {today === date ? "TODAY" : ""}
                         </span>
                         <div className={styles.numberWrapper}>
-                            { selectedDate === date && <div className={styles.calendarSelector}></div>}
+                            {(!isDesktop && selectedDate === date)  && <div className={styles.calendarSelector}></div>}
                             <div
-                                className={clsx(styles.number, selectedDate === date && styles.selected)}
+                                className={clsx(
+                                            styles.number,
+                                            {
+                                                [styles.currentDate]: isDesktop && date === today,
+                                                [styles.selected]: !isDesktop && selectedDate === date,
+                                            }
+                                )}
                                 onClick={() => handleDateChoice(date)}
                             >
                                 {dayjs(date).format("D")}

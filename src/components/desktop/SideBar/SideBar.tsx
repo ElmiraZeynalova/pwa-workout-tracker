@@ -3,14 +3,17 @@ import { Icon } from '@iconify/react'
 import {NavLink} from 'react-router-dom'
 import { useExercisesStore } from '../../../store/exercises-store'
 import { useUserStore } from '../../../store/user-store'
-
+import logo from '../../../assets/logo.png'
 export default function SideBar(){
     const setUserId = useUserStore((state) => state.setUserId)
     const clearExercisesStore = useExercisesStore(state => state.clearStore)
     return(
         <>
             <div className={styles.sideBarLayout}>
-                <div className={styles.logo}></div>
+                <div className={styles.logo}>
+                    <img src={logo} width={50} height={50}/>
+                    <h1>FORGE</h1>
+                </div>
                 <div className={styles.menu}>
                     <NavLink onClick={clearExercisesStore} to="/" className={({ isActive }) => 
                         isActive ? styles.btnActive : styles.btn

@@ -91,7 +91,74 @@
     color: black;
     font-weight: 700;
   }
+  @media (min-width: 768px) {
+    .currentDate {
+      font-weight: 600;
+      background: #ffddd4;
+      border: 1px solid #ff5526;
+      border-radius: 50%;
+      padding: 5px 8px;
+    }
+
+    .date {
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .date:active {
+      transform: none;
+    }
+
+    .number {
+      cursor: default;
+      width: 20px;
+      height: 20px;
+      font-size: 16px;
+    }
+
+    .number:active {
+      transform: none;
+    }
+    .numberWrapper {
+      width: 20px;
+      height: 20px;
+    }
+  }
 }
 .month:last-child {
   border: 0;
 }
+
+/* @media (min-width: 768px) {
+  .currentDate {
+    font-weight: 600;
+    background: #ffddd4;
+    border: 1px solid #ff5526;
+    border-radius: 50%;
+    padding: 2px 10px;
+  }
+
+  .date {
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .date:active {
+    transform: none;
+  }
+
+  .number {
+    cursor: default;
+    width: 24px;
+    height: 24px;
+    font-size: 14px;
+  }
+
+  .number:active {
+    transform: none;
+  }
+  .numberWrapper {
+    width: 24px;
+    height: 24px;
+  }
+} */
