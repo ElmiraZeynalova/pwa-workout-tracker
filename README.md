@@ -1,12 +1,11 @@
 <div align="center">
 
-# 🏋️ Forge
+<img src="./src/assets/logo.png" alt="Forge" width="80" /> 
+<h1 style="display:inline">Forge</h1>
 
-**Track your workouts. Build your strength.**
+This is lightweight and simple PWA for logging workouts, with offline-first architecture and cross-device sync.
 
-A lightweight Progressive Web App for logging workouts, tracking progress, and building routines — no account needed.
-
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20App-orange?style=for-the-badge&logo=vercel)](https://your-vercel-url.vercel.app)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20App-orange?style=for-the-badge&logo=vercel)](https://pwa-workout-tracker-2ymf.vercel.app)
 [![PWA](https://img.shields.io/badge/PWA-Ready-5A0FC8?style=for-the-badge&logo=pwa)](https://your-vercel-url.vercel.app)
 [![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react)](https://react.dev)
 
