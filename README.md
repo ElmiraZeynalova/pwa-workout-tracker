@@ -9,7 +9,7 @@ This is a lightweight and simple PWA for logging workouts, with offline-first ar
 
 <br/>
 
-![Forge App Screenshot](./screenshots/preview.png)
+![Preview](./screenshots/preview.png)
 
 </div>
 
