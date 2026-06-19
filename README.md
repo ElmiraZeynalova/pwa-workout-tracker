@@ -32,7 +32,7 @@ This is a lightweight and simple PWA for logging workouts, with offline-first ar
 
 | Home — Daily Log | Log Workout — Routines |
 |:---:|:---:|
-| ![Home](./screenshots/home.png) | ![Log](./screenshots/log.png) |
+| ![Home](./screenshots/home.jpg) | ![Log](./screenshots/log.png) |
 
 ---
 
