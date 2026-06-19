@@ -17,12 +17,14 @@ This is a lightweight and simple PWA for logging workouts, with offline-first ar
 
 ## ✨ Features
 
-- 📋 **Workout Logging** — Log exercises with sets, reps, and weight for any day
-- 🗓️ **Weekly Calendar** — Navigate your training history day by day
-- 💪 **Routines** — Create and start pre-built routines (Full Body, Upper Body, Lower Body, etc.)
+- 📋 **Workout Logging** — Log exercises with sets, reps, and weight *(mobile)*
+- 🗓️ **Calendar** — Navigate your training history day by day
+- 💪 **Routines** — Create, edit, and start workout templates *(mobile & desktop)*
 - 📲 **Install as App** — Works offline, installable on any device as a PWA
-- 🔄 **Cross-device Sync** — Optional account to keep your data consistent across all your devices
+- 🔄 **Cross-device Sync** — Keeps your data consistent across all your devices
 - ✈️ **Offline First** — Fully functional without internet; sync happens when connection is available
+
+> 💡 **Desktop** is a companion experience — view history and manage routines. Workout logging is optimized for mobile.
 
 ---
 
@@ -37,7 +39,7 @@ This is a lightweight and simple PWA for logging workouts, with offline-first ar
 ## 🚀 Getting Started
 
 ### Use it instantly
-👉 **[Open in Browser](https://your-vercel-url.vercel.app)** — no install needed
+👉 **[Open in Browser](https://pwa-workout-tracker-2ymf.vercel.app)** — no install needed
 
 ### Install as PWA
 1. Open the app in Chrome or Safari
@@ -50,8 +52,8 @@ This is a lightweight and simple PWA for logging workouts, with offline-first ar
 
 ```bash
 # Clone the repo
-git clone https://github.com/your-username/forge.git
-cd forge
+git clone https://github.com/ElmiraZeynalova/pwa-workout-tracker.git
+cd workout_tracker
 
 # Install dependencies
 npm install
@@ -75,36 +77,21 @@ npm run preview
 
 | Technology | Purpose |
 |---|---|
-| **React 18** | UI framework |
+| **React 19 (TypeScript)** | UI framework |
 | **Vite** | Build tool |
-| **PWA (Workbox)** | Offline support & installability |
-| **LocalStorage** | Client-side data persistence |
-| **CSS / Tailwind** | Styling |
-| **Node.js / Express** | Sync server |
-| **JWT / Auth** | User authentication for cross-device sync |
-
----
-
-## 📁 Project Structure
-
-```
-forge/
-├── public/
-│   ├── manifest.json       # PWA manifest
-│   └── icons/              # App icons
-├── src/
-│   ├── components/         # UI components
-│   ├── pages/              # App screens
-│   ├── hooks/              # Custom React hooks
-│   └── utils/              # Helpers & storage logic
-└── vite.config.js
-```
+| **vite-plugin-pwa** | Offline support & installability |
+| **IndexedDB** | Local Data Base |
+| **CSS** | Styling |
+| **Supabase** | Database & real-time sync |
+| **Supabase Auth (OTP)** | Passwordless email authentication |
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Feel free to open an issue or submit a pull request.
+Any contributions you make are greatly appreciated. Feel free to open an issue or submit a pull request.
+
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement". Don't forget to give the project a star!
 
 1. Fork the project
 2. Create your feature branch: `git checkout -b feature/my-feature`
@@ -120,8 +107,8 @@ MIT License — feel free to use and modify.
 
 ---
 
-<div align="center">
+## Contact
 
-Made with 🧡 by [your name](https://github.com/your-username)
+Elmira Zeynalova - elmirazeynalova39@gmail.com
 
-</div>
+---
