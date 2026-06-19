@@ -28,14 +28,6 @@ This is a lightweight and simple PWA for logging workouts, with offline-first ar
 
 ---
 
-## 📱 Screenshots
-
-| Home — Daily Log | Log Workout — Routines |
-|:---:|:---:|
-| ![Home](./screenshots/home.jpg) | ![Log](./screenshots/log.png) |
-
----
-
 ## 🚀 Getting Started
 
 ### Use it instantly
