@@ -13,6 +13,7 @@ import { useDateStore } from "../../store/date-store";
 import Header from "../../components/Header/Header"
 import styles from "./CalendarPage.module.css"
 import FilledButton from "../../components/buttons/FilledButton/FilledButton"
+import { ROUTES } from "../../routes";
 
 const TOTAL_MONTHS = 3000
 const CENTER_INDEX = Math.floor(TOTAL_MONTHS / 2)
@@ -92,7 +93,7 @@ export default function CalendarPage(){
     function handleClick(){
        setCenterDate(selectedCalendarDate)
        setSelectedDate(selectedCalendarDate)
-       navigate("/")
+       navigate(ROUTES.HOME)
     }
 
     return(

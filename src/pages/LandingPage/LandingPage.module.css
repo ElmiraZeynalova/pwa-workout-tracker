@@ -1,0 +1,95 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  padding: 20px 50px;
+  border-bottom: 1px solid #cdcdcd74;
+  height: 50px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  h1 {
+    margin: 0;
+    font-size: 25px;
+    color: #323232;
+  }
+}
+
+.openAppBtn {
+  margin: 0;
+  font-weight: 600;
+  padding: 10px 30px;
+  font-size: 17px;
+}
+
+.links {
+  display: flex;
+  gap: 70px;
+  margin: 0;
+
+  a {
+    color: #5f5f5f;
+    text-decoration: none;
+    font-size: 500;
+    font-size: 18px;
+  }
+}
+
+.mainContent {
+  padding: 20px 50px;
+  overflow-y: auto;
+}
+
+.invite {
+  display: flex;
+  justify-content: space-around;
+  .info {
+    display: flex;
+    flex-direction: column;
+    margin-top: 70px;
+    h1 {
+      margin: 0;
+      font-size: 50px;
+    }
+    h1:nth-child(2) {
+      color: #ff5526;
+    }
+
+    p {
+      margin-bottom: 30px;
+      color: #5f5f5f;
+      font-size: 18px;
+      line-height: 30px;
+    }
+    .openInBrowser {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: none;
+      color: #5f5f5f;
+      text-decoration: none;
+      font-size: 500;
+      font-size: 17px;
+      cursor: pointer;
+      background: none;
+    }
+
+    .installBtn {
+      display: flex;
+      align-self: flex-start;
+      gap: 5px;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 17px;
+      padding: 10px 30px;
+      margin-bottom: 25px;
+    }
+  }
+  img {
+    margin: 0;
+  }
+}

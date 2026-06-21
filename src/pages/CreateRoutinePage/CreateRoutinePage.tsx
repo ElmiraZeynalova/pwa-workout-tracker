@@ -16,6 +16,7 @@ import EmptyButton from '../../components/buttons/EmptyButton/EmptyButton'
 import RoutineTitleForm from '../../components/forms/RoutineTitleForm/RoutineTitleForm'
 import { syncServerWithIDB } from '../../supabase/supabase_crud'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
+import { ROUTES } from '../../routes'
 
 export default function CreateRoutinePage(){
     const setRoutine = useRenderDataOnScreenStore((state) => state.setRoutine)
@@ -36,7 +37,7 @@ export default function CreateRoutinePage(){
             const routineId = crypto.randomUUID()
             try {
                 setRoutine(routineId, title, routineExercises)
-                isDesktop ? navigate("/routines") : navigate("/workouts/new")
+                isDesktop ? navigate(ROUTES.ROUTINES) : navigate(ROUTES.WORKOUTS_NEW)
                 await saveRoutine(routineId, title, routineExercises, 0)
                 clearExercisesStore()
                 setTitle("")
@@ -57,11 +58,11 @@ export default function CreateRoutinePage(){
     function handleDiscard(){
         setTitle("")
         clearExercisesStore()
-        isDesktop ? navigate("/routines") : navigate("/workouts/new")
+        isDesktop ? navigate(ROUTES.ROUTINES) : navigate(ROUTES.WORKOUTS_NEW)
     } 
 
     function handleAddExerciseClick(){
-        navigate("/workouts/new/routines/new/exercises")
+        navigate(ROUTES.WORKOUTS_NEW_ROUTINES_NEW_EXERCISES)
     }
     return(
         <>

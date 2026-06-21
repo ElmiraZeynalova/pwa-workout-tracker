@@ -1,16 +1,14 @@
 import { useUserStore } from '../../store/user-store'
-import {signInUser, verifyOtp} from '../../supabase/supabase_crud'
+import {signInUser} from '../../supabase/supabase_crud'
 import {useState} from 'react'
 import { FaRegEnvelope } from "react-icons/fa";
-import { BiDialpadAlt } from "react-icons/bi";
 import styles from './LoginPage.module.css'
 
 export default function LoginPage(){
     const email = useUserStore((state) => state.email)
     const setEmail = useUserStore((state) => state.setEmail)
     const [error, setError] = useState('')
-    const [code, setCode] = useState('')
-    const [loginStep, setLoginStep] = useState<'email' | 'otp'>('email')
+    const [loginStep, setLoginStep] = useState<'email' | 'link-sent'>('email')
     const [loading, setLoading] = useState(false)
 
     async function handleLogin() {
@@ -26,33 +24,15 @@ export default function LoginPage(){
             setError(error.message)
             return
         }
-        setLoginStep('otp')
+        setLoginStep('link-sent')
     }
-    async function handleVerify() {
-        if (code.length !== 6) {
-            setError('Enter 6-digit code')
-            return
-        }
-        setLoading(true)
-        setError('')
-
-        const { error } = await verifyOtp(email!, code)
-        setLoading(false)
-
-        if (error) {
-            setError(error.message)
-            return
-        }
-
-    }
-
 
     return (
         <>
-            {loginStep === 'email' && 
-            <div className={styles.loginPageLayout}>
-                <h1>Login</h1>
-                <p>Please Sign in to continue</p>
+        
+            {loginStep === 'email' && <div className={styles.loginPageLayout}>
+                <h1>Log in</h1>
+                <p>Enter your email to receive a sign-in link</p>
                 <form>
                     <FaRegEnvelope color="black" size={20} />
                     <input 
@@ -66,30 +46,14 @@ export default function LoginPage(){
                     />
                 </form>
                     {error && <p className="error">{error}</p>}
-                    <button type="button" disabled={!email || loading} onClick={handleLogin}>{loading ? 'Sending...' : 'Login'}</button>
+                    <button type="button" disabled={!email || loading} onClick={handleLogin}>{loading ? 'Sending...' : 'Log in'}</button>
                 
             </div>}
-            {loginStep === 'otp' && 
+            {loginStep === 'link-sent' && 
             <div className={styles.loginPageLayout}>
-                <h1>Verify your email</h1>
-                <p>Enter the code sent to {email}:</p>
-                <form>
-                    <BiDialpadAlt color="black" size={20}/>
-                    <input 
-                        type="text" 
-                        inputMode="numeric" 
-                        maxLength={6}
-                        placeholder="123456" 
-                        value={code ?? ''}  
-                        onChange={(e) => {
-                            setCode(e.target.value)
-                            setError('')
-                        }}
-                    />
-                    </form>
-                    {error && <p className="error">{error}</p>}
-                     <button type="button" disabled={code.length !== 6 || loading} onClick={handleVerify}>{loading ? 'Verifying...' : 'Verify'}</button>
-                </div>}
+                <h2>Check your email</h2>
+                <p>We sent a sign-in link to <strong>{email}</strong></p>
+            </div>}
         </>
     )
 }

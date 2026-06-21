@@ -8,6 +8,7 @@ import {useRenderDataOnScreenStore} from '../../store/render-data-store'
 import styles from './LoggedExerciseCard.module.css'
 import EditModalWindow from '../modal-windows/EditModalWindow/EditModalWindow'
 import { useExercisesStore } from '../../store/exercises-store'
+import { ROUTES } from "../../routes";
 
 type SetInfo = {
     setId: string
@@ -52,7 +53,7 @@ export default function LoggedExerciseCard({exercise, date}: {exercise: Exercise
         const formattedSets = exercise.sets.map(s => ({...s, checked: true}))
         const formattedExercise = {...exercise, sets: formattedSets }
         addNewExerciseToStore([formattedExercise])
-        navigate("/exercises/edit", {state: { headerTitle: "Exercise", exerciseId: exercise.exerciseId}});
+        navigate(ROUTES.EXERCISES_EDIT, {state: { headerTitle: "Exercise", exerciseId: exercise.exerciseId}});
         setShowModal(false)
     }
 

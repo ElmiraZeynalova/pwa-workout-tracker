@@ -16,7 +16,7 @@ import DiscardModalWindow from '../../components/modal-windows/DiscardModalWindo
 import MessageModalWindow from '../../components/modal-windows/MessageModalWindow/MessageModalWindow'
 import FilledButton from "../../components/buttons/FilledButton/FilledButton"
 import EmptyButton from "../../components/buttons/EmptyButton/EmptyButton"
-
+import { ROUTES } from "../../routes"
 type SetInfo = {
     setId: string
     reps: number | null
@@ -69,7 +69,7 @@ export default function LogWorkoutPage(){
 
             try {
                 addExercises(currentWorkoutDate, cleanedExercises)
-                navigate("/")
+                navigate(ROUTES.HOME)
                 await saveWorkout(currentWorkoutDate, cleanedExercises, 0)
                 clearExercisesStore()
                 syncServerWithIDB().catch(console.error)
@@ -90,15 +90,23 @@ export default function LogWorkoutPage(){
 
     function handleDiscard(){
         clearExercisesStore()
-        navigate("/")
+        navigate(ROUTES.HOME)
     }
     
     function handleAddExerciseClick(){
-        navigate("/workouts/new/exercises")
+        navigate(ROUTES.WORKOUTS_NEW_EXERCISES)
     }
 
     function handleCreateNewRoutineClick(){
-        navigate("/workouts/new/routines/new")
+        navigate(ROUTES.WORKOUTS_NEW_ROUTINES_NEW)
+    }
+
+    function handleArrowClick(){
+        if(currentWorkoutExercises.length > 0){
+            setShowDiscardModal(true)
+        }else{
+            navigate(ROUTES.HOME)
+        }
     }
 
     return(
@@ -109,7 +117,7 @@ export default function LogWorkoutPage(){
             <div className="mobile-layout">
                 <Header 
                     title={<p className={styles.title} style={{marginLeft: '50px'}}>Log Workout</p>}
-                    leftButton={<button className={styles.headerBtn} onClick={() => setShowDiscardModal(true)}><FaChevronLeft size={16} color="black"/></button>}
+                    leftButton={<button className={styles.headerBtn} onClick={handleArrowClick}><FaChevronLeft size={16} color="black"/></button>}
                     rightButton={<EmptyButton handleClick={handleFinish} size="sm">Finish</EmptyButton>}
                 />
                 <main style={{overflowY: 'auto'}}>

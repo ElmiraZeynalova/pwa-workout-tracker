@@ -7,14 +7,15 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { MdOutlineCalendarMonth } from "react-icons/md";
 import Header from '../../components/Header/Header'
 import styles from './HomePage.module.css'
+import { ROUTES } from '../../routes'
 export default function HomePage(){
     const selectedDate = useDateStore(state => state.selectedDate)
     return(
         <div className="mobile-layout">
             <Header 
                 title={<p className={styles.title}>{dayjs(selectedDate).format('MMMM D')}</p>}
-                leftButton={<NavLink className={styles.headerBtn} to="/workouts/new"><AiOutlinePlus size={26} color="black"/></NavLink>}
-                rightButton={<NavLink className={styles.headerBtn} to="/calendar"><MdOutlineCalendarMonth size={24} color="black"/></NavLink>}
+                leftButton={<NavLink className={styles.headerBtn} to={ROUTES.WORKOUTS_NEW}><AiOutlinePlus size={26} color="black"/></NavLink>}
+                rightButton={<NavLink className={styles.headerBtn} to={ROUTES.CALENDAR}><MdOutlineCalendarMonth size={24} color="black"/></NavLink>}
             />
             <WeekSwiper />
             <main>

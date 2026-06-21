@@ -10,6 +10,7 @@ import CreateRoutinePage from './pages/CreateRoutinePage/CreateRoutinePage'
 import DesktopRoutinesPage from './pages/desktop/RoutinesPage/RoutinesPage'
 import DesktopCreateRoutinePage from './pages/desktop/CreateRoutinePage/CreateRoutinePage'
 import DesktopEditPage from './pages/desktop/EditPage/EditPage'
+import LandingPage from './pages/LandingPage/LandingPage'
 import {syncServerWithIDB, syncIDBWithServer } from './supabase/supabase_crud'
 import {supabase} from './supabase/supabaseClient'
 import {getAllWorkouts} from './indexed_db/workouts-store-crud'
@@ -18,7 +19,9 @@ import EditPage from './pages/EditPage/EditPage'
 import {useRenderDataOnScreenStore} from './store/render-data-store'
 import {useMediaQuery} from './hooks/useMediaQuery'
 import {getAllRoutines} from './indexed_db/routines-store-crud'
-
+import { Navigate } from 'react-router-dom'
+import type { ReactNode } from 'react'
+import {ROUTES} from './routes'
 function App() {
   const setUserId = useUserStore((state) => state.setUserId)
   const setAllWorkouts = useRenderDataOnScreenStore((state) => state.setAllWorkouts)
@@ -62,46 +65,59 @@ function App() {
       }
   }, [init])
 
+  function ProtectedRoute({ children }: { children: ReactNode }) {
+    if (!userId) return <Navigate to={ROUTES.LANDING} replace />
+    return children
+  }
+
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: userId ? homeScreen : <LoginPage/>
+    path: ROUTES.LANDING,
+    element: userId ? <Navigate to={ROUTES.HOME} replace /> : <LandingPage />
   },
   {
-    path: "/calendar",
-    element: <CalendarPage/>
+    path: ROUTES.LOGIN,
+    element: userId ? <Navigate to={ROUTES.HOME} replace /> : <LoginPage />
   },
   {
-    path: "/workouts/new",
-    element: <LogWorkoutPage/>
+    path: ROUTES.HOME,
+    element: <ProtectedRoute>{homeScreen}</ProtectedRoute>
   },
   {
-    path: "/workouts/new/exercises",
-    element: <ExercisesListPage/>
+    path: ROUTES.CALENDAR,
+    element: <ProtectedRoute><CalendarPage /></ProtectedRoute>
   },
   {
-    path: "/exercises/edit",
-    element: <EditPage/>
+    path: ROUTES.WORKOUTS_NEW,
+    element: <ProtectedRoute><LogWorkoutPage /></ProtectedRoute>
   },
   {
-    path: "/routines/edit",
-    element: editScreen
+    path: ROUTES.WORKOUTS_NEW_EXERCISES,
+    element: <ProtectedRoute><ExercisesListPage/></ProtectedRoute>
   },
   {
-    path: "/workouts/new/routines/new",
-    element: <CreateRoutinePage/>
+    path: ROUTES.EXERCISES_EDIT,
+    element: <ProtectedRoute><EditPage/></ProtectedRoute>
   },
   {
-    path: "/workouts/new/routines/new/exercises",
-    element: <ExercisesListPage/>
+    path: ROUTES.ROUTINES_EDIT,
+    element: <ProtectedRoute>{editScreen}</ProtectedRoute>
   },
   {
-    path: "/routines",
-    element: <DesktopRoutinesPage/>
+    path: ROUTES.WORKOUTS_NEW_ROUTINES_NEW,
+    element: <ProtectedRoute><CreateRoutinePage/></ProtectedRoute>
   },
   {
-    path: "/routines/new",
-    element: <DesktopCreateRoutinePage/>
+    path: ROUTES.WORKOUTS_NEW_ROUTINES_NEW_EXERCISES,
+    element: <ProtectedRoute><ExercisesListPage/></ProtectedRoute>
+  },
+  {
+    path: ROUTES.ROUTINES,
+    element: <ProtectedRoute><DesktopRoutinesPage/></ProtectedRoute>
+  },
+  {
+    path:ROUTES.ROUTINES_NEW,
+    element: <ProtectedRoute><DesktopCreateRoutinePage/></ProtectedRoute>
   }
 ])
 
@@ -111,3 +127,4 @@ const router = createBrowserRouter([
 }
 
 export default App
+

@@ -16,6 +16,10 @@ type Exercise = {
     sets: SetInfo[]
 }
 
+export async function logoutUser(){
+    await supabase.auth.signOut()
+}
+
 export async function signInUser(email: string){
     const { error } = await supabase.auth.signInWithOtp({ email: email })
     return { error }

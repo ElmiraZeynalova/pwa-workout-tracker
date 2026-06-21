@@ -10,6 +10,7 @@ import { deleteRoutineById} from '../../indexed_db/routines-store-crud';
 import { syncServerWithIDB, deleteRoutineFromServer } from '../../supabase/supabase_crud'
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import dumbbellIcon from '../../assets/dumbbell.svg'
+import { ROUTES } from '../../routes';
 
 type SetInfo = {
     setId: string
@@ -40,7 +41,7 @@ export default function RoutineCard({ routineId, title, exercises}: Props) {
 
     function handleStartRoutineClick(){
         addNewExerciseToStore(exercises)
-        navigate("/workouts/new")
+        navigate(ROUTES.WORKOUTS_NEW)
     }
 
     async function handleDeleteRoutine(){
@@ -59,7 +60,7 @@ export default function RoutineCard({ routineId, title, exercises}: Props) {
     function handleEditRoutine(){
         setRoutineTitle(title)
         addNewExerciseToStore(exercises)
-        navigate("/routines/edit", {state: { headerTitle: "Routine", routineId: routineId, routineTitle: title}})
+        navigate(ROUTES.ROUTINES_EDIT, {state: { headerTitle: "Routine", routineId: routineId, routineTitle: title}})
         setShowModal(false)
     }
 

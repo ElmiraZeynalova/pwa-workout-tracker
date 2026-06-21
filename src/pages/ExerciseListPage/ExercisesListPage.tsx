@@ -9,6 +9,7 @@ import Header from '../../components/Header/Header'
 import styles from './ExercisesListPage.module.css'
 import FilledButton from '../../components/buttons/FilledButton/FilledButton'
 import { useMediaQuery } from "../../hooks/useMediaQuery";
+import { ROUTES } from "../../routes";
 
 export default function ExercisesListPage(){
     const navigate = useNavigate()
@@ -58,7 +59,7 @@ export default function ExercisesListPage(){
 
             <Header 
                 title={<p className={styles.title}>All Exercises</p>}
-                leftButton={!isDesktop ? <NavLink className={styles.headerBtn} to="/workouts/new"><FaChevronLeft size={16} color="black"/></NavLink> : <div style={{width: '16px'}}></div>}
+                leftButton={!isDesktop ? <NavLink className={styles.headerBtn} to={ROUTES.WORKOUTS_NEW}><FaChevronLeft size={16} color="black"/></NavLink> : <div style={{width: '16px'}}></div>}
                 rightButton={<div style={{width: '16px'}}></div>}
             />
             <div className={styles.searchBar}>

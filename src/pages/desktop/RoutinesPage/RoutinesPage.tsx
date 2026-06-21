@@ -5,6 +5,7 @@ import RoutineCard from '../../../components/RoutineCard/RoutineCard'
 import {NavLink} from 'react-router-dom'
 import RightPanel from '../../../components/desktop/RightPanel/RightPanel'
 import { AiOutlinePlus } from "react-icons/ai";
+import { ROUTES } from '../../../routes'
 
 export default function RoutinesPage(){
     const routines = useRenderDataOnScreenStore(state => state.routines)
@@ -25,7 +26,7 @@ export default function RoutinesPage(){
                 {routineCards}
             </div>
             <RightPanel>
-                <NavLink to='/routines/new' className={styles.createNewRoutineBtn}>
+                <NavLink to={ROUTES.ROUTINES_NEW} className={styles.createNewRoutineBtn}>
                     <AiOutlinePlus size={23} color="##ff5526"/>
                     New Routine
                 </NavLink>

@@ -15,6 +15,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import FilledButton from "../../components/buttons/FilledButton/FilledButton"
 import { deleteRoutineById, markRoutineUnsynced, editRoutine } from "../../indexed_db/routines-store-crud";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
+import { ROUTES } from "../../routes";
 export default function EditPage(){
     const navigate = useNavigate()
     const { state } = useLocation()
@@ -79,20 +80,20 @@ export default function EditPage(){
 
         clearStore()
         if(isDesktop){
-            navigate('/routines')
+            navigate(ROUTES.ROUTINES)
         }else{
-            headerTitle === "Exercise" ? navigate('/') : navigate('/workouts/new')
+            headerTitle === "Exercise" ? navigate(ROUTES.HOME) : navigate(ROUTES.WORKOUTS_NEW)
         }
         syncServerWithIDB().catch(console.warn)
     }
 
     function handleExitEditPage(){
         clearStore()
-        isDesktop ? navigate('/routines') : navigate('/')
+        isDesktop ? navigate(ROUTES.ROUTINES) : navigate('/')
     }
    
     function handleAddExerciseClick(){
-        navigate("/workouts/new/exercises")
+        navigate(ROUTES.WORKOUTS_NEW_EXERCISES)
     }
     return(
         <div className="mobile-layout">
