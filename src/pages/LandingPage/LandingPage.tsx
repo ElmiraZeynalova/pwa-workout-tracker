@@ -79,7 +79,7 @@ export default function LandingPage(){
 
     const leftHeaderPart = 
         <div className={styles.logo}>
-            <img className={styles.logoImage} src={logo} width={50} height={50}/>
+            <img className={styles.logoImage} src={logo}/>
             <h1>Forge</h1>
         </div>
 
