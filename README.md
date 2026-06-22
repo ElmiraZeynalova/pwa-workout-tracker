@@ -5,7 +5,7 @@
 
 This is a lightweight and simple PWA for logging workouts, with offline-first architecture and cross-device sync.
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20App-orange?style=for-the-badge&logo=vercel)](https://pwa-workout-tracker-2ymf.vercel.app)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20App-orange?style=for-the-badge&logo=vercel)](https://pwa-workout-tracker-2ymf.vercel.app/landing)
 
 <br/>
 
@@ -31,7 +31,7 @@ This is a lightweight and simple PWA for logging workouts, with offline-first ar
 ## 🚀 Getting Started
 
 ### Use it instantly
-👉 **[Open in Browser](https://pwa-workout-tracker-2ymf.vercel.app)** — no install needed
+👉 **[Open in Browser](https://pwa-workout-tracker-2ymf.vercel.app/landing)** — no install needed
 
 ### Install as PWA
 1. Open the app in Chrome or Safari
