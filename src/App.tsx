@@ -29,6 +29,7 @@ function App() {
   const userId = useUserStore((state) => state.userId)
   const isSyncing = useRef(false)
 
+  const isPWA = window.matchMedia('(display-mode: standalone)').matches
   const isDesktop = useMediaQuery('(min-width: 1024px)')
   const homeScreen = isDesktop ? <DesktopHomePage /> : <HomePage />
   const editScreen = isDesktop ? <DesktopEditPage/> : <EditPage/>
@@ -73,7 +74,11 @@ function App() {
 const router = createBrowserRouter([
   {
     path: ROUTES.LANDING,
-    element: userId ? <Navigate to={ROUTES.HOME} replace /> : <LandingPage />
+    element: userId 
+      ? <Navigate to={ROUTES.HOME} replace /> 
+      : isPWA 
+        ? <Navigate to={ROUTES.LOGIN} replace />
+        : <LandingPage />
   },
   {
     path: ROUTES.LOGIN,

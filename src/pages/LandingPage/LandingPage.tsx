@@ -45,7 +45,7 @@ const features = [
 ]
 export default function LandingPage(){
     const navigate = useNavigate()
-    const isDesktop = useMediaQuery('(min-width: 1024px)')
+    const isDesktop = useMediaQuery('(min-width: 768px)')
     const [deferredPrompt, setDeferredPrompt] = useState<any>(null)
 
     useEffect(() => {

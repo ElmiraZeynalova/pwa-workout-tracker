@@ -8,7 +8,7 @@ type Props = {
     description: string
 }
 export default function FeatureCard({icon, title, description}: Props){
-    const isDesktop = useMediaQuery('(min-width: 1024px)')
+    const isDesktop = useMediaQuery('(min-width: 768px)')
     return(
         <div className={styles.card}>
             <div className={styles.icon}>{icon}</div>
