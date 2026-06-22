@@ -29,7 +29,6 @@ function App() {
   const userId = useUserStore((state) => state.userId)
   const isSyncing = useRef(false)
 
-  const isPWA = window.matchMedia('(display-mode: standalone)').matches
   const isDesktop = useMediaQuery('(min-width: 1024px)')
   const homeScreen = isDesktop ? <DesktopHomePage /> : <HomePage />
   const editScreen = isDesktop ? <DesktopEditPage/> : <EditPage/>
@@ -65,6 +64,17 @@ function App() {
           window.removeEventListener("online", init)
       }
   }, [init])
+
+  useEffect(() => {
+    window.addEventListener('appinstalled', () => {
+      localStorage.setItem('isPWA', 'true')
+    })
+  }, [])
+
+  const isPWA = 
+  window.matchMedia('(display-mode: standalone)').matches ||
+  (navigator as any).standalone === true ||
+  localStorage.getItem('isPWA') === 'true'
 
   function ProtectedRoute({ children }: { children: ReactNode }) {
     if (!userId) return <Navigate to={ROUTES.LANDING} replace />
