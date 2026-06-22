@@ -1,95 +1,260 @@
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0;
-  padding: 20px 50px;
-  border-bottom: 1px solid #cdcdcd74;
-  height: 50px;
-}
-
 .logo {
   display: flex;
   align-items: center;
+  margin: 0 0 10px 0;
   h1 {
     margin: 0;
     font-size: 25px;
     color: #323232;
   }
-}
-
-.openAppBtn {
-  margin: 0;
-  font-weight: 600;
-  padding: 10px 30px;
-  font-size: 17px;
-}
-
-.links {
-  display: flex;
-  gap: 70px;
-  margin: 0;
-
-  a {
-    color: #5f5f5f;
-    text-decoration: none;
-    font-size: 500;
-    font-size: 18px;
+  .logoImage {
+    margin: 0;
   }
 }
 
 .mainContent {
-  padding: 20px 50px;
+  padding: 20px;
   overflow-y: auto;
 }
 
-.invite {
+.info {
   display: flex;
-  justify-content: space-around;
-  .info {
+  flex-direction: column;
+
+  h1 {
+    margin: 0;
+    font-size: 35px;
+    color: #323232;
+  }
+  span {
+    color: #ff5526;
+  }
+
+  p {
+    margin-bottom: 20px;
+    color: #5f5f5f;
+    font-size: 18px;
+    line-height: 30px;
+  }
+}
+.image {
+  width: 100%;
+  height: 350px;
+}
+
+.openInBrowser {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  color: #5f5f5f;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 17px;
+  cursor: pointer;
+  background: none;
+  margin: 0 auto;
+}
+
+.openInBrowser:hover {
+  color: #ff5526;
+  gap: 15px;
+}
+.installBtn {
+  width: 100%;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 8px 20px;
+  margin-bottom: 15px;
+}
+.features {
+  display: flex;
+  flex-direction: column;
+
+  h3 {
+    color: #ff5526;
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+  }
+  h2 {
+    color: #323232;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 30px 0;
+  }
+  .featureCards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+}
+
+.openInBrowser,
+.installBtn,
+.openAppBtn:active {
+  transform: scale(0.97);
+}
+.icon {
+  width: 22px;
+  height: 22px;
+}
+.icon:nth-child(2) {
+  width: 26px;
+  height: 26px;
+}
+.icon:nth-child(5) {
+  width: 24px;
+  height: 24px;
+}
+
+@media (min-width: 768px) {
+  .icon {
+    width: 26px;
+    height: 26px;
+  }
+  .icon:nth-child(2) {
+    width: 30px;
+    height: 30px;
+  }
+  .icon:nth-child(5) {
+    width: 28px;
+    height: 28px;
+  }
+  .header {
     display: flex;
-    flex-direction: column;
-    margin-top: 70px;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    padding: 20px 50px;
+    border-bottom: 1px solid #cdcdcd74;
+    height: 50px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
     h1 {
       margin: 0;
-      font-size: 50px;
+      font-size: 25px;
+      color: #323232;
     }
-    h1:nth-child(2) {
-      color: #ff5526;
-    }
+  }
 
-    p {
-      margin-bottom: 30px;
-      color: #5f5f5f;
-      font-size: 18px;
-      line-height: 30px;
-    }
-    .openInBrowser {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      border: none;
+  .openAppBtn {
+    margin: 0;
+    font-weight: 600;
+    padding: 10px 30px;
+    font-size: 17px;
+  }
+
+  .links {
+    display: flex;
+    gap: 70px;
+    margin: 0;
+
+    a {
       color: #5f5f5f;
       text-decoration: none;
       font-size: 500;
-      font-size: 17px;
-      cursor: pointer;
-      background: none;
-    }
-
-    .installBtn {
-      display: flex;
-      align-self: flex-start;
-      gap: 5px;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      font-size: 17px;
-      padding: 10px 30px;
-      margin-bottom: 25px;
+      font-size: 18px;
     }
   }
-  img {
-    margin: 0;
+
+  .mainContent {
+    padding: 20px 50px 50px 50px;
+    overflow-y: auto;
+  }
+  .image {
+    width: 700px;
+    height: 600px;
+  }
+  .invite {
+    display: flex;
+    justify-content: space-around;
+    .info {
+      display: flex;
+      flex-direction: column;
+      margin-top: 70px;
+      h1 {
+        margin: 0;
+        font-size: 50px;
+        color: #323232;
+      }
+      h1:nth-child(2) {
+        color: #ff5526;
+      }
+
+      p {
+        margin-bottom: 30px;
+        color: #5f5f5f;
+        font-size: 18px;
+        line-height: 30px;
+      }
+      .openInBrowser {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border: none;
+        color: #5f5f5f;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 17px;
+        cursor: pointer;
+        background: none;
+        margin: 0;
+      }
+
+      .openInBrowser:hover {
+        color: #ff5526;
+        gap: 15px;
+      }
+      .installBtn {
+        display: flex;
+        align-self: flex-start;
+        width: 50%;
+        gap: 5px;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 17px;
+        padding: 10px 30px;
+        margin: 0 0 25px 0;
+      }
+    }
+    img {
+      margin: 0;
+    }
+  }
+
+  .features {
+    padding: 0 75px;
+    display: flex;
+    flex-direction: column;
+
+    h3 {
+      color: #ff5526;
+      font-size: 16px;
+      font-weight: 700;
+      margin: 0 0 20px 0;
+    }
+    h2 {
+      color: #323232;
+      font-size: 30px;
+      font-weight: 700;
+      margin: 0 0 40px 0;
+    }
+    .featureCards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      flex-wrap: wrap;
+    }
   }
 }
