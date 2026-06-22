@@ -1,7 +1,7 @@
 export const ROUTES = {
-  LANDING: '/',
-  LOGIN: '/login',
-  HOME: '/app',
+  LANDING: '/landing',
+  LOGIN: '/',
+  HOME: '/',
   CALENDAR: '/calendar',
   WORKOUTS_NEW: '/workouts/new',
   WORKOUTS_NEW_EXERCISES: '/workouts/new/exercises',

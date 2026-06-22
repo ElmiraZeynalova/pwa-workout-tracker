@@ -61,7 +61,7 @@ export default function LandingPage(){
             await deferredPrompt.userChoice
             setDeferredPrompt(null)
         } else {
-            navigate(ROUTES.LOGIN)
+            navigate(ROUTES.HOME)
         }
     }
 
@@ -86,7 +86,7 @@ export default function LandingPage(){
     const rightHeaderPart = <FilledButton handleClick={handleOpenAppClick} className={styles.openAppBtn}>Open App</FilledButton>
 
     function handleOpenAppClick(){
-        navigate(ROUTES.LOGIN)
+        navigate(ROUTES.HOME)
     }
 
     const featureCards = features.map(f => <FeatureCard key={f.title} icon={f.icon} title={f.title} description={f.description}/>)

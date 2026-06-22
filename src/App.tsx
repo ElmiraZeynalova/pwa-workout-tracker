@@ -19,8 +19,6 @@ import EditPage from './pages/EditPage/EditPage'
 import {useRenderDataOnScreenStore} from './store/render-data-store'
 import {useMediaQuery} from './hooks/useMediaQuery'
 import {getAllRoutines} from './indexed_db/routines-store-crud'
-import { Navigate } from 'react-router-dom'
-import type { ReactNode } from 'react'
 import {ROUTES} from './routes'
 function App() {
   const setUserId = useUserStore((state) => state.setUserId)
@@ -65,74 +63,55 @@ function App() {
       }
   }, [init])
 
-  useEffect(() => {
-    window.addEventListener('appinstalled', () => {
-      localStorage.setItem('isPWA', 'true')
-    })
-  }, [])
-
-  const isPWA = 
-  window.matchMedia('(display-mode: standalone)').matches ||
-  (navigator as any).standalone === true ||
-  localStorage.getItem('isPWA') === 'true'
-
-  function ProtectedRoute({ children }: { children: ReactNode }) {
-    if (!userId) return <Navigate to={ROUTES.LANDING} replace />
-    return children
-  }
 
 const router = createBrowserRouter([
   {
     path: ROUTES.LANDING,
-    element: userId 
-      ? <Navigate to={ROUTES.HOME} replace /> 
-      : isPWA 
-        ? <Navigate to={ROUTES.LOGIN} replace />
-        : <LandingPage />
-  },
-  {
-    path: ROUTES.LOGIN,
-    element: userId ? <Navigate to={ROUTES.HOME} replace /> : <LoginPage />
+    element: <LandingPage />
   },
   {
     path: ROUTES.HOME,
-    element: <ProtectedRoute>{homeScreen}</ProtectedRoute>
+    element: userId ?  homeScreen : <LoginPage />
   },
+  // {
+  //   path: ROUTES.HOME,
+  //   element: <ProtectedRoute>{homeScreen}</ProtectedRoute>
+  // },
   {
     path: ROUTES.CALENDAR,
-    element: <ProtectedRoute><CalendarPage /></ProtectedRoute>
+    element: <CalendarPage />
   },
   {
     path: ROUTES.WORKOUTS_NEW,
-    element: <ProtectedRoute><LogWorkoutPage /></ProtectedRoute>
+    element: <LogWorkoutPage />
   },
   {
     path: ROUTES.WORKOUTS_NEW_EXERCISES,
-    element: <ProtectedRoute><ExercisesListPage/></ProtectedRoute>
+    element: <ExercisesListPage/>
   },
   {
     path: ROUTES.EXERCISES_EDIT,
-    element: <ProtectedRoute><EditPage/></ProtectedRoute>
+    element: <EditPage/>
   },
   {
     path: ROUTES.ROUTINES_EDIT,
-    element: <ProtectedRoute>{editScreen}</ProtectedRoute>
+    element: editScreen
   },
   {
     path: ROUTES.WORKOUTS_NEW_ROUTINES_NEW,
-    element: <ProtectedRoute><CreateRoutinePage/></ProtectedRoute>
+    element: <CreateRoutinePage/>
   },
   {
     path: ROUTES.WORKOUTS_NEW_ROUTINES_NEW_EXERCISES,
-    element: <ProtectedRoute><ExercisesListPage/></ProtectedRoute>
+    element: <ExercisesListPage/>
   },
   {
     path: ROUTES.ROUTINES,
-    element: <ProtectedRoute><DesktopRoutinesPage/></ProtectedRoute>
+    element: <DesktopRoutinesPage/>
   },
   {
     path:ROUTES.ROUTINES_NEW,
-    element: <ProtectedRoute><DesktopCreateRoutinePage/></ProtectedRoute>
+    element: <DesktopCreateRoutinePage/>
   }
 ])
 
