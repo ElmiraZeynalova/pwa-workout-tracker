@@ -1,0 +1,33 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #f3f3f3;
+  display: grid;
+  grid-template-columns: 1fr 6fr 1fr;
+  align-items: center;
+  padding: 18px;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 20px;
+  margin: 0;
+}
+
+.titleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.leftBtnContainer {
+  display: flex;
+
+  justify-content: flex-start;
+}
+
+.rghtBtnContainer {
+  display: flex;
+  justify-content: flex-end;
+}

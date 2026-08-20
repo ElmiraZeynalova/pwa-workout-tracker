@@ -1,0 +1,120 @@
+import { useEffect, useRef, useCallback} from 'react'
+import { createBrowserRouter, RouterProvider} from 'react-router-dom'
+import HomePage from './pages/HomePage/HomePage'
+import DesktopHomePage from './pages/desktop/HomePage/HomePage'
+import CalendarPage from './pages/CalendarPage/CalendarPage'
+import LoginPage from './pages/LoginPage/LoginPage'
+import LogWorkoutPage from './pages/LogWorkoutPage/LogWorkoutPage'
+import ExercisesListPage from './pages/ExerciseListPage/ExercisesListPage'
+import CreateRoutinePage from './pages/CreateRoutinePage/CreateRoutinePage'
+import DesktopRoutinesPage from './pages/desktop/RoutinesPage/RoutinesPage'
+import DesktopCreateRoutinePage from './pages/desktop/CreateRoutinePage/CreateRoutinePage'
+import DesktopEditPage from './pages/desktop/EditPage/EditPage'
+import LandingPage from './pages/LandingPage/LandingPage'
+import {syncServerWithIDB, syncIDBWithServer } from './lib/supabase/crud'
+import {supabase} from './lib/supabase/client'
+import {getAllWorkouts} from './lib/indexed_db/workouts-store-crud'
+import {useUserStore} from './store/user-store'
+import EditPage from './pages/EditPage/EditPage'
+import {useRenderDataOnScreenStore} from './store/render-data-store'
+import {useMediaQuery} from './hooks/useMediaQuery'
+import {getAllRoutines} from './lib/indexed_db/routines-store-crud'
+import {ROUTES} from './lib/constants'
+function App() {
+  const setUserId = useUserStore((state) => state.setUserId)
+  const setAllWorkouts = useRenderDataOnScreenStore((state) => state.setAllWorkouts)
+  const setAllRoutines = useRenderDataOnScreenStore((state) => state.setAllRoutines)
+  const userId = useUserStore((state) => state.userId)
+  const isSyncing = useRef(false)
+
+  const isDesktop = useMediaQuery('(min-width: 1024px)')
+  const homeScreen = isDesktop ? <DesktopHomePage /> : <HomePage />
+  const editScreen = isDesktop ? <DesktopEditPage/> : <EditPage/>
+
+  const init = useCallback(async () => {
+      if (isSyncing.current) return
+      isSyncing.current = true
+      try {
+          const workouts = await getAllWorkouts()
+          const routines = await getAllRoutines()
+          setAllWorkouts(workouts)
+          setAllRoutines(routines)
+          await syncServerWithIDB()
+          await syncIDBWithServer()
+      } catch (err) {
+          console.warn("Sync failed", err)
+      } finally {
+          isSyncing.current = false
+      }
+  }, [])
+
+  useEffect(() => {
+      const { data: authListener } = supabase.auth.onAuthStateChange((_, session) => {
+          if (session) {
+              setUserId(session.user.id)
+              init()
+          }
+      })
+
+      window.addEventListener("online", init)
+      return () => {
+          authListener?.subscription.unsubscribe()
+          window.removeEventListener("online", init)
+      }
+  }, [init])
+
+
+const router = createBrowserRouter([
+  {
+    path: ROUTES.LANDING,
+    element: <LandingPage />
+  },
+  {
+    path: ROUTES.HOME,
+    element: userId ?  homeScreen : <LoginPage />
+  },
+  {
+    path: ROUTES.CALENDAR,
+    element: <CalendarPage />
+  },
+  {
+    path: ROUTES.WORKOUTS_NEW,
+    element: <LogWorkoutPage />
+  },
+  {
+    path: ROUTES.WORKOUTS_NEW_EXERCISES,
+    element: <ExercisesListPage/>
+  },
+  {
+    path: ROUTES.EXERCISES_EDIT,
+    element: <EditPage/>
+  },
+  {
+    path: ROUTES.ROUTINES_EDIT,
+    element: editScreen
+  },
+  {
+    path: ROUTES.WORKOUTS_NEW_ROUTINES_NEW,
+    element: <CreateRoutinePage/>
+  },
+  {
+    path: ROUTES.WORKOUTS_NEW_ROUTINES_NEW_EXERCISES,
+    element: <ExercisesListPage/>
+  },
+  {
+    path: ROUTES.ROUTINES,
+    element: <DesktopRoutinesPage/>
+  },
+  {
+    path:ROUTES.ROUTINES_NEW,
+    element: <DesktopCreateRoutinePage/>
+  }
+])
+
+  return (
+    <RouterProvider router={router}/>
+  )
+}
+
+export default App
+
