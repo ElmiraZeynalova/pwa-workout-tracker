@@ -41,3 +41,12 @@ export async function loginUser(email: string, password: string){
     return {user: user, token: token}
 }
 
+export async function checkUser(userId: string){
+    const user = await prisma.app_users.findUnique({
+        where: {id: userId},
+    })
+    if(!user){
+        throw new Error("User doesn't exist in data base")
+    }
+    return user
+}

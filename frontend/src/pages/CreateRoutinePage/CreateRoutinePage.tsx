@@ -6,16 +6,16 @@ import { AiOutlinePlus } from "react-icons/ai"
 import dumbbellIcon from '../../assets/grey_dumbbell.svg'
 import { useExercisesStore } from '../../store/exercises-store'
 import LoggingExerciseCard from '../../components/LoggingExerciseCard/LoggingExerciseCard'
-import {saveRoutine} from '../../lib/indexed_db/routines-store-crud'
+import {saveRoutine} from '../../utils/indexed_db/routines-store-crud'
 import {useState} from 'react'
 import { useRenderDataOnScreenStore } from '../../store/render-data-store'
 
 import Modal from '../../components/Modal/Modal'
 import Button from '../../components/Button/Button'
 import RoutineTitleForm from '../../components/forms/RoutineTitleForm/RoutineTitleForm'
-import { syncServerWithIDB } from '../../lib/supabase/crud'
+import { syncServerWithIDB } from '../../utils/supabase/crud'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
-import { ROUTES } from '../../lib/constants'
+import { ROUTES } from '../../utils/constants'
 
 export default function CreateRoutinePage(){
     const setRoutine = useRenderDataOnScreenStore((state) => state.setRoutine)

@@ -3,7 +3,7 @@ import LoggedExerciseCard from '../LoggedExerciseCard/LoggedExerciseCard'
 import { AiOutlinePlus } from "react-icons/ai";
 import {useRenderDataOnScreenStore} from '../../store/render-data-store'
 import styles from './DayContent.module.css'
-import { ROUTES } from '../../lib/constants';
+import { ROUTES } from '../../utils/constants';
 
 export default function DayContent({date}: {date: string}){
     const workout = useRenderDataOnScreenStore((state) => state.workouts[date])

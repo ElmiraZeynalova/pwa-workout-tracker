@@ -5,7 +5,7 @@ import RoutineCard from '../../../components/RoutineCard/RoutineCard'
 import {NavLink} from 'react-router-dom'
 import RightPanel from '../../../components/desktop/RightPanel/RightPanel'
 import { AiOutlinePlus } from "react-icons/ai";
-import { ROUTES } from '../../../lib/constants'
+import { ROUTES } from '../../../utils/constants'
 
 export default function RoutinesPage(){
     const routines = useRenderDataOnScreenStore(state => state.routines)

@@ -1,6 +1,7 @@
 export const ROUTES = {
   LANDING: '/landing',
   HOME: '/',
+  LOGIN: '/login',
   CALENDAR: '/calendar',
   WORKOUTS_NEW: '/workouts/new',
   WORKOUTS_NEW_EXERCISES: '/workouts/new/exercises',

@@ -2,18 +2,18 @@ import { useNavigate } from "react-router-dom"
 import {useState} from 'react'
 import { useExercisesStore} from "../../store/exercises-store"
 import { useDateStore } from "../../store/date-store"
-import {saveWorkout} from '../../lib/indexed_db/workouts-store-crud'
+import {saveWorkout} from '../../utils/indexed_db/workouts-store-crud'
 import LoggingExerciseCard from '../../components/LoggingExerciseCard/LoggingExerciseCard'
 import { FaChevronLeft } from "react-icons/fa";
 import dumbbellIcon from '../../assets/grey_dumbbell.svg'
 import { AiOutlinePlus } from "react-icons/ai";
-import { syncServerWithIDB } from '../../lib/supabase/crud'
+import { syncServerWithIDB } from '../../utils/supabase/crud'
 import {useRenderDataOnScreenStore} from '../../store/render-data-store'
 import Header from "../../components/Header/Header"
 import styles from './LogWorkoutPage.module.css'
 import RoutineCard from '../../components/RoutineCard/RoutineCard'
 import Button from "../../components/Button/Button"
-import { ROUTES } from "../../lib/constants"
+import { ROUTES } from "../../utils/constants"
 import Modal from "../../components/Modal/Modal"
 type SetInfo = {
     setId: string

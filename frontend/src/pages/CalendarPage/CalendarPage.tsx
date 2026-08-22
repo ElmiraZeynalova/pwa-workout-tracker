@@ -12,10 +12,13 @@ import { useDateStore } from "../../store/date-store";
 import Header from "../../components/Header/Header"
 import styles from "./CalendarPage.module.css"
 import Button from "../../components/Button/Button";
-import { ROUTES } from "../../lib/constants";
+import { ROUTES } from "../../utils/constants";
 import Modal from "../../components/Modal/Modal";
 const TOTAL_MONTHS = 3000
 const CENTER_INDEX = Math.floor(TOTAL_MONTHS / 2)
+import { useMutation } from '@tanstack/react-query'
+import { logout } from "../../api/auth";
+import {useAuthState} from '../../context/AuthContext'
 
 function getMonth(index: number) {
   const date = dayjs().add(index - CENTER_INDEX, "month")
@@ -42,6 +45,16 @@ export default function CalendarPage(){
     const setSelectedDate = useDateStore(state => state.setSelectedDate)
 
     const navigate = useNavigate()
+
+    const {markAsUnauthenticated} = useAuthState()
+    
+    const logoutMutation = useMutation({
+        mutationFn: () => logout(),
+        onSuccess: () => {
+            markAsUnauthenticated()
+            navigate(ROUTES.LOGIN)
+        },
+    })
 
     useLayoutEffect(() => {
         if (!mainRef.current) return
@@ -120,6 +133,7 @@ export default function CalendarPage(){
             <Header>
                 <Header.LeftButton><Link className={styles.headerBtn} to={ROUTES.HOME}><FaChevronLeft size={16} color="black" /></Link></Header.LeftButton>
                 <Header.Title>Calendar</Header.Title>
+                <Header.RightButton><button onClick={() => logoutMutation.mutate()}>Logout</button></Header.RightButton>
             </Header>
             <div className={styles.calendarDateBar}>
                 {["M", "T", "W", "T", "F", "S", "S" ].map((d, idx) => <div key={idx}>{d}</div>)}

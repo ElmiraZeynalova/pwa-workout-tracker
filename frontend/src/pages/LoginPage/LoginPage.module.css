@@ -8,7 +8,7 @@
     color: "black";
     font-weight: 700;
     font-size: 35px;
-    margin: 0 0 15px 0;
+    margin: auto 0 15px 0;
   }
   h2 {
     font-size: 25px;
@@ -22,13 +22,18 @@
   }
   form {
     display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .inputField {
+    display: flex;
     flex-direction: row;
     align-items: center;
     gap: 10px;
     background: white;
     border-radius: 40px;
     padding: 10px 15px;
-    margin: 0 0 30px 0;
+    margin: 0;
 
     box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
   }
@@ -49,16 +54,54 @@
     color: white;
     text-align: center;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 17px;
     border: 0;
+    margin-top: 10px;
   }
   button:disabled {
     background: #ccc;
     color: #666;
   }
+
+  .noAccountOption {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    margin-top: 20px;
+  }
+
+  .noAccountBtn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 600;
+    font-size: 17px;
+    background: none;
+    border: none;
+    text-decoration: none;
+    color: #666;
+    padding: 0;
+  }
+
+  .noAccountText {
+    color: #7a7a7a;
+    font-weight: 400;
+    font-size: 16px;
+  }
+
+  .changeLoginWay {
+    font-weight: 400;
+    font-size: 17px;
+    margin-top: auto;
+    text-align: center;
+    span {
+      font-weight: 500;
+      color: #ff5526;
+    }
+  }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .loginPageLayout {
     margin: auto auto;
     width: 30%;

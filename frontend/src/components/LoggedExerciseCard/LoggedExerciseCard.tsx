@@ -2,13 +2,13 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import {useState} from 'react'
 import dumbbellIcon from '../../assets/dumbbell.svg'
 import { useNavigate } from 'react-router-dom';
-import {deleteExerciseById, markWorkoutUnsynced} from '../../lib/indexed_db/workouts-store-crud'
-import { syncServerWithIDB } from '../../lib/supabase/crud'
+import {deleteExerciseById, markWorkoutUnsynced} from '../../utils/indexed_db/workouts-store-crud'
+import { syncServerWithIDB } from '../../utils/supabase/crud'
 import {useRenderDataOnScreenStore} from '../../store/render-data-store'
 import styles from './LoggedExerciseCard.module.css'
 import Modal from "../Modal/Modal";
 import { useExercisesStore } from '../../store/exercises-store'
-import { ROUTES } from "../../lib/constants";
+import { ROUTES } from "../../utils/constants";
 import { RiEditLine } from "react-icons/ri";
 import { RiDeleteBinLine } from "react-icons/ri";
 

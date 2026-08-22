@@ -9,7 +9,7 @@ import Header from '../../components/Header/Header'
 import styles from './ExercisesListPage.module.css'
 import Button from "../../components/Button/Button";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
-import { ROUTES } from "../../lib/constants";
+import { ROUTES } from "../../utils/constants";
 
 export default function ExercisesListPage(){
     const navigate = useNavigate()

@@ -6,7 +6,7 @@ import logo from '../../assets/logo.png'
 import Button from '../../components/Button/Button'
 import { Icon } from '@iconify/react'
 import {useState, useEffect} from 'react'
-import { ROUTES } from '../../lib/constants'
+import { ROUTES } from '../../utils/constants'
 import FeatureCard from '../../components/FeatureCard/FeatureCard'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
 
@@ -49,10 +49,15 @@ export default function LandingPage(){
     const [deferredPrompt, setDeferredPrompt] = useState<any>(null)
 
     useEffect(() => {
-        window.addEventListener('beforeinstallprompt', (e) => {
+        const handleBeforeInstallPrompt = (e: Event) => {
             e.preventDefault()
             setDeferredPrompt(e)
-        })
+        }
+        window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
+        
+        return () => {
+            window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
+        }
     }, [])
 
     const handleInstall = async () => {
@@ -61,7 +66,7 @@ export default function LandingPage(){
             await deferredPrompt.userChoice
             setDeferredPrompt(null)
         } else {
-            navigate(ROUTES.HOME)
+            navigate(ROUTES.LOGIN)
         }
     }
 
@@ -86,7 +91,7 @@ export default function LandingPage(){
     const rightHeaderPart = <Button handleClick={handleOpenAppClick} className={styles.openAppBtn} fill={true}>Open App</Button>
 
     function handleOpenAppClick(){
-        navigate(ROUTES.HOME)
+        navigate(ROUTES.LOGIN)
     }
 
     const featureCards = features.map(f => <FeatureCard key={f.title} icon={f.icon} title={f.title} description={f.description}/>)

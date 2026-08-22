@@ -4,8 +4,8 @@ import {NavLink, useNavigate} from 'react-router-dom'
 import { useExercisesStore } from '../../../store/exercises-store'
 import { useUserStore } from '../../../store/user-store'
 import logo from '../../../assets/logo.png'
-import { logoutUser } from '../../../lib/supabase/auth'
-import { ROUTES } from '../../../lib/constants'
+import { logoutUser } from '../../../utils/supabase/auth'
+import { ROUTES } from '../../../utils/constants'
 export default function SideBar(){
     const setUserId = useUserStore((state) => state.setUserId)
     const clearExercisesStore = useExercisesStore(state => state.clearStore)

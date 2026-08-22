@@ -6,11 +6,11 @@ import Button from '../Button/Button';
 import Modal from '../Modal/Modal';
 import { useExercisesStore } from "../../store/exercises-store";
 import { useRenderDataOnScreenStore } from '../../store/render-data-store';
-import { deleteRoutineById} from '../../lib/indexed_db/routines-store-crud';
-import { syncServerWithIDB, deleteRoutineFromServer } from '../../lib/supabase/crud'
+import { deleteRoutineById} from '../../utils/indexed_db/routines-store-crud';
+import { syncServerWithIDB, deleteRoutineFromServer } from '../../utils/supabase/crud'
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import dumbbellIcon from '../../assets/dumbbell.svg'
-import { ROUTES } from '../../lib/constants';
+import { ROUTES } from '../../utils/constants';
 import { RiEditLine } from "react-icons/ri";
 import { RiDeleteBinLine } from "react-icons/ri";
 type SetInfo = {

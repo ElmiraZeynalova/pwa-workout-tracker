@@ -7,9 +7,10 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { MdOutlineCalendarMonth } from "react-icons/md";
 import Header from '../../components/Header/Header'
 import styles from './HomePage.module.css'
-import { ROUTES } from '../../lib/constants'
+import { ROUTES } from '../../utils/constants'
 export default function HomePage(){
     const selectedDate = useDateStore(state => state.selectedDate)
+
     return(
         <div className="mobile-layout">
 
