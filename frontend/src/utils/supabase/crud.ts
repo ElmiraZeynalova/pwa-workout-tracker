@@ -5,16 +5,16 @@ import { useRenderDataOnScreenStore } from '../../store/render-data-store'
 import { getUnsyncedRoutines, markRoutineSynced, clearRoutinesStoreMemory, getAllRoutines, deleteRoutineById, getRoutineById, saveRoutine } from '../indexed_db/routines-store-crud'
 import { supabase } from './client'
 
-type SetInfo = {
+type Set = {
     setId: string
-    reps: number | null
-    weight?: number | null
+    reps: number
+    weight: number 
 }
 
 type Exercise = {
     exerciseId: string
     exerciseName: string
-    sets: SetInfo[]
+    sets: Set[]
 }
 
 

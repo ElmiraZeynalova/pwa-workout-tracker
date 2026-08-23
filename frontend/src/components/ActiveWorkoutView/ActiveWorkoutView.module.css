@@ -1,0 +1,23 @@
+.logScreenWithExercisesAdded {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.logScreenWithExercisesAdded::-webkit-scrollbar {
+  display: none;
+}
+
+.addExerciseBtn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 0 auto;
+}
+
+.addExerciseBtn:active {
+  transform: scale(0.97);
+}

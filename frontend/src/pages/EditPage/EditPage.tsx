@@ -41,7 +41,7 @@ export default function EditPage(){
             if(!editingExercise) return
             const cleanExerciseData = {
                 exerciseId: exerciseId,
-                exerciseName: editingExercise.exerciseName,
+                exerciseName: editingExercise.name,
                 sets: editingExercise.sets
                         .filter(s => s.checked === true)
                         .map(s => ({setId: s.setId, reps: s.reps, weight: s.weight}))

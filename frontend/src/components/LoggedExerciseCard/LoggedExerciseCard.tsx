@@ -2,7 +2,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import {useState} from 'react'
 import dumbbellIcon from '../../assets/dumbbell.svg'
 import { useNavigate } from 'react-router-dom';
-import {deleteExerciseById, markWorkoutUnsynced} from '../../utils/indexed_db/workouts-store-crud'
+//import {deleteExerciseById, markWorkoutUnsynced} from '../../utils/indexed_db/workouts-store-crud'
 import { syncServerWithIDB } from '../../utils/supabase/crud'
 import {useRenderDataOnScreenStore} from '../../store/render-data-store'
 import styles from './LoggedExerciseCard.module.css'
@@ -11,19 +11,8 @@ import { useExercisesStore } from '../../store/exercises-store'
 import { ROUTES } from "../../utils/constants";
 import { RiEditLine } from "react-icons/ri";
 import { RiDeleteBinLine } from "react-icons/ri";
+import type { Exercise} from "../../types/workout.type";
 
-
-type SetInfo = {
-    setId: string
-    reps: number | null
-    weight?: number | null
-}
-
-type Exercise = {
-    exerciseId: string
-    exerciseName: string
-    sets: SetInfo[]
-}
 
 export default function LoggedExerciseCard({exercise, date}: {exercise: Exercise, date: string}){
     const removeExercise = useRenderDataOnScreenStore((state) => state.removeExercise)
@@ -82,7 +71,7 @@ export default function LoggedExerciseCard({exercise, date}: {exercise: Exercise
             <div className={styles.loggedExerciseCard}>
                 <div className={styles.top}>
                     <img src={dumbbellIcon} alt="exercise icon" width={40} height={40}/>
-                    <p className={styles.exerciseName}>{exercise.exerciseName}</p>
+                    <p className={styles.exerciseName}>{exercise.name}</p>
                     <BsThreeDotsVertical className={styles.menuBtn} onClick={() => setShowModal(true)} size={18} color='#FF5526'/>
                 </div>
                 <div className={styles.setRows}>

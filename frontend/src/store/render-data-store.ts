@@ -1,16 +1,6 @@
 import { create } from 'zustand'
+import type { Exercise} from '../types/workout.type'
 
-type SetInfo = {
-    setId: string
-    reps: number | null
-    weight?: number | null
-}
-
-type Exercise = {
-    exerciseId: string
-    exerciseName: string 
-    sets: SetInfo[]
-}
 
 type Workout = {
     date: string

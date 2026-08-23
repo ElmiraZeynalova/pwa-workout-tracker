@@ -1,16 +1,16 @@
 import { create } from 'zustand'
 
-export type SetInfo = {
+type Set = {
     setId: string
-    reps: number | null
-    weight?: number | null
+    reps: number 
+    weight: number 
     checked?: boolean
 }
 
-export type Exercise = {
+type Exercise = {
     exerciseId: string
-    exerciseName: string 
-    sets: SetInfo[]
+    name: string 
+    sets: Set[]
 }
 
 type ExercisesStore = {
@@ -36,7 +36,7 @@ export const useExercisesStore = create<ExercisesStore>((set) => ({
         set(state => ({
             exercises: [...state.exercises, 
                 ...newExercisesNames.map(newName => (
-                {exerciseId: crypto.randomUUID(), exerciseName: newName, sets: [{setId: crypto.randomUUID(), reps: 0, weight: null, checked: false}]}
+                {exerciseId: crypto.randomUUID(), name: newName, sets: [{setId: crypto.randomUUID(), reps: 0, weight: 0, checked: false}]}
                 ))
             ]
         })),
@@ -52,7 +52,7 @@ export const useExercisesStore = create<ExercisesStore>((set) => ({
         set(state => ({
             exercises: state.exercises.map(e => 
                 e.exerciseId === exerciseId 
-                    ? {...e, sets: [...e.sets, {setId: crypto.randomUUID(), reps:0, weight: null, checked: false}]}
+                    ? {...e, sets: [...e.sets, {setId: crypto.randomUUID(), reps:0, weight: 0, checked: false}]}
                     : e
             )
         })),

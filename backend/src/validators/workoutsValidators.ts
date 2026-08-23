@@ -3,7 +3,7 @@ import {z} from 'zod'
 export const setSchema = z.object({
   setId: z.string().uuid(),
   reps: z.number().int().positive(),
-  weight: z.number().positive(),
+  weight: z.number().nonnegative(),
 })
 
 export const exerciseSchema = z.object({

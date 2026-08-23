@@ -1,5 +1,5 @@
 const DB_NAME = 'workout_tracker'
-const DB_VERSION = 2
+const DB_VERSION = 3
 const STORE_NAMES = ["workouts", "routines"]
 
 export async function openDB(): Promise<IDBDatabase> {

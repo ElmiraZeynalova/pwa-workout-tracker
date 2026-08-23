@@ -28,7 +28,7 @@ export default function LoggingExerciseCard({exerciseId, purpose}:{exerciseId: s
         <div className={styles.loggingExerciseCard}>
             <div className={styles.top}>
                 <img src={dumbbellIcon} alt="exercise icon" width={40} height={40}/>
-                <h3 className={styles.exerciseName}>{exercise?.exerciseName}</h3>   
+                <h3 className={styles.exerciseName}>{exercise?.name}</h3>   
                 <RxCross2 size={20} className={styles.crossBtn} color="#858585" onClick={() => deleteExercise(exerciseId)}/>
             </div>
             

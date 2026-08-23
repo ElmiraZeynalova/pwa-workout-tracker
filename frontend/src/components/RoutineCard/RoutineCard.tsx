@@ -13,17 +13,8 @@ import dumbbellIcon from '../../assets/dumbbell.svg'
 import { ROUTES } from '../../utils/constants';
 import { RiEditLine } from "react-icons/ri";
 import { RiDeleteBinLine } from "react-icons/ri";
-type SetInfo = {
-    setId: string
-    reps: number | null
-    weight?: number | null
-}
+import type { Exercise} from '../../types/workout.type';
 
-type Exercise = {
-    exerciseId: string
-    exerciseName: string
-    sets: SetInfo[]
-}
 
 type Props = {
     routineId: string
@@ -69,7 +60,7 @@ export default function RoutineCard({ routineId, title, exercises}: Props) {
         return <div key={e.exerciseId} className={styles.exercise}>
             <img src={dumbbellIcon} alt="exercise icon" width={40} height={40}/>
             <div className={styles.exerciseInfo}>
-                <p className={styles.exerciseName}>{e.exerciseName}</p>
+                <p className={styles.exerciseName}>{e.name}</p>
                 <div className={styles.sets}>{e.sets.map((s, idx) => (
                     <div key={s.setId} className={styles.set}>
                         <p className={styles.setIdx}>set {idx + 1}</p>
@@ -102,7 +93,7 @@ export default function RoutineCard({ routineId, title, exercises}: Props) {
                     <h1>{title}</h1>
                     <BsThreeDotsVertical className={styles.menuBtn} onClick={() => setShowModal(true)} size={18} color='#FF5526'/>
                 </div>
-                {isDesktop ? exercisesPerformed : <p>{exercises.map(e => e.exerciseName).join(', ')}</p>}
+                {isDesktop ? exercisesPerformed : <p>{exercises.map(e => e.name).join(', ')}</p>}
                 {!isDesktop && <Button handleClick={handleStartRoutineClick} size="sm" className={styles.startRoutineBtn} fill={false}>Start Routine</Button>}
             </div>
         </>
