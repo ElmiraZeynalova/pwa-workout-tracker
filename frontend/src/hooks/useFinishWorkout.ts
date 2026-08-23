@@ -2,11 +2,11 @@ import { useExercisesStore } from "../store/exercises-store"
 import { useDateStore } from "../store/date-store"
 import { useRenderDataOnScreenStore } from "../store/render-data-store"
 import { useAuthState } from "../context/AuthContext"
-import type { Exercise } from "../types/workout.type"
+import type { Exercise } from "../types"
 import { useNavigate } from "react-router-dom"
 import {ROUTES} from '../utils/constants'
 import { saveWorkout, markWorkoutSynced } from "../utils/indexed_db/workouts-store-crud"
-import { createWorkout } from "../api/workouts"
+import { createOrUpdateWorkout } from "../api/workouts"
 
 export function useFinishWorkout(){
     const currentWorkoutExercises = useExercisesStore(state => state.exercises)
@@ -45,7 +45,8 @@ export function useFinishWorkout(){
         clearExercisesStore()
 
         if(authState === "loggedIn"){
-            await createWorkout(workoutId, currentWorkoutDate, cleanedExercises)
+            const exercises = useRenderDataOnScreenStore.getState().workouts[currentWorkoutDate]?.exercises
+            await createOrUpdateWorkout(workoutId, currentWorkoutDate, exercises)
             await markWorkoutSynced(currentWorkoutDate)
         }
     }   

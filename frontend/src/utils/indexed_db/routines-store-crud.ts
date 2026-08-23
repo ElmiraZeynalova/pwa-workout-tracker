@@ -1,23 +1,5 @@
 import {openDB} from './open_db'
-
-type Routine = {
-    isSynced: number
-    updated_at: string
-    title: string
-    routineId: string
-    exercises: Exercise[]
-}
-type SetInfo = {
-    setId: string
-    reps: number | null
-    weight?: number | null
-}
-
-type Exercise = {
-    exerciseId: string
-    exerciseName: string
-    sets: SetInfo[]
-}
+import type {Routine, Exercise} from "../../types"
 
 const STORE_NAME = "routines"
 

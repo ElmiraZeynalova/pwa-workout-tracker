@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import type { Exercise} from '../types/workout.type'
+import type { Exercise} from '../types'
 
 
 type Workout = {

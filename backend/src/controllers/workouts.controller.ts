@@ -1,5 +1,5 @@
 import {Request, Response} from 'express'
-import {getAllWorkoutsByUserId, createOrAppendWorkout, deleteWorkoutById, getWorkoutById} from '../services/workouts.service'
+import {getAllWorkoutsByUserId, createOrUpdateWorkout, deleteWorkoutById, getWorkoutById, getExercisesByWorkoutId} from '../services/workouts.service'
 import {createWorkoutSchema} from '../validators/workoutsValidators'
 
 export async function getAllWorkouts(req: Request, res: Response){
@@ -37,7 +37,7 @@ export async function createWorkout(req: Request, res: Response){
     const {workoutId, date, exercises} = parseResult.data
 
     try{
-        const workout = await createOrAppendWorkout(userId, workoutId, date, exercises)
+        const workout = await createOrUpdateWorkout(userId, workoutId, date, exercises)
         res.status(201).json(workout)
     }catch(error){
         res.status(400).json({error: (error as Error).message})
@@ -58,7 +58,20 @@ export async function deleteWorkout(req: Request, res: Response){
         res.status(400).json({error: (error as Error).message})
     }
 }
-// router.get("/:id", getWorkoutByDate)
-// router.post("/", createWorkout)
-// router.delete("/:id", deleteWorkout)
-// router.put("/:id", editWorkout)
+
+export async function getWorkoutExercises(req: Request, res: Response){
+    const {id} = req.params
+
+    if(typeof id !== 'string'){
+        return res.status(400).json({error: 'Invalid workout id'})
+    }
+
+    try{
+        const exercises = await getExercisesByWorkoutId(id)
+        res.status(200).json(exercises)
+    }catch(error){
+        res.status(400).json({error: (error as Error).message})
+    }
+
+
+}

@@ -1,9 +1,5 @@
 import {openDB} from './open_db'
-import type {Workout, Exercise} from "../../types/workout.type"
-
-type WorkoutWithSyncStatus = Workout & {
-  isSynced: number
-}
+import type {Exercise, IDB_Workout} from "../../types"
 
 const STORE_NAME = "workouts"
 
@@ -114,7 +110,7 @@ export async function deleteWorkoutByDate(workoutDate: string){
 export async function getWorkoutByDate(date: string){
     const db = await openDB()
 
-    return new Promise<WorkoutWithSyncStatus>((resolve, reject) => {
+    return new Promise<IDB_Workout>((resolve, reject) => {
         const transaction = db.transaction(STORE_NAME, "readonly")
         const store = transaction.objectStore(STORE_NAME)
 
@@ -127,7 +123,7 @@ export async function getWorkoutByDate(date: string){
 export async function getAllWorkouts(){
     const db = await openDB()
 
-    return new Promise<Workout[]>((resolve, reject) => {
+    return new Promise<IDB_Workout[]>((resolve, reject) => {
         const transaction = db.transaction(STORE_NAME, "readonly")
         const store = transaction.objectStore(STORE_NAME)
 
@@ -216,7 +212,7 @@ export async function markWorkoutSynced(workoutDate: string){
 export async function getUnsyncedWorkouts(){
     const db = await openDB()
 
-    return new Promise<WorkoutWithSyncStatus[]>((resolve, reject) => {
+    return new Promise<IDB_Workout[]>((resolve, reject) => {
         const transaction = db.transaction(STORE_NAME, "readonly")
         const store = transaction.objectStore(STORE_NAME)
 
@@ -230,7 +226,7 @@ export async function getUnsyncedWorkouts(){
                 return
             }
 
-            const unsyncedWorkouts = allWorkouts.filter((w: WorkoutWithSyncStatus) => w.isSynced === 0)
+            const unsyncedWorkouts = allWorkouts.filter((w: IDB_Workout) => w.isSynced === 0)
             resolve(unsyncedWorkouts)
         }
 

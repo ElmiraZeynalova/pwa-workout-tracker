@@ -81,6 +81,7 @@
     text-decoration: none;
     color: #666;
     padding: 0;
+    cursor: pointer;
   }
 
   .noAccountText {
@@ -95,6 +96,7 @@
     margin-top: auto;
     text-align: center;
     span {
+      cursor: pointer;
       font-weight: 500;
       color: #ff5526;
     }

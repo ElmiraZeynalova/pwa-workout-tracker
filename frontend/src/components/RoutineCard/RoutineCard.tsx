@@ -7,13 +7,13 @@ import Modal from '../Modal/Modal';
 import { useExercisesStore } from "../../store/exercises-store";
 import { useRenderDataOnScreenStore } from '../../store/render-data-store';
 import { deleteRoutineById} from '../../utils/indexed_db/routines-store-crud';
-import { syncServerWithIDB, deleteRoutineFromServer } from '../../utils/supabase/crud'
+import { deleteRoutine } from '../../api/routines';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import dumbbellIcon from '../../assets/dumbbell.svg'
 import { ROUTES } from '../../utils/constants';
 import { RiEditLine } from "react-icons/ri";
 import { RiDeleteBinLine } from "react-icons/ri";
-import type { Exercise} from '../../types/workout.type';
+import type { Exercise} from '../../types';
 
 
 type Props = {
@@ -40,12 +40,11 @@ export default function RoutineCard({ routineId, title, exercises}: Props) {
         removeRoutine(routineId)
         await deleteRoutineById(routineId)
         try {
-            await deleteRoutineFromServer(routineId)
+            await deleteRoutine(routineId)
         } catch(e) {
             console.warn("Failed to delete routine from server:", e)
         }
         setShowModal(false)
-        syncServerWithIDB().catch(console.warn)
 
     }
 

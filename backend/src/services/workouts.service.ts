@@ -52,32 +52,35 @@ function buildExercisesCreateData(exercises: Exercise[]) {
   }))
 }
 
-
-export async function createOrAppendWorkout(
+export async function createOrUpdateWorkout(
   userId: string,
   workoutId: string,
   date: string,
   exercises: Exercise[]
 ) {
-
   const existingWorkout = await prisma.workouts.findUnique({
-    where: {user_id_date: { user_id: userId, date }},
+    where: { user_id_date: { user_id: userId, date } },
   })
 
-  if(existingWorkout){
+  if (existingWorkout) {
     return prisma.workouts.update({
-      where: {id: existingWorkout.id},
-      data: { exercises: { create: buildExercisesCreateData(exercises) } },
+      where: { id: existingWorkout.id },
+      data: {
+        exercises: {
+          deleteMany: {},
+          create: buildExercisesCreateData(exercises),
+        },
+      },
       include: { exercises: { include: { sets: true } } },
     })
-
   }
+
   return prisma.workouts.create({
     data: {
       id: workoutId,
       user_id: userId,
-      date: date,
-      exercises: {create: buildExercisesCreateData(exercises)},
+      date,
+      exercises: { create: buildExercisesCreateData(exercises) },
     },
     include: { exercises: { include: { sets: true } } },
   })
@@ -86,5 +89,12 @@ export async function createOrAppendWorkout(
 export async function deleteWorkoutById(workoutId: string, userId: string){
   return prisma.workouts.delete({
     where: {id: workoutId, user_id: userId}
+  })
+}
+
+export async function getExercisesByWorkoutId(workoutId: string){
+  return prisma.exercises.findMany({
+    where: {workout_id: workoutId},
+    include: {sets: true},
   })
 }

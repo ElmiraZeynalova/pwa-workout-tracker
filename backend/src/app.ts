@@ -1,6 +1,7 @@
 import express from 'express'
 import authRoutes from './routes/auth.routes'
 import workoutsRoutes from './routes/workouts.routes'
+import routinesRoutes from './routes/routines.routes'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 
@@ -15,6 +16,6 @@ app.use(cors({
 
 app.use("/auth", authRoutes)
 app.use("/workouts", workoutsRoutes)
-
+app.use("/routines", routinesRoutes)
 
 export default app;

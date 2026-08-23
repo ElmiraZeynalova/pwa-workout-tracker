@@ -2,8 +2,8 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import {useState} from 'react'
 import dumbbellIcon from '../../assets/dumbbell.svg'
 import { useNavigate } from 'react-router-dom';
-//import {deleteExerciseById, markWorkoutUnsynced} from '../../utils/indexed_db/workouts-store-crud'
-import { syncServerWithIDB } from '../../utils/supabase/crud'
+import {deleteExerciseById, markWorkoutUnsynced} from '../../utils/indexed_db/workouts-store-crud'
+//import { syncServerWithIDB } from '../../utils/supabase/crud'
 import {useRenderDataOnScreenStore} from '../../store/render-data-store'
 import styles from './LoggedExerciseCard.module.css'
 import Modal from "../Modal/Modal";
@@ -11,7 +11,7 @@ import { useExercisesStore } from '../../store/exercises-store'
 import { ROUTES } from "../../utils/constants";
 import { RiEditLine } from "react-icons/ri";
 import { RiDeleteBinLine } from "react-icons/ri";
-import type { Exercise} from "../../types/workout.type";
+import type { Exercise} from "../../types";
 
 
 export default function LoggedExerciseCard({exercise, date}: {exercise: Exercise, date: string}){
@@ -37,7 +37,6 @@ export default function LoggedExerciseCard({exercise, date}: {exercise: Exercise
         }
         setShowModal(false)
 
-        await syncServerWithIDB()
     }
 
     async function handleEditExr(){

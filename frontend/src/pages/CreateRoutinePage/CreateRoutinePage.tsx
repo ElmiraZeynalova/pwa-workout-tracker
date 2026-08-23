@@ -6,14 +6,15 @@ import { AiOutlinePlus } from "react-icons/ai"
 import dumbbellIcon from '../../assets/grey_dumbbell.svg'
 import { useExercisesStore } from '../../store/exercises-store'
 import LoggingExerciseCard from '../../components/LoggingExerciseCard/LoggingExerciseCard'
-import {saveRoutine} from '../../utils/indexed_db/routines-store-crud'
+import {saveRoutine, markRoutineSynced} from '../../utils/indexed_db/routines-store-crud'
 import {useState} from 'react'
 import { useRenderDataOnScreenStore } from '../../store/render-data-store'
 
 import Modal from '../../components/Modal/Modal'
 import Button from '../../components/Button/Button'
 import RoutineTitleForm from '../../components/forms/RoutineTitleForm/RoutineTitleForm'
-import { syncServerWithIDB } from '../../utils/supabase/crud'
+import {createOrUpdateRoutine} from "../../api/routines"
+
 import { useMediaQuery } from '../../hooks/useMediaQuery'
 import { ROUTES } from '../../utils/constants'
 
@@ -34,13 +35,16 @@ export default function CreateRoutinePage(){
     async function handleSave(){
         if(routineExercises.length > 0 && title.length > 0){
             const routineId = crypto.randomUUID()
+
             try {
                 setRoutine(routineId, title, routineExercises)
                 isDesktop ? navigate(ROUTES.ROUTINES) : navigate(ROUTES.WORKOUTS_NEW)
                 await saveRoutine(routineId, title, routineExercises, 0)
+                await createOrUpdateRoutine(routineId, title, routineExercises)
+                await markRoutineSynced(routineId)
                 clearExercisesStore()
                 setTitle("")
-                syncServerWithIDB().catch(console.error)
+
 
             } catch (error) {
                 console.error(error)
