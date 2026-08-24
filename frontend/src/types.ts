@@ -45,18 +45,13 @@ export interface DB_Exercise {
 
 export interface Routine {
     isSynced: number
-    updated_at: string
+    updatedAt: string
     title: string
     routineId: string
     exercises: Exercise[]
 }
 
 export type IDB_Workout = Workout & {
-  isSynced: number,
-  updated_at: string
-}
-
-export type IDB_Routine = Routine & {
   isSynced: number,
   updated_at: string
 }

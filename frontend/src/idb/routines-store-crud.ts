@@ -1,5 +1,5 @@
 import {openDB} from './open_db'
-import type {Routine, Exercise} from "../../types"
+import type {Routine, Exercise} from "../types"
 
 const STORE_NAME = "routines"
 
@@ -18,14 +18,14 @@ export async function saveRoutine(routineId: string, title: string, exercises: E
                 ? { 
                     routineId: data.routineId,
                     isSynced: status,
-                    updated_at: now,
+                    updatedAt: now,
                     title: title, 
                     exercises: [
                         ...data.exercises.filter((e: Exercise) => !exercises.some(ne => ne.exerciseId === e.exerciseId)), 
                         ...exercises
                     ] 
                 }
-                : { isSynced: status, updated_at: now, routineId: routineId, title: title, exercises: exercises }
+                : { isSynced: status, updatedAt: now, routineId: routineId, title: title, exercises: exercises }
             const putRequest = store.put(toSave)
             putRequest.onerror = () => reject(putRequest.error)
         }
@@ -72,7 +72,7 @@ export async function editRoutine(routineId: string, title: string, exercises: E
         const now = new Date().toISOString()
         store.put({routineId,
                     isSynced: 0,
-                    updated_at: now,
+                    updatedAt: now,
                     title, 
                     exercises}) 
 
@@ -104,7 +104,7 @@ export async function markRoutineUnsynced(routineId: string){
     })
 }
 
-export async function markRoutineSynced(routineId: string){
+export async function markRoutineSynced(routineId: string, updatedAt: string){
     const db = await openDB()
     return new Promise<void>((resolve, reject) => {
         const transaction = db.transaction(STORE_NAME, "readwrite")
@@ -120,7 +120,7 @@ export async function markRoutineSynced(routineId: string){
                 return
             }
 
-            store.put({ ...routine, isSynced: 1 })
+            store.put({ ...routine, isSynced: 1, updatedAt: updatedAt })
         }
         transaction.oncomplete = () => resolve()
         transaction.onerror = () => reject(transaction.error)

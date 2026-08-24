@@ -1,9 +1,9 @@
 import { getAllWorkouts, createOrUpdateWorkout, getWorkoutExercises } from "../api/workouts";
-import { saveWorkout, getUnsyncedWorkouts, getWorkoutByDate, markWorkoutSynced, deleteWorkoutByDate, getAllWorkouts as getAllWorkoutsFromIDB, clearWorkoutsStoreMemory} from "./indexed_db/workouts-store-crud";
+import { saveWorkout, getUnsyncedWorkouts, getWorkoutByDate, markWorkoutSynced, deleteWorkoutByDate, getAllWorkouts as getAllWorkoutsFromIDB, clearWorkoutsStoreMemory} from "../idb/workouts-store-crud";
 import { useRenderDataOnScreenStore } from "../store/render-data-store";
 import { getAllRoutines, createOrUpdateRoutine, getRoutineExercises } from "../api/routines";
-import { saveRoutine, getUnsyncedRoutines, markRoutineSynced, deleteRoutineById, getAllRoutines as getAllRoutinesFromIDB, clearRoutinesStoreMemory, getRoutineById } from "./indexed_db/routines-store-crud";
-import type { DB_Workout, IDB_Routine, DB_Routine, IDB_Workout, DB_Exercise, Exercise, DB_Set } from "../types";
+import { saveRoutine, getUnsyncedRoutines, markRoutineSynced, deleteRoutineById, getAllRoutines as getAllRoutinesFromIDB, clearRoutinesStoreMemory, getRoutineById } from "../idb/routines-store-crud";
+import type { DB_Workout, Routine, DB_Routine, IDB_Workout, DB_Exercise, Exercise, DB_Set } from "../types";
 
 async function syncWorkouts(){
     const removeWorkout = useRenderDataOnScreenStore.getState().removeWorkout
@@ -11,8 +11,8 @@ async function syncWorkouts(){
     const unsyncedWorkouts = await getUnsyncedWorkouts()
     if(unsyncedWorkouts.length > 0){
         for(const workout of unsyncedWorkouts){
-            await createOrUpdateWorkout(workout.workoutId, workout.date, workout.exercises)
-            await markWorkoutSynced(workout.date)
+            const serverWorkout = await createOrUpdateWorkout(workout.workoutId, workout.date, workout.exercises)
+            await markWorkoutSynced(workout.date, serverWorkout.updated_at)
         }
     }
 
@@ -39,8 +39,9 @@ async function syncWorkouts(){
         if(!localWorkout || (localWorkout.isSynced === 1 && w.updated_at > localWorkout.updated_at)){
             if(localWorkout) await deleteWorkoutByDate(w.date)
             const exercisesFromDB = await getWorkoutExercises(w.id)
+            if(!exercisesFromDB) continue
             const exercisesToSave: Exercise[] = exercisesFromDB.map((e: DB_Exercise) => (
-                {"exerciseId": e.id, "name": e.name, "sets": e.sets.map((s: DB_Set) => ({"setId": s.id, "reps": s.reps, "weight": s.weight}))}
+                {"exerciseId": e.id, "name": e.name, "sets": e.sets?.map((s: DB_Set) => ({"setId": s.id, "reps": s.reps, "weight": s.weight}))}
             ))
 
             await saveWorkout(w.date, w.id, exercisesToSave, 1)
@@ -56,8 +57,8 @@ async function syncRoutines(){
     const unsyncedRoutines = await getUnsyncedRoutines()
     if(unsyncedRoutines.length > 0){
         for(const routine of unsyncedRoutines){
-            await createOrUpdateRoutine(routine.routineId, routine.title, routine.exercises)
-            await markRoutineSynced(routine.routineId)
+            const serverRoutine = await createOrUpdateRoutine(routine.routineId, routine.title, routine.exercises)
+            await markRoutineSynced(routine.routineId, serverRoutine.updated_at)
         }
     }
 
@@ -70,7 +71,7 @@ async function syncRoutines(){
     }
 
     const serverData = new Set(allRoutinesFromServer.map((r: DB_Routine) => r.id))
-    const localRoutines: IDB_Routine[] = await getAllRoutinesFromIDB()
+    const localRoutines: Routine[] = await getAllRoutinesFromIDB()
     
     for (const local of localRoutines) {
         if (!serverData.has(local.routineId) && local.isSynced === 1) {
@@ -81,11 +82,12 @@ async function syncRoutines(){
 
     for(const r of allRoutinesFromServer){
         const localRoutine = await getRoutineById(r.id)
-        if(!localRoutine || (localRoutine.isSynced === 1 && r.updated_at > localRoutine.updated_at)){
+        if(!localRoutine || (localRoutine.isSynced === 1 && r.updated_at > localRoutine.updatedAt)){
             if(localRoutine) await deleteRoutineById(r.id)
             const exercisesFromDB = await getRoutineExercises(r.id)
+            if(!exercisesFromDB) continue
             const exercisesToSave: Exercise[] = exercisesFromDB.map((e: DB_Exercise) => (
-                {"exerciseId": e.id, "name": e.name, "sets": e.sets.map((s: DB_Set) => ({"setId": s.id, "reps": s.reps, "weight": s.weight}))}
+                {"exerciseId": e.id, "name": e.name, "sets": e.sets?.map((s: DB_Set) => ({"setId": s.id, "reps": s.reps, "weight": s.weight}))}
             ))
             await saveRoutine(r.id, r.title, exercisesToSave, 1)
             setRoutine(r.id, r.title, exercisesToSave)

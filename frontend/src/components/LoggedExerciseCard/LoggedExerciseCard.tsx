@@ -2,7 +2,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import {useState} from 'react'
 import dumbbellIcon from '../../assets/dumbbell.svg'
 import { useNavigate } from 'react-router-dom';
-import {deleteExerciseById, markWorkoutUnsynced} from '../../utils/indexed_db/workouts-store-crud'
+import {deleteExerciseById, markWorkoutUnsynced} from '../../idb/workouts-store-crud'
 //import { syncServerWithIDB } from '../../utils/supabase/crud'
 import {useRenderDataOnScreenStore} from '../../store/render-data-store'
 import styles from './LoggedExerciseCard.module.css'

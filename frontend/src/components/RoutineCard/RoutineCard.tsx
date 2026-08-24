@@ -6,7 +6,7 @@ import Button from '../Button/Button';
 import Modal from '../Modal/Modal';
 import { useExercisesStore } from "../../store/exercises-store";
 import { useRenderDataOnScreenStore } from '../../store/render-data-store';
-import { deleteRoutineById} from '../../utils/indexed_db/routines-store-crud';
+import { deleteRoutineById} from '../../idb/routines-store-crud';
 import { deleteRoutine } from '../../api/routines';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import dumbbellIcon from '../../assets/dumbbell.svg'

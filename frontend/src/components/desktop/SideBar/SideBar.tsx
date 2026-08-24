@@ -2,18 +2,16 @@ import styles from './SideBar.module.css'
 import { Icon } from '@iconify/react'
 import {NavLink, useNavigate} from 'react-router-dom'
 import { useExercisesStore } from '../../../store/exercises-store'
-import { useUserStore } from '../../../store/user-store'
 import logo from '../../../assets/logo.png'
-import { logoutUser } from '../../../utils/supabase/auth'
+import { logout} from "../../../api/auth"
 import { ROUTES } from '../../../utils/constants'
+
 export default function SideBar(){
-    const setUserId = useUserStore((state) => state.setUserId)
     const clearExercisesStore = useExercisesStore(state => state.clearStore)
     const navigate = useNavigate()
     async function handleLogout(){
-        setUserId('')
         navigate(ROUTES.HOME)
-        await logoutUser()
+        await logout()
     }
 
     return(

@@ -2,8 +2,7 @@ import { useNavigate } from "react-router-dom"
 import { useDateStore } from "../../store/date-store"
 import { FaChevronLeft } from "react-icons/fa";
 import { useLocation } from 'react-router-dom'
-import { deleteExerciseById, editExercise, markWorkoutUnsynced} from '../../utils/indexed_db/workouts-store-crud'
-import { syncServerWithIDB } from '../../utils/supabase/crud'
+import { deleteExerciseById, editExercise, markWorkoutUnsynced} from '../../idb/workouts-store-crud'
 import {useRenderDataOnScreenStore} from '../../store/render-data-store'
 import Header from '../../components/Header/Header'
 import styles from './EditPage.module.css'
@@ -12,7 +11,7 @@ import { useExercisesStore } from "../../store/exercises-store";
 import RoutineTitleForm from '../../components/forms/RoutineTitleForm/RoutineTitleForm'
 import { AiOutlinePlus } from "react-icons/ai";
 import Button from "../../components/Button/Button";
-import { deleteRoutineById, markRoutineUnsynced, editRoutine } from "../../utils/indexed_db/routines-store-crud";
+import { deleteRoutineById, markRoutineUnsynced, editRoutine } from "../../idb/routines-store-crud";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import { ROUTES } from "../../utils/constants";
 export default function EditPage(){
@@ -41,7 +40,7 @@ export default function EditPage(){
             if(!editingExercise) return
             const cleanExerciseData = {
                 exerciseId: exerciseId,
-                exerciseName: editingExercise.name,
+                name: editingExercise.name,
                 sets: editingExercise.sets
                         .filter(s => s.checked === true)
                         .map(s => ({setId: s.setId, reps: s.reps, weight: s.weight}))
@@ -83,7 +82,6 @@ export default function EditPage(){
         }else{
             headerTitle === "Exercise" ? navigate(ROUTES.HOME) : navigate(ROUTES.WORKOUTS_NEW)
         }
-        syncServerWithIDB().catch(console.warn)
     }
 
     function handleExitEditPage(){

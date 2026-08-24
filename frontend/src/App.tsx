@@ -1,8 +1,8 @@
-import { useEffect, useRef} from 'react'
+import { useEffect} from 'react'
 import { RouterProvider} from 'react-router-dom'
 import { getRouter } from './utils/getRouter'
-import {getAllWorkouts} from "./utils/indexed_db/workouts-store-crud"
-import { getAllRoutines } from './utils/indexed_db/routines-store-crud'
+import {getAllWorkouts} from "./idb/workouts-store-crud"
+import { getAllRoutines } from './idb/routines-store-crud'
 import { useAuthState } from "./context/AuthContext"
 import { useRenderDataOnScreenStore } from './store/render-data-store'
 import { syncData } from './utils/syncData'

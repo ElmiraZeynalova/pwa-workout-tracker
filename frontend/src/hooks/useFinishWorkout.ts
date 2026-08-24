@@ -5,7 +5,7 @@ import { useAuthState } from "../context/AuthContext"
 import type { Exercise } from "../types"
 import { useNavigate } from "react-router-dom"
 import {ROUTES} from '../utils/constants'
-import { saveWorkout, markWorkoutSynced } from "../utils/indexed_db/workouts-store-crud"
+import { saveWorkout, markWorkoutSynced } from "../idb/workouts-store-crud"
 import { createOrUpdateWorkout } from "../api/workouts"
 
 export function useFinishWorkout(){
@@ -46,8 +46,8 @@ export function useFinishWorkout(){
 
         if(authState === "loggedIn"){
             const exercises = useRenderDataOnScreenStore.getState().workouts[currentWorkoutDate]?.exercises
-            await createOrUpdateWorkout(workoutId, currentWorkoutDate, exercises)
-            await markWorkoutSynced(currentWorkoutDate)
+            const serverWorkout = await createOrUpdateWorkout(workoutId, currentWorkoutDate, exercises)
+            await markWorkoutSynced(currentWorkoutDate, serverWorkout.updated_at)
         }
     }   
 

@@ -6,7 +6,7 @@ import { AiOutlinePlus } from "react-icons/ai"
 import dumbbellIcon from '../../assets/grey_dumbbell.svg'
 import { useExercisesStore } from '../../store/exercises-store'
 import LoggingExerciseCard from '../../components/LoggingExerciseCard/LoggingExerciseCard'
-import {saveRoutine, markRoutineSynced} from '../../utils/indexed_db/routines-store-crud'
+import {saveRoutine, markRoutineSynced} from '../../idb/routines-store-crud'
 import {useState} from 'react'
 import { useRenderDataOnScreenStore } from '../../store/render-data-store'
 
@@ -40,8 +40,8 @@ export default function CreateRoutinePage(){
                 setRoutine(routineId, title, routineExercises)
                 isDesktop ? navigate(ROUTES.ROUTINES) : navigate(ROUTES.WORKOUTS_NEW)
                 await saveRoutine(routineId, title, routineExercises, 0)
-                await createOrUpdateRoutine(routineId, title, routineExercises)
-                await markRoutineSynced(routineId)
+                const serverRoutine = await createOrUpdateRoutine(routineId, title, routineExercises)
+                await markRoutineSynced(routineId, serverRoutine.updated_at )
                 clearExercisesStore()
                 setTitle("")
 

@@ -1,5 +1,5 @@
 import {openDB} from './open_db'
-import type {Exercise, IDB_Workout} from "../../types"
+import type {Exercise, IDB_Workout} from "../types"
 
 const STORE_NAME = "workouts"
 
@@ -18,14 +18,14 @@ export async function saveWorkout(date: string, workoutId: string, exercises: Ex
                 ? { 
                     workoutId: workoutId,
                     isSynced: status,
-                    updated_at: now,
+                    updatedAt: now,
                     date: date, 
                     exercises: [
                         ...data.exercises.filter((e: Exercise) => !exercises.some(ne => ne.exerciseId === e.exerciseId)), 
                         ...exercises
                     ] 
                 }
-                : { workoutId: workoutId, isSynced: status, updated_at: now, date: date, exercises: exercises }
+                : { workoutId: workoutId, isSynced: status, updatedAt: now, date: date, exercises: exercises }
             const putRequest = store.put(toSave)
             putRequest.onerror = () => reject(putRequest.error)
         }
@@ -57,7 +57,7 @@ export async function editExercise(workoutDate: string, cleanExerciseData: Exerc
                 e.exerciseId === cleanExerciseData.exerciseId ? {...e, sets: cleanExerciseData.sets} : e
             ))
 
-            store.put({ ...workout, updated_at: now, exercises: updatedExercises })
+            store.put({ ...workout, updatedAt: now, exercises: updatedExercises })
         }
         transaction.oncomplete = () => resolve()
         transaction.onerror = () => reject(transaction.error)
@@ -83,7 +83,7 @@ export async function deleteExerciseById(workoutDate: string, exerciseId: string
             const now = new Date().toISOString()
             const updated = {
                 ...workout,
-                updated_at: now,
+                updatedAt: now,
                 exercises: workout.exercises.filter((e: Exercise) => e.exerciseId !== exerciseId)
             }
             store.put(updated)
@@ -186,7 +186,7 @@ export async function markWorkoutUnsynced(workoutDate: string){
     })
 }
 
-export async function markWorkoutSynced(workoutDate: string){
+export async function markWorkoutSynced(workoutDate: string, updatedAt: string){
     const db = await openDB()
     return new Promise<void>((resolve, reject) => {
         const transaction = db.transaction(STORE_NAME, "readwrite")
@@ -202,7 +202,7 @@ export async function markWorkoutSynced(workoutDate: string){
                 return
             }
 
-            store.put({ ...workout, isSynced: 1 })
+            store.put({ ...workout, isSynced: 1, updatedAt: updatedAt })
         }
         transaction.oncomplete = () => resolve()
         transaction.onerror = () => reject(transaction.error)
