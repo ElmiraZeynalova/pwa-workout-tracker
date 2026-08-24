@@ -1,4 +1,4 @@
-import { useEffect} from 'react'
+import { useEffect, useMemo} from 'react'
 import { RouterProvider} from 'react-router-dom'
 import { getRouter } from './utils/getRouter'
 import {getAllWorkouts} from "./idb/workouts-store-crud"
@@ -6,8 +6,10 @@ import { getAllRoutines } from './idb/routines-store-crud'
 import { useAuthState } from "./context/AuthContext"
 import { useRenderDataOnScreenStore } from './store/render-data-store'
 import { syncData } from './utils/syncData'
+import { useMediaQuery } from './hooks/useMediaQuery'
 
 function App() {
+  const isDesktop = useMediaQuery('(min-width: 1024px)')
   const {authState} = useAuthState()
 
   const setAllWorkouts = useRenderDataOnScreenStore((state) => state.setAllWorkouts)
@@ -28,7 +30,7 @@ function App() {
   }, [])
 
 
-const router = getRouter()
+const router = useMemo(() => getRouter(isDesktop), [isDesktop])
   return (
     <RouterProvider router={router}/>
   )

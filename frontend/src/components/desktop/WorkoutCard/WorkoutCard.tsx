@@ -1,18 +1,7 @@
 import styles from './WorkoutCard.module.css'
 import dumbbellIcon from "../../../assets/dumbbell.svg"
 import dayjs from 'dayjs'
-
-type SetInfo = {
-    setId: string
-    reps: number | null
-    weight?: number | null
-}
-
-type Exercise = {
-    exerciseId: string
-    exerciseName: string
-    sets: SetInfo[]
-}
+import type {Exercise} from "../../../types"
 
 type Props = {
     date?: string
@@ -26,7 +15,7 @@ export default function WorkoutCard({date, title, exercises}: Props){
         return <div key={e.exerciseId} className={styles.exercise}>
             <img src={dumbbellIcon} alt="exercise icon" width={45} height={45}/>
             <div className={styles.exerciseInfo}>
-                <p className={styles.exerciseName}>{e.exerciseName}</p>
+                <p className={styles.exerciseName}>{e.name}</p>
                 <div className={styles.sets}>{e.sets.map((s, idx) => (
                     <div key={s.setId} className={styles.set}>
                         <p className={styles.setIdx}>set {idx + 1}</p>

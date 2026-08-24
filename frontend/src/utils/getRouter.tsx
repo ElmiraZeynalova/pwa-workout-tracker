@@ -1,22 +1,25 @@
 import {ROUTES} from './constants'
 import { createBrowserRouter} from 'react-router-dom'
+import ProtectedRoute from '../components/ProtectedRoute'
+import {lazy, Suspense} from 'react'
+import PageLoader from '../components/PageLoader/PageLoader'
 import HomePage from '../pages/HomePage/HomePage'
 import DesktopHomePage from '../pages/desktop/HomePage/HomePage'
-import CalendarPage from '../pages/CalendarPage/CalendarPage'
+const CalendarPage = lazy(() => import('../pages/CalendarPage/CalendarPage'))
 import LoginPage from '../pages/LoginPage/LoginPage'
-import LogWorkoutPage from '../pages/LogWorkoutPage/LogWorkoutPage'
-import ExercisesListPage from '../pages/ExerciseListPage/ExercisesListPage'
-import CreateRoutinePage from '../pages/CreateRoutinePage/CreateRoutinePage'
-import DesktopRoutinesPage from '../pages/desktop/RoutinesPage/RoutinesPage'
-import DesktopCreateRoutinePage from '../pages/desktop/CreateRoutinePage/CreateRoutinePage'
-import DesktopEditPage from '../pages/desktop/EditPage/EditPage'
+const LogWorkoutPage = lazy(() => import('../pages/LogWorkoutPage/LogWorkoutPage'))
+const ExercisesListPage = lazy(() => import('../pages/ExerciseListPage/ExercisesListPage'))
+const CreateRoutinePage = lazy(() => import('../pages/CreateRoutinePage/CreateRoutinePage'))
+const DesktopRoutinesPage = lazy(() => import('../pages/desktop/RoutinesPage/RoutinesPage'))
+const DesktopCreateRoutinePage = lazy(() => import('../pages/desktop/CreateRoutinePage/CreateRoutinePage'))
+const DesktopEditPage = lazy(() => import('../pages/desktop/EditPage/EditPage'))
 import LandingPage from '../pages/LandingPage/LandingPage'
-import {useMediaQuery} from '../hooks/useMediaQuery'
-import EditPage from '../pages/EditPage/EditPage'
-import ProtectedRoute from '../components/ProtectedRoute'
+const EditPage = lazy(() => import('../pages/EditPage/EditPage'))
 
-export function getRouter(){
-    const isDesktop = useMediaQuery('(min-width: 1024px)')
+function withSuspense(node: React.ReactNode){
+    return <Suspense fallback={<PageLoader/>}>{node}</Suspense>
+}
+export function getRouter(isDesktop: boolean){
 
     return createBrowserRouter([
         {
@@ -29,43 +32,43 @@ export function getRouter(){
         },
         {
             path: ROUTES.HOME,
-            element: isDesktop ? <ProtectedRoute><DesktopHomePage/></ProtectedRoute> : <ProtectedRoute><HomePage/></ProtectedRoute>
+            element: <ProtectedRoute>{isDesktop ? <DesktopHomePage/> : <HomePage/>}</ProtectedRoute>
         },
         {
             path: ROUTES.CALENDAR,
-            element: <ProtectedRoute><CalendarPage /></ProtectedRoute>
+            element: <ProtectedRoute>{withSuspense(<CalendarPage />)}</ProtectedRoute>
         },
         {
             path: ROUTES.WORKOUTS_NEW,
-            element: <ProtectedRoute><LogWorkoutPage /> </ProtectedRoute>
+            element: <ProtectedRoute>{withSuspense(<LogWorkoutPage />)}</ProtectedRoute>
         },
         {
             path: ROUTES.WORKOUTS_NEW_EXERCISES,
-            element: <ProtectedRoute><ExercisesListPage/></ProtectedRoute>
+            element: <ProtectedRoute>{withSuspense(<ExercisesListPage/>)}</ProtectedRoute>
         },
         {
             path: ROUTES.EXERCISES_EDIT,
-            element: <ProtectedRoute><EditPage/></ProtectedRoute>
+            element: <ProtectedRoute>{withSuspense(<EditPage/>)}</ProtectedRoute>
         },
         {
             path: ROUTES.ROUTINES_EDIT,
-            element: isDesktop ? <ProtectedRoute><DesktopEditPage/></ProtectedRoute> : <ProtectedRoute><EditPage/></ProtectedRoute>
+            element: <ProtectedRoute>{withSuspense( isDesktop ? <DesktopEditPage/> : <EditPage/>)}</ProtectedRoute>
         },
         {
             path: ROUTES.WORKOUTS_NEW_ROUTINES_NEW,
-            element: <ProtectedRoute><CreateRoutinePage/></ProtectedRoute>
+            element: <ProtectedRoute>{withSuspense(<CreateRoutinePage/>)}</ProtectedRoute>
         },
         {
             path: ROUTES.WORKOUTS_NEW_ROUTINES_NEW_EXERCISES,
-            element: <ProtectedRoute><ExercisesListPage/></ProtectedRoute>
+            element: <ProtectedRoute>{withSuspense(<ExercisesListPage/>)}</ProtectedRoute>
         },
         {
             path: ROUTES.ROUTINES,
-            element: <ProtectedRoute><DesktopRoutinesPage/></ProtectedRoute>
+            element: <ProtectedRoute>{withSuspense(<DesktopRoutinesPage/>)}</ProtectedRoute>
         },
         {
             path:ROUTES.ROUTINES_NEW,
-            element: <ProtectedRoute><DesktopCreateRoutinePage/></ProtectedRoute>
+            element: <ProtectedRoute>{withSuspense(<DesktopCreateRoutinePage/>)}</ProtectedRoute>
         }
     ])
 }

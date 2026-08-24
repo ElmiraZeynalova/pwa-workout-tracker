@@ -98,7 +98,7 @@ export default function CalendarPage(){
         const setCount = e.sets.length
         return <div key={e.exerciseId} className={styles.exercise}>
             <img src={dumbbellIcon} alt="exercise icon" width={40} height={40}/>
-            <p>{setCount} {setCount > 1 ? "sets" : "set"} {e.exerciseName}</p>
+            <p>{setCount} {setCount > 1 ? "sets" : "set"} {e.name}</p>
         </div>
     })
 
