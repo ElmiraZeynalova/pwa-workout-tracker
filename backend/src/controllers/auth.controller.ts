@@ -21,12 +21,13 @@ export async function login(req: Request, res: Response){
     try{
         const {email, password} = req.body
         const {user, token} = await loginUser(email, password)
+        const isProduction = process.env.NODE_ENV === 'production'
         res.cookie('jwt', token, {
-                httpOnly: true,                                   
-                secure: process.env.NODE_ENV === 'production',     
-                sameSite: 'lax',                                    
-                maxAge: 7 * 24 * 60 * 60 * 1000,                     
-            })
+            httpOnly: true,
+            secure: isProduction,
+            sameSite: isProduction ? 'none' : 'lax',
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+        })
         res.status(201).json({userId: user.id, email: user.email, password: user.password})
     }catch(error){
         res.status(400).json({error: (error as Error).message})
