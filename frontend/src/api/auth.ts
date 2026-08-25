@@ -16,11 +16,6 @@ export async function logout(){
 }
 
 export async function userIsValid(){
-    try{
-        const {data} = await apiClient.get("/auth/me")
-        return data
-    }catch(error){
-        return null
-    }
-
+    const {data} = await apiClient.get("/auth/me")
+    return data
 }

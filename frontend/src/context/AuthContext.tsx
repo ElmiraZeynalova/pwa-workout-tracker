@@ -1,7 +1,7 @@
-// context/AuthContext.tsx
+
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react'
 import {userIsValid} from "../api/auth"
-
+import axios from 'axios'
 export type AuthState = "loggedIn" | "guest" | "unauthenticated"
 
 interface AuthContextValue {
@@ -21,13 +21,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   })
 
   useEffect(() => {
+    if (!navigator.onLine) {
+        return
+    }
     if(authState !== "loggedIn") return
 
     async function verifySession() {
-      const user = await userIsValid()
-      if (!user) {
-        markAsUnauthenticated()
-      }
+      try{
+        await userIsValid()
+      }catch(error){
+        if (axios.isAxiosError(error)) {
+            if (error.response?.status === 401) {
+                markAsUnauthenticated()
+            } else {
+
+            }
+        }
+        }
     }
 
     verifySession()
