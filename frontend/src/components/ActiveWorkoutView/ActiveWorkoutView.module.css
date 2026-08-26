@@ -3,12 +3,6 @@
   flex-direction: column;
   gap: 12px;
   padding: 12px;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.logScreenWithExercisesAdded::-webkit-scrollbar {
-  display: none;
 }
 
 .addExerciseBtn {

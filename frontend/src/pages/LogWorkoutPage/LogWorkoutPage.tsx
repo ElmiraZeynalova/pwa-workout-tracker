@@ -73,14 +73,14 @@ export default function LogWorkoutPage(){
             </Modal>
 
 
-            <div>
+            <div className={styles.container}>
                 <Header>
                     <Header.LeftButton><button className={styles.headerBtn} onClick={handleArrowClick}><Icon icon="boxicons:chevron-left" width={30} height={30} color="black" /></button></Header.LeftButton>
                     <Header.Title>Log Workout</Header.Title>
                     {exercisesCount > 0 && <Header.RightButton><Button handleClick={handleFinish} size="sm" fill={false}>Finish</Button></Header.RightButton>}
                 </Header>
 
-                <main style={{overflowY: 'auto'}}>
+                <main className={styles.main}>
                     {exercisesCount > 0 
                     ? <ActiveWorkoutView/>
                     : <EmptyWorkoutView/>

@@ -1,5 +1,7 @@
+import styles from './PageLoader.module.css'
 export default function PageLoader(){
     return(
-        <div style={{display: "flex", justifyContent: "center"}}><p>Loading...</p></div>
+        <div className={styles.container}><div className={styles.loader}></div></div>
+        
     )
 }
