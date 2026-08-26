@@ -2,8 +2,7 @@ import { Link, useNavigate } from "react-router-dom"
 import {useState} from 'react'
 import exercises from '../../data/exercises.json'
 import { useExercisesStore } from '../../store/exercises-store'
-import { FaChevronLeft } from "react-icons/fa";
-import { PiMagnifyingGlassBold } from "react-icons/pi";
+import { Icon } from '@iconify/react'
 import dumbbellIcon from '../../assets/dumbbell.svg'
 import Header from '../../components/Header/Header'
 import styles from './ExercisesListPage.module.css'
@@ -57,12 +56,12 @@ export default function ExercisesListPage(){
     return(
         <div className="mobile-layout" style={{ overflowY: 'auto'}} >
             <Header>
-                {!isDesktop && <Header.LeftButton><Link className={styles.headerBtn} to={ROUTES.WORKOUTS_NEW}><FaChevronLeft size={16} color="black"/></Link></Header.LeftButton>}
+                {!isDesktop && <Header.LeftButton><Link className={styles.headerBtn} to={ROUTES.WORKOUTS_NEW}><Icon icon="boxicons:chevron-left" width={30} height={30} color="black" /></Link></Header.LeftButton>}
                 <Header.Title>All Exercises</Header.Title>
             </Header>
             <div className={styles.searchBar}>
                 <form>
-                    <PiMagnifyingGlassBold size={18} color="#a7a7a7"/>
+                    <Icon icon="radix-icons:magnifying-glass" color="#656565" width={22} height={22} />
                     <input 
                         type="text"
                         placeholder="Search exercise"

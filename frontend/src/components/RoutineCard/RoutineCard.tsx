@@ -1,5 +1,5 @@
 import styles from './RoutineCard.module.css'
-import { BsThreeDotsVertical } from "react-icons/bs";
+import { Icon } from '@iconify/react'
 import {useState} from 'react'
 import { useNavigate } from 'react-router-dom';
 import Button from '../Button/Button';
@@ -11,8 +11,6 @@ import { deleteRoutine } from '../../api/routines';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import dumbbellIcon from '../../assets/dumbbell.svg'
 import { ROUTES } from '../../utils/constants';
-import { RiEditLine } from "react-icons/ri";
-import { RiDeleteBinLine } from "react-icons/ri";
 import type { Exercise} from '../../types';
 
 
@@ -77,11 +75,11 @@ export default function RoutineCard({ routineId, title, exercises}: Props) {
                     <Modal.Content>
                         <div className={styles.modalActionBtns}>
                             <button className={styles.modalActionBtn} onClick={() => handleEditRoutine()}>
-                                <RiEditLine size={20} color="#8e8e8e"/>
-                                Edit exercise</button>
+                                <Icon icon="mynaui:edit" width={20} height={20} color="#8e8e8e"/>
+                                Edit routine</button>
                             <button className={styles.modalActionBtn} onClick={() => handleDeleteRoutine()}>
-                                <RiDeleteBinLine size={20} color="#8e8e8e"/>
-                                Delete exercise</button>
+                                <Icon icon="meteor-icons:trash-can" width={20} height={20}  color="#8e8e8e"/>
+                                Delete routine</button>
                         </div>
                         <button className={styles.modalCancelBtn} onClick={() => setShowModal(false)}>Cancel</button>
                     </Modal.Content>
@@ -90,7 +88,7 @@ export default function RoutineCard({ routineId, title, exercises}: Props) {
             <div className={styles.routineCard}>
                 <div className={styles.top}>
                     <h1>{title}</h1>
-                    <BsThreeDotsVertical className={styles.menuBtn} onClick={() => setShowModal(true)} size={18} color='#FF5526'/>
+                    <Icon icon="bi:three-dots-vertical" className={styles.menuBtn} width={18} height={18} color='#FF5526' onClick={() => setShowModal(true)}/>
                 </div>
                 {isDesktop ? exercisesPerformed : <p>{exercises.map(e => e.name).join(', ')}</p>}
                 {!isDesktop && <Button handleClick={handleStartRoutineClick} size="sm" className={styles.startRoutineBtn} fill={false}>Start Routine</Button>}

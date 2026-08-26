@@ -1,4 +1,4 @@
-import { FaChevronLeft } from "react-icons/fa";
+import { Icon } from '@iconify/react'
 import {Link, useNavigate} from "react-router-dom"
 import CalendarMonth from '../../components/CalendarMonth/CalendarMonth'
 import dayjs from "dayjs"
@@ -6,7 +6,6 @@ import {useState, useRef, useLayoutEffect} from 'react'
 import { FixedSizeList as List } from 'react-window'
 import type { ListChildComponentProps } from 'react-window'
 import { useRenderDataOnScreenStore } from "../../store/render-data-store";
-import { RxCross2 } from "react-icons/rx";
 import dumbbellIcon from "../../assets/dumbbell.svg"
 import { useDateStore } from "../../store/date-store";
 import Header from "../../components/Header/Header"
@@ -14,11 +13,12 @@ import styles from "./CalendarPage.module.css"
 import Button from "../../components/Button/Button";
 import { ROUTES } from "../../utils/constants";
 import Modal from "../../components/Modal/Modal";
-const TOTAL_MONTHS = 3000
-const CENTER_INDEX = Math.floor(TOTAL_MONTHS / 2)
 import { useMutation } from '@tanstack/react-query'
 import { logout } from "../../api/auth";
 import {useAuthState} from '../../context/AuthContext'
+
+const TOTAL_MONTHS = 3000
+const CENTER_INDEX = Math.floor(TOTAL_MONTHS / 2)
 
 function getMonth(index: number) {
   const date = dayjs().add(index - CENTER_INDEX, "month")
@@ -117,7 +117,7 @@ export default function CalendarPage(){
                 <Modal.Header className={styles.modalHeader}>
                     <>
                         <p>{dayjs(selectedCalendarDate).format("dddd, MMMM DD YYYY")}</p>
-                        <RxCross2 size={20} className={styles.crossBtn} color="#858585" onClick={() => setShowModal(false)}/>
+                        <Icon icon="system-uicons:cross" color="#656565" width={18} height={18} className={styles.crossBtn} onClick={() => setShowModal(false)}/>
                     </>
                 </Modal.Header>
                 <Modal.Content className={styles.modalContent}>
@@ -131,7 +131,7 @@ export default function CalendarPage(){
 
         <div className="mobile-layout" style={{ height: "100vh", overflow: "hidden" }}>
             <Header>
-                <Header.LeftButton><Link className={styles.headerBtn} to={ROUTES.HOME}><FaChevronLeft size={16} color="black" /></Link></Header.LeftButton>
+                <Header.LeftButton><Link className={styles.headerBtn} to={ROUTES.HOME}><Icon icon="boxicons:chevron-left" width={30} height={30} color="black" /></Link></Header.LeftButton>
                 <Header.Title>Calendar</Header.Title>
                 <Header.RightButton><button onClick={() => logoutMutation.mutate()}>Logout</button></Header.RightButton>
             </Header>

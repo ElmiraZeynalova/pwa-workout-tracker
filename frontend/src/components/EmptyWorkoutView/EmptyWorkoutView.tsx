@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom"
 import { ROUTES } from "../../utils/constants"
 import RoutineCard from "../RoutineCard/RoutineCard"
 import Button from "../Button/Button"
-import { AiOutlinePlus } from "react-icons/ai"
 import dumbbellIcon from "../../assets/grey_dumbbell.svg"
+import { Icon } from '@iconify/react'
 
 export default function EmptyWorkoutView(){
     const routines = useRenderDataOnScreenStore(state => state.routines)
@@ -35,7 +35,7 @@ export default function EmptyWorkoutView(){
                 <h1>Get started</h1>
                 <p>Start adding exercises or choose routine to start your workout</p>
                 <Button handleClick={handleAddExerciseClick} className={styles.addExerciseBtn} fill={true}>
-                    <AiOutlinePlus size={22} color="white"/>
+                    <Icon icon="boxicons:plus" color="white" width={22} height={22}/>
                     Add Exercise
                 </Button>
 
@@ -45,7 +45,7 @@ export default function EmptyWorkoutView(){
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                     <h1>Routines</h1>
                     <button onClick={handleCreateNewRoutineClick} className={styles.createNewRoutineBtn}>
-                        <AiOutlinePlus size={20} color="#ff5526"/>
+                        <Icon icon="boxicons:plus" color="#ff5526" width={20} height={20}/>
                         Create New
                     </button>
                 </div>

@@ -7,13 +7,14 @@
   .setHeaders,
   .setForm {
     display: grid;
-    grid-template-columns: 1fr 1fr 130px 25px;
+    grid-template-columns: repeat(3, 1fr) 24px 18px;
     align-items: center;
-    gap: 0;
+    column-gap: 8px;
   }
 
   .setHeaders {
     margin-bottom: 10px;
+
     p {
       color: #858585;
       font-weight: 400;
@@ -24,6 +25,10 @@
       &:first-child {
         text-align: left;
       }
+    }
+
+    > :nth-child(4) {
+      justify-self: center;
     }
   }
 
@@ -54,12 +59,15 @@
       align-items: center;
       justify-content: center;
       justify-self: center;
-      margin-right: 6px;
     }
 
     .checked {
       background: #ff5526;
       border-color: #ff5526;
+    }
+
+    .crossBtn {
+      justify-self: center;
     }
   }
 }

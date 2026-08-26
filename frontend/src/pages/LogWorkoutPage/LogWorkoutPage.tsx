@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import {useState} from 'react'
 import { useExercisesStore} from "../../store/exercises-store"
-import { FaChevronLeft } from "react-icons/fa";
 import Header from "../../components/Header/Header"
 import styles from './LogWorkoutPage.module.css'
 import Button from "../../components/Button/Button"
@@ -10,6 +9,7 @@ import Modal from "../../components/Modal/Modal"
 import ActiveWorkoutView from "../../components/ActiveWorkoutView/ActiveWorkoutView"
 import EmptyWorkoutView from "../../components/EmptyWorkoutView/EmptyWorkoutView"
 import { useFinishWorkout } from "../../hooks/useFinishWorkout"
+import { Icon } from '@iconify/react'
 
 export default function LogWorkoutPage(){
     const clearExercisesStore = useExercisesStore((state) => state.clearStore)
@@ -75,7 +75,7 @@ export default function LogWorkoutPage(){
 
             <div>
                 <Header>
-                    <Header.LeftButton><button className={styles.headerBtn} onClick={handleArrowClick}><FaChevronLeft size={16} color="black"/></button></Header.LeftButton>
+                    <Header.LeftButton><button className={styles.headerBtn} onClick={handleArrowClick}><Icon icon="boxicons:chevron-left" width={30} height={30} color="black" /></button></Header.LeftButton>
                     <Header.Title>Log Workout</Header.Title>
                     {exercisesCount > 0 && <Header.RightButton><Button handleClick={handleFinish} size="sm" fill={false}>Finish</Button></Header.RightButton>}
                 </Header>

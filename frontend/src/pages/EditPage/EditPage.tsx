@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { useDateStore } from "../../store/date-store"
-import { FaChevronLeft } from "react-icons/fa";
+import { Icon } from '@iconify/react'
 import { useLocation } from 'react-router-dom'
 import { deleteExerciseById, editExercise, markWorkoutUnsynced} from '../../idb/workouts-store-crud'
 import {useRenderDataOnScreenStore} from '../../store/render-data-store'
@@ -9,7 +9,6 @@ import styles from './EditPage.module.css'
 import LoggingExerciseCard from '../../components/LoggingExerciseCard/LoggingExerciseCard'
 import { useExercisesStore } from "../../store/exercises-store";
 import RoutineTitleForm from '../../components/forms/RoutineTitleForm/RoutineTitleForm'
-import { AiOutlinePlus } from "react-icons/ai";
 import Button from "../../components/Button/Button";
 import { deleteRoutineById, markRoutineUnsynced, editRoutine } from "../../idb/routines-store-crud";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
@@ -95,7 +94,7 @@ export default function EditPage(){
     return(
         <div className="mobile-layout">
             <Header>
-                <Header.LeftButton><button className={styles.headerBtn} onClick={handleExitEditPage}><FaChevronLeft size={16} color="black"/></button></Header.LeftButton>
+                <Header.LeftButton><button className={styles.headerBtn} onClick={handleExitEditPage}><Icon icon="boxicons:chevron-left" width={30} height={30} color="black" /></button></Header.LeftButton>
                 <Header.Title>Edit {headerTitle}</Header.Title>
                 <Header.RightButton><Button handleClick={handleSave} size="sm" fill={false}>Save</Button></Header.RightButton>
             </Header>
@@ -106,7 +105,7 @@ export default function EditPage(){
                             <RoutineTitleForm/>
                             {editingCardsForRoutine}
                             {!isDesktop && <Button handleClick={handleAddExerciseClick} className={styles.addExerciseBtn} fill={true}>
-                                <AiOutlinePlus size={22} color="white"/>
+                                <Icon icon="boxicons:plus" color="white" width={22} height={22}/>
                                 Add Exercise
                             </Button>}
                         </>

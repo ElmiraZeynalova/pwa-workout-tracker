@@ -1,8 +1,7 @@
 import Header from '../../components/Header/Header'
 import styles from './CreateRoutinePage.module.css'
 import {useNavigate} from 'react-router-dom'
-import { FaChevronLeft } from "react-icons/fa"
-import { AiOutlinePlus } from "react-icons/ai"
+import { Icon } from '@iconify/react'
 import dumbbellIcon from '../../assets/grey_dumbbell.svg'
 import { useExercisesStore } from '../../store/exercises-store'
 import LoggingExerciseCard from '../../components/LoggingExerciseCard/LoggingExerciseCard'
@@ -35,17 +34,15 @@ export default function CreateRoutinePage(){
     async function handleSave(){
         if(routineExercises.length > 0 && title.length > 0){
             const routineId = crypto.randomUUID()
-
+            const exercisesToSave = routineExercises
+            clearExercisesStore()
+            setRoutine(routineId, title, exercisesToSave)
+            isDesktop ? navigate(ROUTES.ROUTINES) : navigate(ROUTES.WORKOUTS_NEW)
             try {
-                setRoutine(routineId, title, routineExercises)
-                isDesktop ? navigate(ROUTES.ROUTINES) : navigate(ROUTES.WORKOUTS_NEW)
-                await saveRoutine(routineId, title, routineExercises, 0)
-                const serverRoutine = await createOrUpdateRoutine(routineId, title, routineExercises)
+                await saveRoutine(routineId, title, exercisesToSave, 0)
+                const serverRoutine = await createOrUpdateRoutine(routineId, title, exercisesToSave)
                 await markRoutineSynced(routineId, serverRoutine.updated_at )
-                clearExercisesStore()
                 setTitle("")
-
-
             } catch (error) {
                 console.error(error)
             }
@@ -73,8 +70,8 @@ export default function CreateRoutinePage(){
                 <Modal.Overlay/>
                 <Modal.Container>
                     <Modal.Content>
-                        <p className={styles.modalText}>Are you sure you want to discard this workout?</p>
-                        <Button className={styles.discardBtn} handleClick={handleDiscard} fill={true}>Discard workout</Button>
+                        <p className={styles.modalText}>Are you sure you want to discard this routine?</p>
+                        <Button className={styles.discardBtn} handleClick={handleDiscard} fill={true}>Discard routine</Button>
                         <button className={styles.cancelBtn} onClick={() => setShowModal(false)}>Cancel</button>
                     </Modal.Content>
                 </Modal.Container>
@@ -92,7 +89,7 @@ export default function CreateRoutinePage(){
 
             <div className="mobile-layout">
                 <Header>
-                    <Header.LeftButton><button className={styles.headerBtn} onClick={() => setShowModal(true)}><FaChevronLeft size={16} color="black"/></button></Header.LeftButton>
+                    <Header.LeftButton><button className={styles.headerBtn} onClick={() => setShowModal(true)}><Icon icon="boxicons:chevron-left" width={30} height={30} color="black" /></button></Header.LeftButton>
                     <Header.Title>Create Routine</Header.Title>
                     <Header.RightButton><Button handleClick={handleSave} size="sm" fill={false}>Save</Button></Header.RightButton>
                 </Header>
@@ -111,7 +108,7 @@ export default function CreateRoutinePage(){
                             return <LoggingExerciseCard key={exercise.exerciseId} exerciseId={exercise.exerciseId} purpose="routine"/>
                         })}
                         {!isDesktop && <Button handleClick={handleAddExerciseClick} className={styles.addExerciseBtn} fill={true}>
-                            <AiOutlinePlus size={22} color="white"/>
+                            <Icon icon="boxicons:plus" color="white" width={22} height={22}/>
                             Add Exercise
                         </Button>}
                     </div>

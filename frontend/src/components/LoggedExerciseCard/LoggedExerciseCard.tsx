@@ -1,4 +1,3 @@
-import { BsThreeDotsVertical } from "react-icons/bs";
 import {useState} from 'react'
 import dumbbellIcon from '../../assets/dumbbell.svg'
 import { useNavigate } from 'react-router-dom';
@@ -8,8 +7,7 @@ import styles from './LoggedExerciseCard.module.css'
 import Modal from "../Modal/Modal";
 import { useExercisesStore } from '../../store/exercises-store'
 import { ROUTES } from "../../utils/constants";
-import { RiEditLine } from "react-icons/ri";
-import { RiDeleteBinLine } from "react-icons/ri";
+import { Icon } from '@iconify/react'
 import type { Exercise} from "../../types";
 
 
@@ -55,10 +53,10 @@ export default function LoggedExerciseCard({exercise, date}: {exercise: Exercise
                     <Modal.Content>
                         <div className={styles.modalActionBtns}>
                             <button className={styles.modalActionBtn} onClick={() => handleEditExr()}>
-                                <RiEditLine size={20} color="#8e8e8e"/>
+                                <Icon icon="mynaui:edit" width={20} height={20} color="#8e8e8e"/>
                                 Edit exercise</button>
                             <button className={styles.modalActionBtn} onClick={() => handleDeleteExr()}>
-                                <RiDeleteBinLine size={20} color="#8e8e8e"/>
+                                <Icon icon="meteor-icons:trash-can" width={20} height={20}  color="#8e8e8e"/>
                                 Delete exercise</button>
                         </div>
                         <button className={styles.modalCancelBtn} onClick={() => setShowModal(false)}>Cancel</button>
@@ -70,7 +68,7 @@ export default function LoggedExerciseCard({exercise, date}: {exercise: Exercise
                 <div className={styles.top}>
                     <img src={dumbbellIcon} alt="exercise icon" width={40} height={40}/>
                     <p className={styles.exerciseName}>{exercise.name}</p>
-                    <BsThreeDotsVertical className={styles.menuBtn} onClick={() => setShowModal(true)} size={18} color='#FF5526'/>
+                    <Icon icon="bi:three-dots-vertical" className={styles.menuBtn} width={18} height={18} color='#FF5526'onClick={() => setShowModal(true)}/>
                 </div>
                 <div className={styles.setRows}>
                     {sets.map(set => (

@@ -2,7 +2,7 @@ import styles from './ActiveWorkoutView.module.css'
 import LoggingExerciseCard from '../LoggingExerciseCard/LoggingExerciseCard'
 import { useExercisesStore } from '../../store/exercises-store'
 import Button from '../Button/Button'
-import { AiOutlinePlus } from "react-icons/ai"
+import { Icon } from '@iconify/react'
 import { ROUTES } from '../../utils/constants'
 import { useNavigate } from 'react-router-dom'
 
@@ -22,7 +22,7 @@ export default function ActiveWorkoutView(){
         <div className={styles.logScreenWithExercisesAdded}>
             {exercisesCards}
             <Button handleClick={handleAddExerciseClick} className={styles.addExerciseBtn} fill={true}>
-                <AiOutlinePlus size={22} color="white"/>
+                <Icon icon="boxicons:plus" color="white" width={22} height={22}/>
                 Add Exercise
             </Button>
         </div>
