@@ -4,7 +4,7 @@ import { useRenderDataOnScreenStore } from '../../../store/render-data-store'
 import RoutineCard from '../../../components/RoutineCard/RoutineCard'
 import {NavLink} from 'react-router-dom'
 import RightPanel from '../../../components/desktop/RightPanel/RightPanel'
-import { AiOutlinePlus } from "react-icons/ai";
+import { Icon } from '@iconify/react'
 import { ROUTES } from '../../../utils/constants'
 
 export default function RoutinesPage(){
@@ -27,7 +27,7 @@ export default function RoutinesPage(){
             </div>
             <RightPanel>
                 <NavLink to={ROUTES.ROUTINES_NEW} className={styles.createNewRoutineBtn}>
-                    <AiOutlinePlus size={23} color="##ff5526"/>
+                    <Icon icon="boxicons:plus" color="#ff5526" width={23} height={23}/>
                     New Routine
                 </NavLink>
             </RightPanel>
