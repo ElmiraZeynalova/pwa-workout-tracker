@@ -2,9 +2,9 @@ import styles from './Calendar.module.css'
 import { useDateStore } from '../../../store/date-store'
 import dayjs from 'dayjs'
 import CalendarMonth from '../../CalendarMonth/CalendarMonth'
-import { FaChevronLeft } from "react-icons/fa";
-import { FaChevronRight } from "react-icons/fa";
 import Button from '../../Button/Button';
+import { Icon } from '@iconify/react'
+
 export default function Calendar(){
     const selectedDate = useDateStore(state => state.selectedDate)
     const setSelectedDate = useDateStore(state => state.setSelectedDate)
@@ -25,8 +25,8 @@ export default function Calendar(){
                 <div className={styles.top}>
                     <h1>{dayjs(selectedDate).format("MMMM YYYY")}</h1>
                     <div className={styles.buttons}>
-                        <Button handleClick={() => setSelectedDate(date.subtract(1, 'month').format('YYYY-MM-DD'))} fill={false}><FaChevronLeft size={16} color="#ff5526" /></Button>
-                        <Button handleClick={() => setSelectedDate(date.add(1, 'month').format('YYYY-MM-DD'))} fill={false}><FaChevronRight size={16} color="#ff5526" /></Button>
+                        <Button handleClick={() => setSelectedDate(date.subtract(1, 'month').format('YYYY-MM-DD'))} fill={false}><Icon icon="boxicons:chevron-left" width={30} height={30} color="#ff5526" /></Button>
+                        <Button handleClick={() => setSelectedDate(date.add(1, 'month').format('YYYY-MM-DD'))} fill={false}><Icon icon="boxicons:chevron-right" width={30} height={30} color="#ff5526" /></Button>
                     </div>
                 </div>
 
