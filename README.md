@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./src/assets/logo.png" alt="Forge" width="80" /> 
+<img src="frontend/src/assets/logo.png" alt="Forge" width="80" /> 
 <h1 style="display:inline">Forge</h1>
 
 This is a lightweight and simple PWA for logging workouts, with offline-first architecture and cross-device sync.
@@ -9,7 +9,7 @@ This is a lightweight and simple PWA for logging workouts, with offline-first ar
 
 <br/>
 
-![Preview](./screenshots/preview2.png)
+![Preview](frontend/screenshots/preview2.png)
 
 </div>
 
