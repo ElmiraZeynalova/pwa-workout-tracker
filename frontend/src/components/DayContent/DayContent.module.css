@@ -17,25 +17,13 @@
   color: #00000072;
 }
 
-.startWorkoutBtn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-  font-weight: 400;
-  font-size: 17px;
-  cursor: pointer;
-  text-decoration: none;
-  color: #00000072;
-  margin-bottom: 20px;
-  transition: transform 0.08s ease;
-}
-.startWorkoutBtn:active {
-  transform: scale(0.97);
-}
 .workoutDay {
+  height: 100%;
   padding: 12px;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }

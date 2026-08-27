@@ -8,7 +8,7 @@ import type { Swiper as SwiperType } from 'swiper'
 import 'swiper/css'
 import styles from './DaySwiper.module.css'
 
-const RANGE = 14
+const RANGE = 7
 
 function generateDateRange(centerDate: Dayjs) {
   return Array.from({ length: RANGE * 2 + 1 }, (_, i) =>

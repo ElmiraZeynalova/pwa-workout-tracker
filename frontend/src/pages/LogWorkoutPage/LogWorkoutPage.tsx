@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import {useState} from 'react'
+import { useLocation } from "react-router-dom"
 import { useExercisesStore} from "../../store/exercises-store"
 import Header from "../../components/Header/Header"
 import styles from './LogWorkoutPage.module.css'
@@ -16,7 +17,9 @@ export default function LogWorkoutPage(){
     const navigate = useNavigate()
     const [showModal, setShowModal] = useState<boolean>(false)
     const [showFinishModal, setShowFinishModal] = useState<boolean>(false)
-
+    const location = useLocation()
+    const urlPath = location.pathname
+    console.log(urlPath)
     const {isValid, notValid, finishWorkout, exercisesCount} = useFinishWorkout()
     
     async function handleFinish(){
@@ -74,11 +77,11 @@ export default function LogWorkoutPage(){
 
 
             <div className={styles.container}>
-                <Header>
+                {urlPath !== "/" && <Header>
                     <Header.LeftButton><button className={styles.headerBtn} onClick={handleArrowClick}><Icon icon="boxicons:chevron-left" width={30} height={30} color="black" /></button></Header.LeftButton>
                     <Header.Title>Log Workout</Header.Title>
                     {exercisesCount > 0 && <Header.RightButton><Button handleClick={handleFinish} size="sm" fill={false}>Finish</Button></Header.RightButton>}
-                </Header>
+                </Header>}
 
                 <main className={styles.main}>
                     {exercisesCount > 0 
