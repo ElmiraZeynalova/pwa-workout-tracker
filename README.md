@@ -65,17 +65,17 @@ npm run preview
 
 ---
 
-## 🧱 Tech Stack
-
 | Technology | Purpose |
 |---|---|
 | **React 19 (TypeScript)** | UI framework |
 | **Vite** | Build tool |
 | **vite-plugin-pwa** | Offline support & installability |
-| **IndexedDB** | Local Data Base |
 | **CSS** | Styling |
-| **Supabase** | Database & real-time sync |
-| **Supabase Auth (OTP)** | Passwordless email authentication |
+| **IndexedDB** | Local storage for offline-first data |
+| **Node.js + Express** | Backend API |
+| **Prisma** | ORM for database access |
+| **PostgreSQL (Supabase)** | Database |
+| **JWT** | Authentication |
 
 ---
 
