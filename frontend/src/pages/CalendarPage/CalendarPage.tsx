@@ -13,11 +13,11 @@ import styles from "./CalendarPage.module.css"
 import Button from "../../components/Button/Button";
 import { ROUTES } from "../../utils/constants";
 import Modal from "../../components/Modal/Modal";
-import { useMutation } from '@tanstack/react-query'
-import { logout } from "../../api/auth";
-import {useAuthState} from '../../context/AuthContext'
+// import { useMutation } from '@tanstack/react-query'
+// import { logout } from "../../api/auth";
+// import {useAuthState} from '../../context/AuthContext'
 
-const TOTAL_MONTHS = 3000
+const TOTAL_MONTHS = 300
 const CENTER_INDEX = Math.floor(TOTAL_MONTHS / 2)
 
 function getMonth(index: number) {
@@ -46,15 +46,15 @@ export default function CalendarPage(){
 
     const navigate = useNavigate()
 
-    const {markAsUnauthenticated} = useAuthState()
+    // const {markAsUnauthenticated} = useAuthState()
     
-    const logoutMutation = useMutation({
-        mutationFn: () => logout(),
-        onSuccess: () => {
-            markAsUnauthenticated()
-            navigate(ROUTES.LOGIN)
-        },
-    })
+    // const logoutMutation = useMutation({
+    //     mutationFn: () => logout(),
+    //     onSuccess: () => {
+    //         markAsUnauthenticated()
+    //         navigate(ROUTES.LOGIN)
+    //     },
+    // })
 
     useLayoutEffect(() => {
         if (!mainRef.current) return
@@ -133,7 +133,7 @@ export default function CalendarPage(){
             <Header>
                 <Header.LeftButton><Link className={styles.headerBtn} to={ROUTES.HOME}><Icon icon="boxicons:chevron-left" width={30} height={30} color="black" /></Link></Header.LeftButton>
                 <Header.Title>Calendar</Header.Title>
-                <Header.RightButton><button onClick={() => logoutMutation.mutate()}>Logout</button></Header.RightButton>
+                {/* <Header.RightButton><button onClick={() => logoutMutation.mutate()}>Logout</button></Header.RightButton> */}
             </Header>
             <div className={styles.calendarDateBar}>
                 {["M", "T", "W", "T", "F", "S", "S" ].map((d, idx) => <div key={idx}>{d}</div>)}

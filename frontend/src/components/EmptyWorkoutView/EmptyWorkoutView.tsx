@@ -11,12 +11,12 @@ export default function EmptyWorkoutView(){
     const routines = useRenderDataOnScreenStore(state => state.routines)
     const navigate = useNavigate()
 
-    const routineCards = Object.values(routines).map((routine) => (
+    const routineCards = Object.values(routines)?.map((routine) => (
         <RoutineCard
             key={routine.routineId}
             routineId={routine.routineId}
             title={routine.title}
-            exercises={routine.exercises}
+            exercises={routine?.exercises}
         />
     ))
 

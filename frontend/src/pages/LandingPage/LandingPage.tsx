@@ -22,14 +22,14 @@ const features = [
         description: "Create custom workout templates and start them with one tap. Full Body, Upper Body, Lower Body — your choice."
     },
     {
-        icon: <Icon icon="ri:map-line" color="#ff5526" className={styles.icon} />,
-        title: "Offline First",
-        description: "No internet? No problem. Forge works fully offline and syncs your data across devices when you're back online."
+        icon: <Icon icon="hugeicons:anonymous" color="#ff5526" className={styles.icon} />,
+        title: "Guest mode",
+        description: "No registration needed. Data saved locally only."
     },
     {
-        icon: <Icon icon="bx:bx-envelope" color="#ff5526" className={styles.icon} />,
-        title: "Passwordless Login",
-        description: "Sign in with just your email."
+        icon: <Icon icon="ri:map-line" color="#ff5526" className={styles.icon} />,
+        title: "Offline First",
+        description: "No internet? No problem. Forge may work fully offline and syncs your data when you're back online."
     },
     {
         icon: <Icon icon="bx:bx-shield" color="#ff5526" className={styles.icon}/>,

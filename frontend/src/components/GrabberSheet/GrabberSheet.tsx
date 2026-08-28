@@ -13,7 +13,8 @@ export default function GrabberSheet({containerRef}: {containerRef: React.RefObj
     const [position, setPosition] = useState<number>(0)
     const startY = useRef<number>(0)
     const buttonWidth = useRef<number>(50)
-    const threshold = useRef<number>(0)
+    const thresholdForPointerMove = useRef<number>(0)
+    const thresholdForPointerUp = useRef<number>(0)
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -30,12 +31,13 @@ export default function GrabberSheet({containerRef}: {containerRef: React.RefObj
         e.currentTarget.setPointerCapture(e.pointerId);
         goingDown.current = false
         startY.current = e.clientY
-        threshold.current = containerRef.current!.scrollHeight * 0.4
+        thresholdForPointerMove.current = containerRef.current!.scrollHeight * 0.25
+        thresholdForPointerUp.current = containerRef.current!.scrollHeight * 0.7
     }
 
     function handlePointerMove(e: React.PointerEvent<HTMLDivElement>){
         const newPosition = startY.current - e.clientY
-        if(e.clientY >= threshold.current){
+        if(e.clientY >= thresholdForPointerMove.current){
             setPosition(newPosition)
         }else{
             navigate(ROUTES.WORKOUTS_NEW)
@@ -44,9 +46,10 @@ export default function GrabberSheet({containerRef}: {containerRef: React.RefObj
 
     function handlePointerUp(e: React.PointerEvent<HTMLDivElement>){
        e.currentTarget.releasePointerCapture(e.pointerId);
-        if(e.clientY > threshold.current){
+        if(e.clientY > thresholdForPointerUp.current){
             goingDown.current = true
             if(!sheetRef.current) return
+            sheetRef.current.style.transition = 'transform 300ms ease-out';
             sheetRef.current.style.transform = `translateY(${0}px)`;
             if(!buttonRef.current) return
             buttonWidth.current = 50
