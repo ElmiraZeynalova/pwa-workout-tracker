@@ -32,7 +32,7 @@ export default function EditPage(){
     const updateExercise = useRenderDataOnScreenStore((state) => state.updateExercise)
     const removeRoutine = useRenderDataOnScreenStore(state => state.removeRoutine)
     const updateRoutine = useRenderDataOnScreenStore(state => state.updateRoutine)
-    const editingCardsForRoutine = editingRoutineExercises.map(e => <LoggingExerciseCard key={e.exerciseId} exerciseId={e.exerciseId} purpose="routine"/>)
+    const editingCardsForRoutine = editingRoutineExercises?.map(e => <LoggingExerciseCard key={e.exerciseId} exerciseId={e.exerciseId} purpose="routine"/>)
 
     async function handleSave(){
         if(headerTitle === "Exercise"){

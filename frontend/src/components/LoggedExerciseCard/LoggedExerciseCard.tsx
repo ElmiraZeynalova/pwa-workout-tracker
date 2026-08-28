@@ -16,7 +16,7 @@ export default function LoggedExerciseCard({exercise, date}: {exercise: Exercise
     const [showModal, setShowModal] = useState<boolean>(false)
     const navigate = useNavigate()
     const addNewExerciseToStore = useExercisesStore(state => state.addNewFullExercises)
-    const sets = exercise.sets.map((set, idx) => (
+    const sets = exercise?.sets?.map((set, idx) => (
         {
             id: idx + 1,
             reps: set.reps,
@@ -37,7 +37,7 @@ export default function LoggedExerciseCard({exercise, date}: {exercise: Exercise
     }
 
     async function handleEditExr(){
-        const formattedSets = exercise.sets.map(s => ({...s, checked: true}))
+        const formattedSets = exercise?.sets?.map(s => ({...s, checked: true}))
         const formattedExercise = {...exercise, sets: formattedSets }
         addNewExerciseToStore([formattedExercise])
         navigate(ROUTES.EXERCISES_EDIT, {state: { headerTitle: "Exercise", exerciseId: exercise.exerciseId}});
@@ -71,7 +71,7 @@ export default function LoggedExerciseCard({exercise, date}: {exercise: Exercise
                     <Icon icon="bi:three-dots-vertical" className={styles.menuBtn} width={18} height={18} color='#FF5526'onClick={() => setShowModal(true)}/>
                 </div>
                 <div className={styles.setRows}>
-                    {sets.map(set => (
+                    {sets?.map(set => (
                         <div className={styles.setRow} key={set.id}>
                             <span style={{width: 20}}>{set.id}</span>
                             <p>{set.weight} <span>kgs</span></p>

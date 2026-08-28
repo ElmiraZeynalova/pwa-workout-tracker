@@ -104,7 +104,7 @@ export default function CreateRoutinePage(){
                                 <p>Get started by adding exercises to your routine</p>
                             </div>
                         }
-                        {routineExercises.map(exercise => {
+                        {routineExercises?.map(exercise => {
                             return <LoggingExerciseCard key={exercise.exerciseId} exerciseId={exercise.exerciseId} purpose="routine"/>
                         })}
                         {!isDesktop && <Button handleClick={handleAddExerciseClick} className={styles.addExerciseBtn} fill={true}>

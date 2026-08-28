@@ -28,7 +28,7 @@ export default function DaySwiper(){
         [centerDate]
     )
     
-    const initialSlideIndex = dates.findIndex(d => d === selectedDate)
+    const initialSlideIndex = dates?.findIndex(d => d === selectedDate)
 
     useEffect(() => {
         if (!swiperRef.current) return
@@ -64,8 +64,8 @@ export default function DaySwiper(){
             onSlideChange={handleSlideChange}
             style={{width: '100%', height: '100%'}}
         >
-        {dates.map((date) => (
-            <SwiperSlide className={styles.swiperSlide} key={date} style={{}}>
+        {dates?.map((date) => (
+            <SwiperSlide className={styles.swiperSlide} key={date}>
                 <DayContent date={date} />
             </SwiperSlide>
         ))}

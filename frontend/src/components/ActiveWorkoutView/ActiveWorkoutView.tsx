@@ -10,7 +10,7 @@ export default function ActiveWorkoutView(){
     const navigate = useNavigate()
     const currentWorkoutExercises = useExercisesStore(state => state.exercises)
 
-    const exercisesCards = currentWorkoutExercises.map(exercise => {
+    const exercisesCards = currentWorkoutExercises?.map(exercise => {
         return <LoggingExerciseCard key={exercise.exerciseId} exerciseId={exercise.exerciseId} purpose="logWorkout"/>
     })
     

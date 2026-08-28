@@ -94,7 +94,7 @@ export default function CalendarPage(){
         )
     }
     
-    const exercisesPerformed = workout?.exercises.map(e => {
+    const exercisesPerformed = workout?.exercises?.map(e => {
         const setCount = e.sets.length
         return <div key={e.exerciseId} className={styles.exercise}>
             <img src={dumbbellIcon} alt="exercise icon" width={40} height={40}/>

@@ -58,7 +58,7 @@ export default function RoutineCard({ routineId, title, exercises}: Props) {
             <img src={dumbbellIcon} alt="exercise icon" width={40} height={40}/>
             <div className={styles.exerciseInfo}>
                 <p className={styles.exerciseName}>{e.name}</p>
-                <div className={styles.sets}>{e.sets.map((s, idx) => (
+                <div className={styles.sets}>{e?.sets?.map((s, idx) => (
                     <div key={s.setId} className={styles.set}>
                         <p className={styles.setIdx}>set {idx + 1}</p>
                         <p className={styles.setInfo}>{(s.weight !== null && s.weight !== 0) ? s.reps + " x " + s.weight + " kg" : s.reps + " reps"}</p>

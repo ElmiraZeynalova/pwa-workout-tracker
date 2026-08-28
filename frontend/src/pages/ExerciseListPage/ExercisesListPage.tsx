@@ -35,7 +35,7 @@ export default function ExercisesListPage(){
     }
 
     const hasInput = search.trim().length > 0
-    const filteredExercises = hasInput ? exercises.filter(e => e.exerciseName.toLowerCase().includes(search.toLowerCase())) : exercises
+    const filteredExercises = hasInput ? exercises?.filter(e => e.exerciseName.toLowerCase().includes(search.toLowerCase())) : exercises
     const exercisesList = filteredExercises.length > 0 ?
         filteredExercises.map(e => {
             return(

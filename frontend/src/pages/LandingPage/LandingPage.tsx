@@ -94,7 +94,7 @@ export default function LandingPage(){
         navigate(ROUTES.LOGIN)
     }
 
-    const featureCards = features.map(f => <FeatureCard key={f.title} icon={f.icon} title={f.title} description={f.description}/>)
+    const featureCards = features?.map(f => <FeatureCard key={f.title} icon={f.icon} title={f.title} description={f.description}/>)
     return(
         <>
             {isDesktop && <header className={styles.header}>

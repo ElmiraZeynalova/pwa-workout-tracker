@@ -19,7 +19,6 @@ export default function LogWorkoutPage(){
     const [showFinishModal, setShowFinishModal] = useState<boolean>(false)
     const location = useLocation()
     const urlPath = location.pathname
-    console.log(urlPath)
     const {isValid, notValid, finishWorkout, exercisesCount} = useFinishWorkout()
     
     async function handleFinish(){
