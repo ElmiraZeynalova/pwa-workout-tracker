@@ -23,7 +23,7 @@ Forge is an offline-first workout tracking PWA built with React, TypeScript, Nod
 * 📲 **Progressive Web App** — Installable on mobile and desktop with offline support
 * ✈️ **Offline-First Data** — Workout data remains available without an internet connection
 * 🔄 **Cross-Device Sync** — Synchronize locally stored workouts with the backend when connectivity is restored
-* 🔐 **Authentication** — Secure user authentication using JWT and HTTP-only cookies
+* 🔐 **Authentication** — JWT authentication with short-lived access tokens and rotating refresh tokens stored in HTTP-only cookies
 * 📱 **Responsive UI** — Mobile-first workout logging with desktop support for history and routine management
 
 > 💡 **Desktop** is a companion experience — view history and manage routines. Workout logging is optimized for mobile.
@@ -35,7 +35,8 @@ Forge is an offline-first workout tracking PWA built with React, TypeScript, Nod
 * Designed an **offline-first data flow** using IndexedDB as the local source of data with background synchronization to the backend.
 * Implemented **cross-device synchronization** between local client data and PostgreSQL.
 * Built a REST API with **Node.js and Express** and integrated PostgreSQL through Prisma.
-* Implemented **JWT-based authentication** using HTTP-only cookies.
+* Implemented **JWT-based authentication** with short-lived access tokens, rotating refresh tokens, HTTP-only cookies, and server-side session storage.
+* Added automatic access token renewal through Axios interceptors when the access token expires.
 * Added **PWA support** with service worker caching and installability.
 * Handled online/offline transitions and synchronization of locally created and modified workout data.
 * Used **TypeScript** across the frontend and backend to improve type safety.
