@@ -19,3 +19,8 @@ export async function userIsValid(){
     const {data} = await apiClient.get("/auth/me")
     return data
 }
+
+export async function refreshToken(){
+    const {data} = await apiClient.get("/auth/refresh")
+    return data
+}

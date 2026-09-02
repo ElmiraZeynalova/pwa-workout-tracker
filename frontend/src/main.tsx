@@ -6,6 +6,7 @@ import App from './App.tsx'
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { AuthProvider } from './context/AuthContext.tsx';
+import "./api/interceptors.ts"
 
 const queryClient = new QueryClient()
 

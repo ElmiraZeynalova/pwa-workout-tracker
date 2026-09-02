@@ -16,9 +16,17 @@ export default function LoginPage(){
     const {continueAsGuest, markAsLoggedIn} = useAuthState()
 
     const loginMutation = useMutation({
-        mutationFn: () => mode === "login" ? login(email, password) : register(email, password),
-        onSuccess: () => {
-            markAsLoggedIn()
+        mutationFn: async() => {
+            if(mode === "login"){
+                const {accessToken} = await login(email, password)
+                return accessToken
+            }else{
+                const {accessToken} = await register(email, password)
+                return accessToken
+            }
+        },
+        onSuccess: (accessToken) => {
+            markAsLoggedIn(accessToken)
             navigate(ROUTES.HOME)
         },
         onError: (err) => setError(err.message)
